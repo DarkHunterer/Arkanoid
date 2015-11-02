@@ -72,6 +72,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener  {
        // System.out.println("Szer okna to: "+getWidth() +" a wys okna: "+ getHeight());
        // System.out.println("Szer panelu gry to: "+panelgry_.getWidth() +" a wys panelu gry to: "+ panelgry_.getHeight());
         panelgry_.actionPerformed(e);
+        pasekWyniku_.actionPerformed(e);
         repaint();
     }
 
