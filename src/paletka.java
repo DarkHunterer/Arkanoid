@@ -28,10 +28,12 @@ public class paletka implements KeyListener {
         szer_=szerokosc;
     }
 
-    public void porusz(){
+    public void porusz(int maxX){
         x_pos += dx;
         if(x_pos<1)
             x_pos=1;
+        if(x_pos+szer_>maxX)
+            x_pos=maxX-szer_;
     }
 
     public int getSzer_() {

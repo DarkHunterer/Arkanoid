@@ -48,7 +48,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             paletka_.ustaw_pozycje(this.getWidth()/2,this.getHeight() -50,getWidth()/5);
             init=true;
         }
-        paletka_.porusz();
+        paletka_.porusz(getWidth());
         System.out.println("Szer panelu gry to: "+getWidth() +" a wys panelu gry to: "+ getHeight());
         System.out.println("Paletka: X: "+ paletka_.getX()+" Y: "+paletka_.getY()+" szer i wys: "+paletka_.getSzer_() +" "+ paletka_.getWys_());
         repaint();
