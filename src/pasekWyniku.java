@@ -35,7 +35,6 @@ public class pasekWyniku extends JPanel implements ActionListener{
         add(labelZycie);
         add(labelCzas);
         this.setOpaque(true);
-
     }
 
     @Override
