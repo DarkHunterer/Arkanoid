@@ -87,4 +87,8 @@ public class paletka implements KeyListener {
             }
         }
     }
+
+    public Rectangle getBounds(){
+        return new Rectangle(x_pos,y_pos,szer_,wys_);
+    }
 }
