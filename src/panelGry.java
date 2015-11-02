@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 /**
  * Created by Daniel on 02.11.2015.
  */
+
 public class panelGry extends JPanel implements ActionListener, KeyListener {
 
     paletka paletka_;
@@ -15,7 +16,8 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     public panelGry(Color color){
         this.setOpaque(true);
         this.setBackground(color);
-        paletka_ = new paletka(this.getWidth()/2,this.getHeight() -50,getWidth()/5);
+        paletka_ = new paletka(this.getWidth()/2,this.getHeight() -50,getWidth()/5,getHeight()/25);
+        paletka_ = new paletka(this.getWidth()/2,this.getHeight() -50,getWidth()/5,getHeight()/25);
         dodajKlocek();
     }
 
@@ -45,12 +47,15 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         if(init==false)
         {
-            paletka_.ustaw_pozycje(this.getWidth()/2,this.getHeight() -50,getWidth()/5);
+            paletka_.ustaw_pozycje(this.getWidth()/2,this.getHeight() - this.getHeight()/10,getWidth()/5,getHeight()/25);
             init=true;
         }
         paletka_.porusz(getWidth());
         System.out.println("Szer panelu gry to: "+getWidth() +" a wys panelu gry to: "+ getHeight());
         System.out.println("Paletka: X: "+ paletka_.getX()+" Y: "+paletka_.getY()+" szer i wys: "+paletka_.getSzer_() +" "+ paletka_.getWys_());
         repaint();
+    }
+    public void skaluj(){
+        paletka_.skaluj(getWidth(),getHeight());
     }
 }

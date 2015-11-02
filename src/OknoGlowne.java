@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class OknoGlowne extends JFrame implements ActionListener, KeyListener  {
+public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener  {
     pasekWyniku pasekWyniku_ = new pasekWyniku(Color.cyan);
     panelGry panelgry_ = new panelGry(Color.white);
     private final int DELAY = 10;
@@ -17,6 +17,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener  {
         timer = new Timer(DELAY,this);
         addKeyListener(this);
         timer.start();
+        panelgry_.addComponentListener(this);
     }
     private void dodajGUI(){
         Dimension rozmiar_okna = new Dimension(500,500);
@@ -30,16 +31,15 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener  {
         c.gridx=0;
         c.gridy=0;
         c.ipady=(int)rozmiar_okna.getHeight()/20;
-        //c.anchor = GridBagConstraints.PAGE_START;
         this.add(pasekWyniku_,c);
 
         c.gridx=0;
         c.gridy=1;
-
         c.weighty=0.9;
         c.ipady=19*(int)rozmiar_okna.getHeight()/20;
-
         add(panelgry_, c);
+
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setPreferredSize(rozmiar_okna);
         this.getContentPane().setBackground(Color.BLUE);
@@ -76,4 +76,23 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener  {
         repaint();
     }
 
+    @Override
+    public void componentResized(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+        panelgry_.skaluj();
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
+
+    }
 }
