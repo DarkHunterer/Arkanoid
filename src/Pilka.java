@@ -23,8 +23,8 @@ public class Pilka {
         promien= prom;
     }
     public void porusz(int maxX){
-        x_pos += dx;
-        y_pos += dy;
+        x_pos += 2*dx;
+        y_pos += 2*dy;
         if(x_pos<1)
             x_pos=1;
         if(x_pos+promien>maxX)

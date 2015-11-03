@@ -12,6 +12,7 @@ public class paletka implements KeyListener {
     private int y_pos;
     private int szer_;
     private int wys_;
+    private int predkosc;
 
     private int dx;
     private int dy;
@@ -21,6 +22,7 @@ public class paletka implements KeyListener {
         y_pos = y_start;
         szer_=szerokosc;
         wys_ = wysokosc;
+        predkosc =1;
     }
     public void ustaw_pozycje(int x_start,int y_start,int szerokosc,int wysokosc){
         x_pos = x_start;
@@ -68,12 +70,12 @@ public class paletka implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
     if (key==KeyEvent.VK_LEFT) {
-            System.out.println(" Strzalka w lewo wcisnieta");
-            dx=-1;
+            //System.out.println(" Strzalka w lewo wcisnieta");
+            dx=-predkosc;
     }
     else if(key==KeyEvent.VK_RIGHT) {
-        System.out.println(" Strzalka w prawo wcisnieta");
-        dx=1;
+      //  System.out.println(" Strzalka w prawo wcisnieta");
+        dx=predkosc;
     }
     }
 
@@ -82,7 +84,7 @@ public class paletka implements KeyListener {
         int key = e.getKeyCode();
         if (key==KeyEvent.VK_LEFT||key==KeyEvent.VK_RIGHT) {
             if (x_pos > 0) {
-                System.out.println(" Strzalka w lewo lub prawo puszczona");
+               // System.out.println(" Strzalka w lewo lub prawo puszczona");
                 dx=0;
             }
         }

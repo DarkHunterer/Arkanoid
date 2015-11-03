@@ -9,6 +9,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private Timer timer;
 
     public OknoGlowne(){
+        super();
         dodajGUI();
         dodajElementy();
 
@@ -71,10 +72,10 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     public void actionPerformed(ActionEvent e) {
        // System.out.println("Szer okna to: "+getWidth() +" a wys okna: "+ getHeight());
        // System.out.println("Szer panelu gry to: "+panelgry_.getWidth() +" a wys panelu gry to: "+ panelgry_.getHeight());
-        panelgry_.actionPerformed(e);
-        pasekWyniku_.actionPerformed(e);
-        repaint();
-    }
+         panelgry_.actionPerformed(e);
+         pasekWyniku_.actionPerformed(e);
+         repaint();
+     }
 
     @Override
     public void componentResized(ComponentEvent e) {
