@@ -22,15 +22,10 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         this.setBackground(color);
         paletka_ = new paletka(this.getWidth()/2,this.getHeight()/10,getWidth()/5,getHeight()/25);
         pilka_ = new Pilka(this.getWidth()/2,this.getHeight()/2,this.getHeight()/30);
-        pos =new int[][]{{getWidth()/30,50},{2*getWidth()/30,50}};
-        System.out.println(pos[0][0]+" "+pos[0][1]+" "+pos[1][0]+" "+pos[1][1]);
-        System.out.println(getPreferredSize());
+        pos =new int[][]{{20,20},{20,40},{20,60},{20,80},{20,100},{60,20},{100,20},{140,20},{180,20}};
+
         klocki = new ArrayList<>();
-        for (int i=0;i<pos.length;i++) {
-            for (int[] p : pos) {
-                klocki.add(new Klocek(p[0],p[1],getWidth()/30,getHeight()/30));
-            }
-        }
+    pilka_.setPredkosc(2);
     }
 
     private void rysuj_paletke(Graphics g){
@@ -69,14 +64,20 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         paletka_.keyPressed(e);
     }
+
     public void actionPerformed(ActionEvent e) {
         if(init==false)
         {
             paletka_.ustaw_pozycje(this.getWidth()/2,this.getHeight() - this.getHeight()/10,getWidth()/5,getHeight()/25);
             pilka_.ustaw_pozycje(this.getWidth()/2,this.getHeight()/2,this.getHeight()/30);
-
+            for (int i=0;i<pos.length;i++) {
+                for (int[] p : pos) {
+                    klocki.add(new Klocek(p[0],p[1],getWidth(),getHeight()));
+                }
+            }
             init=true;
         }
+
         paletka_.porusz(getWidth());
         pilka_.porusz(getWidth());
         sprawdzKolizje();
@@ -87,9 +88,19 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         repaint();
     }
     public void sprawdzKolizje(){
-        Rectangle r1 = paletka_.getBounds();
-        Rectangle r2 = pilka_.getBounds();
-        if(r1.intersects(r2)){
+        Rectangle rpaletka = paletka_.getBounds();
+        Rectangle rpilka = pilka_.getBounds();
+
+        for(Klocek kl : klocki){
+            Rectangle rklocek = kl.getBounds();
+
+            if(rklocek.intersects(rpilka))
+            {
+                pilka_.odwroc_Y();
+            }
+        }
+
+        if(rpaletka.intersects(rpilka)){
             pilka_.odwroc_Y();
         }
         else if((pilka_.getX_pos()>=getWidth()-pilka_.getPromien())||(pilka_.getX_pos()<=1))

@@ -12,7 +12,6 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         super();
         dodajGUI();
         dodajElementy();
-
     }
     private  void dodajElementy(){
         timer = new Timer(DELAY,this);

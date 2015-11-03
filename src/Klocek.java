@@ -13,7 +13,7 @@ public class Klocek {
     Klocek(int x, int y, int szer_ekr, int wys_ekr){
         pos_X = x;
         pos_Y = y;
-        szer = szer_ekr/20;
+        szer = szer_ekr/15;
         wys = wys_ekr/30;
     }
 
@@ -39,5 +39,8 @@ public class Klocek {
 
     public int getWytrzymalosc() {
         return wytrzymalosc;
+    }
+    public Rectangle getBounds(){
+        return new Rectangle(pos_X,pos_Y,szer,wys);
     }
 }

@@ -7,15 +7,26 @@ public class Pilka {
     private int x_pos;
     private int y_pos;
     private int promien;
-
+    private int predkosc;
     private int dx=1;
     private int dy=1;
+
     Pilka(int x_start,int y_start,int szerokosc){
         System.out.println("Dodano pilke");
         x_pos = x_start;
         y_pos = y_start;
         promien=szerokosc;
+        predkosc=1;
     }
+
+    public int getPredkosc() {
+        return predkosc;
+    }
+
+    public void setPredkosc(int predkosc) {
+        this.predkosc = predkosc;
+    }
+
     public void ustaw_pozycje(int x_start,int y_start,int prom){
         x_pos = x_start;
         y_pos = y_start;
@@ -23,8 +34,8 @@ public class Pilka {
         promien= prom;
     }
     public void porusz(int maxX){
-        x_pos += 2*dx;
-        y_pos += 2*dy;
+        x_pos += predkosc*dx;
+        y_pos += predkosc*dy;
         if(x_pos<1)
             x_pos=1;
         if(x_pos+promien>maxX)
