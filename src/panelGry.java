@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class panelGry extends JPanel implements ActionListener, KeyListener {
 
-    private final int[][] pos;
+    private int[][] pos;
     private paletka paletka_;
     private Pilka pilka_;
     private Boolean init = false;
@@ -21,16 +21,15 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     public panelGry(Color color){
         this.setOpaque(true);
         this.setBackground(color);
+
+    }
+    public void start(){
         paletka_ = new paletka(this.getWidth()/2,this.getHeight()/10,getWidth()/5,getHeight()/25);
         pilka_ = new Pilka(this.getWidth()/2,this.getHeight()/2,this.getHeight()/30);
         pos =new int[][]{{20,20},{20,40},{20,60},{20,80},{20,100},{60,20},{100,20},{140,20},{180,20}};
-
         klocki = new ArrayList<>();
-    pilka_.setPredkosc(2);
-    }
-    public void start(){
-    pauza=false;
-
+        pilka_.setPredkosc(2);
+        pauza=false;
     }
     private void rysuj_paletke(Graphics g){
         g.drawRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
@@ -60,6 +59,9 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         paletka_.keyReleased(e);
     }
 
+    public void setPauza(Boolean pauza) {
+        this.pauza = pauza;
+    }
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -67,16 +69,10 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         paletka_.keyPressed(e);
-        if (e.getKeyCode()==KeyEvent.VK_ESCAPE) {
-            System.out.println("Escape wcisniety");
-            if(pauza!=true)
-                pauza= true;
-            else  pauza = false;
-        }
     }
 
     public void actionPerformed(ActionEvent e) {
-       if(pauza==false) {
+       if(pauza!=true) {
            if (init == false) {
                paletka_.ustaw_pozycje(this.getWidth() / 2, this.getHeight() - this.getHeight() / 10, getWidth() / 5, getHeight() / 25);
                pilka_.ustaw_pozycje(this.getWidth() / 2, this.getHeight() / 2, this.getHeight() / 30);

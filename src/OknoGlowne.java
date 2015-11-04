@@ -7,9 +7,13 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     panelGry panelgry_ = new panelGry(Color.white);
     private final int DELAY = 10;
     private Timer timer;
-
+    private Boolean pauza = false;
+    private Boolean graTrwa = false;
+    private MenuBar mbar;
+    private Menu menu;
     public OknoGlowne(){
         super();
+        dodajMenu();
         dodajGUI();
         dodajElementy();
     }
@@ -19,10 +23,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         timer.start();
         panelgry_.addComponentListener(this);
     }
-
-    private void dodajGUI(){
-        Dimension rozmiar_okna = new Dimension(500,500);
-
+    private void zacznijGre(){
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -37,19 +38,31 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         c.gridy=1;
         c.weighty=0.95;
         add(panelgry_, c);
+        pasekWyniku_.start();
+        panelgry_.start();
+        graTrwa = true;
+    }
+    private void dodajGUI(){
+        Dimension rozmiar_okna = new Dimension(500,500);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setPreferredSize(rozmiar_okna);
         this.getContentPane().setBackground(Color.BLUE);
         this.pack();
-
     }
     public static void main(String [] args){
         OknoGlowne okno = new OknoGlowne();
         okno.setVisible(true);
-        okno.panelgry_.start();
+        okno.zacznijGre();
     }
 
+    private void dodajMenu(){
+        mbar = new MenuBar();
+        menu = new Menu("Dupa menu");
+        mbar.add(menu);
+        setMenuBar(mbar);
+        mbar.setName("Dupa");
+    }
 
         @Override
         public void keyReleased(KeyEvent e) {
@@ -63,16 +76,35 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
     @Override
         public void keyPressed(KeyEvent e) {
+
         panelgry_.keyPressed(e);
+        if (e.getKeyCode()==KeyEvent.VK_ESCAPE) {
+            System.out.println("Escape wcisniety");
+            if(pauza!=true) {
+                pauza = true;
+                menu.setEnabled(true);
+                MenuBar a = new MenuBar();
+                this.setMenuBar(a);
+            }
+            else {
+                pauza = false;
+                menu.setEnabled(false);
+                this.setMenuBar(mbar);
+            }
+            panelgry_.setPauza(pauza);
+            }
+
         }
 
     @Override
     public void actionPerformed(ActionEvent e) {
        // System.out.println("Szer okna to: "+getWidth() +" a wys okna: "+ getHeight());
        // System.out.println("Szer panelu gry to: "+panelgry_.getWidth() +" a wys panelu gry to: "+ panelgry_.getHeight());
-         panelgry_.actionPerformed(e);
-         pasekWyniku_.actionPerformed(e);
-         repaint();
+       if(graTrwa!=false) {
+           panelgry_.actionPerformed(e);
+           pasekWyniku_.actionPerformed(e);
+       }
+           repaint();
      }
 
     @Override
