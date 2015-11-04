@@ -19,6 +19,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         timer.start();
         panelgry_.addComponentListener(this);
     }
+
     private void dodajGUI(){
         Dimension rozmiar_okna = new Dimension(500,500);
 
@@ -27,18 +28,15 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         c.fill = GridBagConstraints.BOTH;
 
         c.weightx=1;
-        c.weighty=0.1;
+        c.weighty=0.01;
         c.gridx=0;
         c.gridy=0;
-        c.ipady=(int)rozmiar_okna.getHeight()/20;
         this.add(pasekWyniku_,c);
 
         c.gridx=0;
         c.gridy=1;
-        c.weighty=0.9;
-        c.ipady=19*(int)rozmiar_okna.getHeight()/20;
+        c.weighty=0.95;
         add(panelgry_, c);
-
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setPreferredSize(rozmiar_okna);
@@ -49,6 +47,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     public static void main(String [] args){
         OknoGlowne okno = new OknoGlowne();
         okno.setVisible(true);
+        okno.panelgry_.start();
     }
 
 

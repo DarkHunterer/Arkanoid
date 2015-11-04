@@ -16,6 +16,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     private paletka paletka_;
     private Pilka pilka_;
     private Boolean init = false;
+    private Boolean pauza = true;
     private ArrayList<Klocek> klocki;
     public panelGry(Color color){
         this.setOpaque(true);
@@ -27,7 +28,10 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         klocki = new ArrayList<>();
     pilka_.setPredkosc(2);
     }
+    public void start(){
+    pauza=false;
 
+    }
     private void rysuj_paletke(Graphics g){
         g.drawRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
         g.fillRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
@@ -63,29 +67,34 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         paletka_.keyPressed(e);
+        if (e.getKeyCode()==KeyEvent.VK_ESCAPE) {
+            System.out.println("Escape wcisniety");
+            if(pauza!=true)
+                pauza= true;
+            else  pauza = false;
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(init==false)
-        {
-            paletka_.ustaw_pozycje(this.getWidth()/2,this.getHeight() - this.getHeight()/10,getWidth()/5,getHeight()/25);
-            pilka_.ustaw_pozycje(this.getWidth()/2,this.getHeight()/2,this.getHeight()/30);
-            for (int i=0;i<pos.length;i++) {
-                for (int[] p : pos) {
-                    klocki.add(new Klocek(p[0],p[1],getWidth(),getHeight()));
-                }
-            }
-            init=true;
-        }
-
-        paletka_.porusz(getWidth());
-        pilka_.porusz(getWidth());
-        sprawdzKolizje();
-
+       if(pauza==false) {
+           if (init == false) {
+               paletka_.ustaw_pozycje(this.getWidth() / 2, this.getHeight() - this.getHeight() / 10, getWidth() / 5, getHeight() / 25);
+               pilka_.ustaw_pozycje(this.getWidth() / 2, this.getHeight() / 2, this.getHeight() / 30);
+               for (int i = 0; i < pos.length; i++) {
+                   for (int[] p : pos) {
+                       klocki.add(new Klocek(p[0], p[1], getWidth(), getHeight()));
+                   }
+               }
+               init = true;
+           }
+           paletka_.porusz(getWidth());
+           pilka_.porusz(getWidth());
+           sprawdzKolizje();
+           repaint();
+       }
        // System.out.println("Szer panelu gry to: "+getWidth() +" a wys panelu gry to: "+ getHeight());
        // System.out.println("Paletka: X: "+ paletka_.getX()+" Y: "+paletka_.getY()+" szer i wys: "+paletka_.getSzer_() +" "+ paletka_.getWys_());
       //  System.out.println("Pilka: X: "+ pilka_.getX_pos()+" Y: "+pilka_.getY_pos()+" promien: "+pilka_.getPromien());
-        repaint();
     }
     public void sprawdzKolizje(){
         Rectangle rpaletka = paletka_.getBounds();
