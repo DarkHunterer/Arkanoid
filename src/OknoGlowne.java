@@ -2,15 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener  {
+public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener, ItemListener  {
     pasekWyniku pasekWyniku_ = new pasekWyniku(Color.cyan);
     panelGry panelgry_ = new panelGry(Color.white);
     private final int DELAY = 10;
     private Timer timer;
     private Boolean pauza = false;
     private Boolean graTrwa = false;
-    private MenuBar mbar;
-    private Menu menu;
+
     public OknoGlowne(){
         super();
         dodajMenu();
@@ -57,11 +56,41 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     }
 
     private void dodajMenu(){
+
+        MenuBar mbar;
+        Menu menu;
+        Menu menuPomoc = new Menu("Pomoc");
+
+        MenuItem mStart = new MenuItem("Start gry");
+        MenuItem mKoniec = new MenuItem("Koniec gry");
+        MenuItem bestScore = new MenuItem("Najlepsze wyniki");
+        MenuItem mUstawienia = new MenuItem("Ustawienia");
+        MenuItem mPomoc = new MenuItem("Zasady gry");
+        MenuItem mAutorzy = new MenuItem("O autorach");
+
         mbar = new MenuBar();
-        menu = new Menu("Dupa menu");
-        mbar.add(menu);
+        menu = new Menu("Menu");
         setMenuBar(mbar);
-        mbar.setName("Dupa");
+        mbar.add(menu);
+
+        mbar.setHelpMenu(menuPomoc);
+        mbar.add(menuPomoc);
+        menu.add(mStart);
+        menu.add(bestScore);
+        menu.add(mUstawienia);
+        menu.add(mKoniec);
+        menuPomoc.add(mPomoc);
+        menuPomoc.add(mAutorzy);
+        mbar.setName("Pasek Menu");
+
+        mKoniec.addActionListener(this);
+        mAutorzy.addActionListener(this);
+        mPomoc.addActionListener(this);
+        
+
+        mKoniec.setActionCommand("EXIT");
+        mAutorzy.setActionCommand("AUTORZY");
+        mPomoc.setActionCommand("POMOC");
     }
 
         @Override
@@ -76,25 +105,20 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
     @Override
         public void keyPressed(KeyEvent e) {
-
         panelgry_.keyPressed(e);
-        if (e.getKeyCode()==KeyEvent.VK_ESCAPE) {
-            System.out.println("Escape wcisniety");
+        if (e.getKeyCode()==KeyEvent.VK_P) {
+            System.out.println("Pauza wcisnieta");
             if(pauza!=true) {
                 pauza = true;
-                menu.setEnabled(true);
-                MenuBar a = new MenuBar();
-                this.setMenuBar(a);
+                getMenuBar().getMenu(0).setEnabled(true);
             }
             else {
                 pauza = false;
-                menu.setEnabled(false);
-                this.setMenuBar(mbar);
+                getMenuBar().getMenu(0).setEnabled(false);
             }
             panelgry_.setPauza(pauza);
             }
-
-        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -104,6 +128,17 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
            panelgry_.actionPerformed(e);
            pasekWyniku_.actionPerformed(e);
        }
+        if (e.getActionCommand()=="EXIT"){
+            this.dispose();
+        }
+        else if(e.getActionCommand()=="POMOC")
+        {
+            JOptionPane.showMessageDialog(getParent(),"KONRAD DZIWKO NIE SPIJ KURWA");
+        }
+        else if(e.getActionCommand()=="AUTORZY")
+        {
+            JOptionPane.showMessageDialog(getParent(),"Autorzy gry:\n-Daniel Rêkawek\n-Tu powinien byæ Konrad Jêdrzejczak ALE KURWA NAWET NIE SKOMPILOWAL PROJEKTU!");
+        }
            repaint();
      }
 
@@ -124,6 +159,11 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
     @Override
     public void componentHidden(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
 
     }
 }
