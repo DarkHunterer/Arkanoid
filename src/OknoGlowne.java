@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener, ItemListener  {
+public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener{
     pasekWyniku pasekWyniku_ = new pasekWyniku(Color.cyan);
     panelGry panelgry_ = new panelGry(Color.white);
     private final int DELAY = 10;
@@ -13,16 +13,15 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     public OknoGlowne(){
         super();
         dodajMenu();
-        dodajGUI();
         dodajElementy();
+        dodajGUI();
     }
     private  void dodajElementy(){
         timer = new Timer(DELAY,this);
         addKeyListener(this);
         timer.start();
-        panelgry_.addComponentListener(this);
-    }
-    private void zacznijGre(){
+        this.addComponentListener(this);
+
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -37,6 +36,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         c.gridy=1;
         c.weighty=0.95;
         add(panelgry_, c);
+    }
+    private void zacznijGre(){
         pasekWyniku_.start();
         panelgry_.start();
         graTrwa = true;
@@ -52,7 +53,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     public static void main(String [] args){
         OknoGlowne okno = new OknoGlowne();
         okno.setVisible(true);
-        okno.zacznijGre();
+
     }
 
     private void dodajMenu(){
@@ -86,15 +87,16 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         mKoniec.addActionListener(this);
         mAutorzy.addActionListener(this);
         mPomoc.addActionListener(this);
-        
+        mStart.addActionListener(this);
 
         mKoniec.setActionCommand("EXIT");
         mAutorzy.setActionCommand("AUTORZY");
         mPomoc.setActionCommand("POMOC");
+        mStart.setActionCommand("START");
     }
 
-        @Override
-        public void keyReleased(KeyEvent e) {
+    @Override
+    public void keyReleased(KeyEvent e) {
             panelgry_.keyReleased(e);
         }
 
@@ -139,17 +141,22 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         {
             JOptionPane.showMessageDialog(getParent(),"Autorzy gry:\n-Daniel Rêkawek\n-Tu powinien byæ Konrad Jêdrzejczak ALE KURWA NAWET NIE SKOMPILOWAL PROJEKTU!");
         }
+        else if(e.getActionCommand()=="START")
+        {
+            zacznijGre();
+        }
            repaint();
      }
 
     @Override
     public void componentResized(ComponentEvent e) {
-
+        System.out.println("Komponent resized");
+        panelgry_.skaluj();
     }
 
     @Override
     public void componentMoved(ComponentEvent e) {
-        panelgry_.skaluj();
+        System.out.println("Komponent moved");
     }
 
     @Override
@@ -162,8 +169,4 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-
-    }
 }

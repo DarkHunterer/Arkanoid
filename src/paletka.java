@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.text.DecimalFormat;
 
 /**
  * Created by Daniel on 02.11.2015.
@@ -56,7 +57,16 @@ public class paletka implements KeyListener {
         return y_pos;
     }
 
-    public void skaluj(int szerokosc,int wysokosc){
+    public void skaluj(int szerokosc,int wysokosc,int szer_stara, int wys_stara){
+        if(szer_!=0) {
+            double a = (double)x_pos/szer_stara;
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(4);
+           // System.out.println("PosX="+x_pos+" szerokosc:"+szerokosc+" szer_stara="+szer_stara+" b="+df.format(a));
+            x_pos=(int)(szerokosc*a);
+         //   System.out.println("Wynik dzialania to:"+(int)(szerokosc*a)+" a pos_X to:"+x_pos);
+        }
+        System.out.println("y_pos paletki to"+y_pos+"wysokosc ekranu to "+wysokosc);
         y_pos = wysokosc-wysokosc/10;
         szer_ = szerokosc/5;
         wys_ = wysokosc/25;

@@ -18,18 +18,31 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     private Boolean init = false;
     private Boolean pauza = true;
     private ArrayList<Klocek> klocki;
+    private int szer_stara;
+    private int wys_stara;
+
     public panelGry(Color color){
         this.setOpaque(true);
         this.setBackground(color);
-
     }
     public void start(){
-        paletka_ = new paletka(this.getWidth()/2,this.getHeight()/10,getWidth()/5,getHeight()/25);
-        pilka_ = new Pilka(this.getWidth()/2,this.getHeight()/2,this.getHeight()/30);
-        pos =new int[][]{{20,20},{20,40},{20,60},{20,80},{20,100},{60,20},{100,20},{140,20},{180,20}};
+        int width_ = getWidth();
+        int heigth= getHeight();
+        System.out.println("Szerokosc "+width_ +" wysokosc " +heigth);
+        paletka_ = new paletka(width_/2,heigth-heigth/10,width_/5,heigth/25);
+        pilka_ = new Pilka(width_/2,heigth/2,heigth/30);
+        pos =new int[][]{{20,20},{20,40},{20,60},{20,80},{20,100},{20,120},{20,140},{20,160},{60,20},{100,20},{140,20},{180,20},{220,20},{260,20}};
         klocki = new ArrayList<>();
         pilka_.setPredkosc(2);
+        for (int i = 0; i < pos.length; i++) {
+            for (int[] p : pos) {
+                klocki.add(new Klocek(p[0], p[1], width_, heigth));
+            }
+           // System.out.println(width_);
+        }
+        skaluj();
         pauza=false;
+        init = true;
     }
     private void rysuj_paletke(Graphics g){
         g.drawRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
@@ -74,17 +87,14 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
        if(pauza!=true) {
            if (init == false) {
-               paletka_.ustaw_pozycje(this.getWidth() / 2, this.getHeight() - this.getHeight() / 10, getWidth() / 5, getHeight() / 25);
-               pilka_.ustaw_pozycje(this.getWidth() / 2, this.getHeight() / 2, this.getHeight() / 30);
-               for (int i = 0; i < pos.length; i++) {
-                   for (int[] p : pos) {
-                       klocki.add(new Klocek(p[0], p[1], getWidth(), getHeight()));
-                   }
-               }
-               init = true;
+               //paletka_.ustaw_pozycje(this.getWidth() / 2, this.getHeight() - this.getHeight() / 10, getWidth() / 5, getHeight() / 25);
+               //pilka_.ustaw_pozycje(this.getWidth() / 2, this.getHeight() / 2, this.getHeight() / 30);
+               //init = true;
            }
+           szer_stara = getWidth();
+           wys_stara = getHeight();
            paletka_.porusz(getWidth());
-           pilka_.porusz(getWidth());
+           pilka_.porusz(getWidth(),getHeight());
            sprawdzKolizje();
            repaint();
        }
@@ -101,6 +111,8 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
 
             if(rklocek.intersects(rpilka))
             {
+                System.out.println("Zderzenie z klockiem");
+                //pilka_.setY_pos((kl.getPos_Y()+ kl.getSzer()));
                 pilka_.odwroc_Y();
             }
         }
@@ -112,13 +124,25 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         {
             pilka_.odwroc_X();
         }
-        else if((pilka_.getY_pos()>=getHeight()-pilka_.getPromien())||(pilka_.getY_pos()<=0)){
+        else if((pilka_.getY_pos()+pilka_.getPromien()>=getHeight())) {
+            pilka_.odwroc_Y();
+            pilka_.setY_pos(getHeight()-pilka_.getPromien());
+            JOptionPane.showMessageDialog(getParent(),"GAME OVER!");
+        }
+        else if(pilka_.getY_pos()<=0){
             pilka_.odwroc_Y();
         }
-    }
+
+        }
     public void skaluj()
     {
-        paletka_.skaluj(getWidth(),getHeight());
-        pilka_.skaluj(getWidth(),getHeight());
+        if(init==true) {
+            paletka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
+            pilka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara,paletka_.getSzer_());
+            for (Klocek k : klocki) {
+                k.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
+            }
+            repaint();
+        }
     }
 }
