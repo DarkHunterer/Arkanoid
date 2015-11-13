@@ -141,11 +141,11 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
         else if(e.getActionCommand().equals("POMOC"))
         {
-            JOptionPane.showMessageDialog(getParent(),"KONRAD DZIWKO NIE SPIJ KURWA");
+            JOptionPane.showMessageDialog(getParent(),"Serio...? Pilka zbija klocki.\nSterujesz strzalkami.\nW czym tu potrzeba pomocy?");
         }
         else if(e.getActionCommand().equals("AUTORZY"))
         {
-            JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel Rêkawek\n-Tu powinien byæ Konrad Jêdrzejczak ALE KURWA NAWET NIE SKOMPILOWAL PROJEKTU!");
+            JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel Rêkawek\n-Konrad Jêdrzejczak!");
         }
         else if(e.getActionCommand().equals("START"))
         {
