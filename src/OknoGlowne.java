@@ -3,23 +3,29 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener{
-    pasekWyniku pasekWyniku_ = new pasekWyniku(Color.cyan);
-    panelGry panelgry_ = new panelGry(Color.white);
+    pasekWyniku pasekWyniku_ = new pasekWyniku(Color.red);
+    panelGry panelgry_ = new panelGry(Color.red);
     private final int DELAY = 10;
-    private Timer timer;
+    private Timer timerGlowny;
     private Boolean pauza = false;
     private Boolean graTrwa = false;
 
     public OknoGlowne(){
-        super();
+      //  super();
         dodajMenu();
         dodajElementy();
         dodajGUI();
     }
     private  void dodajElementy(){
-        timer = new Timer(DELAY,this);
+        Dimension rozmiar_okna = new Dimension(500,500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setPreferredSize(rozmiar_okna);
+        this.getContentPane().setBackground(Color.BLUE);
+
+        timerGlowny = new Timer(DELAY,this);
         addKeyListener(this);
-        timer.start();
+        timerGlowny.setActionCommand("TIMER_MAIN_TICK_OFF");
+        timerGlowny.start();
         this.addComponentListener(this);
 
         this.setLayout(new GridBagLayout());
@@ -39,21 +45,19 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     }
     private void zacznijGre(){
         pasekWyniku_.start();
-        panelgry_.start();
+        panelgry_.setVisible(true);
         graTrwa = true;
+        panelgry_.start();
+        timerGlowny.setActionCommand("TIMER_MAIN_TICK");
     }
     private void dodajGUI(){
-        Dimension rozmiar_okna = new Dimension(500,500);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setPreferredSize(rozmiar_okna);
-        this.getContentPane().setBackground(Color.BLUE);
         this.pack();
     }
     public static void main(String [] args){
         OknoGlowne okno = new OknoGlowne();
         okno.setVisible(true);
-
+        okno.panelgry_.setVisible(false);
     }
 
     private void dodajMenu(){
@@ -110,7 +114,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         panelgry_.keyPressed(e);
         if (e.getKeyCode()==KeyEvent.VK_P) {
             System.out.println("Pauza wcisnieta");
-            if(pauza!=true) {
+            if(!pauza) {
                 pauza = true;
                 getMenuBar().getMenu(0).setEnabled(true);
             }
@@ -126,22 +130,23 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     public void actionPerformed(ActionEvent e) {
        // System.out.println("Szer okna to: "+getWidth() +" a wys okna: "+ getHeight());
        // System.out.println("Szer panelu gry to: "+panelgry_.getWidth() +" a wys panelu gry to: "+ panelgry_.getHeight());
-       if(graTrwa!=false) {
+
+        if(!graTrwa) {
            panelgry_.actionPerformed(e);
            pasekWyniku_.actionPerformed(e);
        }
-        if (e.getActionCommand()=="EXIT"){
+        if (e.getActionCommand().equals("EXIT")){
             this.dispose();
         }
-        else if(e.getActionCommand()=="POMOC")
+        else if(e.getActionCommand().equals("POMOC"))
         {
             JOptionPane.showMessageDialog(getParent(),"KONRAD DZIWKO NIE SPIJ KURWA");
         }
-        else if(e.getActionCommand()=="AUTORZY")
+        else if(e.getActionCommand().equals("AUTORZY"))
         {
-            JOptionPane.showMessageDialog(getParent(),"Autorzy gry:\n-Daniel Rêkawek\n-Tu powinien byæ Konrad Jêdrzejczak ALE KURWA NAWET NIE SKOMPILOWAL PROJEKTU!");
+            JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel Rêkawek\n-Tu powinien byæ Konrad Jêdrzejczak ALE KURWA NAWET NIE SKOMPILOWAL PROJEKTU!");
         }
-        else if(e.getActionCommand()=="START")
+        else if(e.getActionCommand().equals("START"))
         {
             zacznijGre();
         }

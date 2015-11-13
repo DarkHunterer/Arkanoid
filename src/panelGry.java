@@ -20,17 +20,25 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     private ArrayList<Klocek> klocki;
     private int szer_stara;
     private int wys_stara;
+    private Timer timer;
+    private final int DELAY = 10;
+
 
     public panelGry(Color color){
         this.setOpaque(true);
         this.setBackground(color);
     }
-    public void start(){
+
+        public void start(){
+            /*timer = new Timer(DELAY,this);
+            addKeyListener(this);
+            timer.start();
+            */
         int width_ = getWidth();
         int heigth= getHeight();
         System.out.println("Szerokosc "+width_ +" wysokosc " +heigth);
         paletka_ = new paletka(width_/2,heigth-heigth/10,width_/5,heigth/25);
-        pilka_ = new Pilka(width_/2,heigth/2,heigth/30);
+        pilka_ = new Pilka(width_/2,heigth/2,heigth/40);
         pos =new int[][]{{20,20},{20,40},{20,60},{20,80},{20,100},{20,120},{20,140},{20,160},{60,20},{100,20},{140,20},{180,20},{220,20},{260,20}};
         klocki = new ArrayList<>();
         pilka_.setPredkosc(2);
@@ -40,7 +48,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             }
            // System.out.println(width_);
         }
-        skaluj();
+        //skaluj();
         pauza=false;
         init = true;
     }
@@ -85,19 +93,20 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-       if(pauza!=true) {
-           if (init == false) {
-               //paletka_.ustaw_pozycje(this.getWidth() / 2, this.getHeight() - this.getHeight() / 10, getWidth() / 5, getHeight() / 25);
-               //pilka_.ustaw_pozycje(this.getWidth() / 2, this.getHeight() / 2, this.getHeight() / 30);
-               //init = true;
-           }
-           szer_stara = getWidth();
-           wys_stara = getHeight();
-           paletka_.porusz(getWidth());
-           pilka_.porusz(getWidth(),getHeight());
-           sprawdzKolizje();
-           repaint();
-       }
+
+        if (e.getActionCommand().equals("TIMER_MAIN_TICK")) {
+         //   System.out.println(e.getActionCommand());
+            if (!pauza) {
+                if (init) {
+                    szer_stara = getWidth();
+                    wys_stara = getHeight();
+                    paletka_.porusz(getWidth());
+                    pilka_.porusz(getWidth(), getHeight());
+                    sprawdzKolizje();
+                    repaint();
+                }
+            }
+        }
        // System.out.println("Szer panelu gry to: "+getWidth() +" a wys panelu gry to: "+ getHeight());
        // System.out.println("Paletka: X: "+ paletka_.getX()+" Y: "+paletka_.getY()+" szer i wys: "+paletka_.getSzer_() +" "+ paletka_.getWys_());
       //  System.out.println("Pilka: X: "+ pilka_.getX_pos()+" Y: "+pilka_.getY_pos()+" promien: "+pilka_.getPromien());
@@ -136,7 +145,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         }
     public void skaluj()
     {
-        if(init==true) {
+        if(init) {
             paletka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
             pilka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara,paletka_.getSzer_());
             for (Klocek k : klocki) {

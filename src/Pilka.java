@@ -32,7 +32,6 @@ public class Pilka {
         x_pos = x_start;
         y_pos = y_start;
         promien=prom;
-        promien= prom;
     }
     public void porusz(int maxX,int maxY){
         x_pos += predkosc*dx;
@@ -85,8 +84,7 @@ public class Pilka {
             y_pos=(int)(wysokosc*b);
             System.out.println("Wynik dzialania to:"+(int)(szerokosc*a)+" a pos_X to:"+x_pos);
         }
-
-        promien = szer_paletki/4;
+        promien = szerokosc/40;
     }
 }
 
