@@ -136,7 +136,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
            pasekWyniku_.actionPerformed(e);
        }
         if (e.getActionCommand().equals("EXIT")){
-            this.dispose();
+            //this.dispose(); to dziala ciekawie
+            System.exit(1);
         }
         else if(e.getActionCommand().equals("POMOC"))
         {
