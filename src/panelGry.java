@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class panelGry extends JPanel implements ActionListener, KeyListener {
 
-    private int[][] pos;
+    private int[][] bricksPos;
     private paletka paletka_;
     private Pilka pilka_;
     private Boolean init = false;
@@ -34,25 +34,44 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             addKeyListener(this);
             timer.start();
             */
-        int width_ = getWidth();
+        int width = getWidth();
         int heigth= getHeight();
-        System.out.println("Szerokosc "+width_ +" wysokosc " +heigth);
-        paletka_ = new paletka(width_/2,heigth-heigth/10,width_/5,heigth/25);
-        pilka_ = new Pilka(width_/2,heigth/2,heigth/40);
-        pos =new int[][]{{20,20},{20,40},{20,60},{20,80},{20,100},{20,120},{20,140},{20,160},{60,20},{100,20},{140,20},{180,20},{220,20},{260,20}};
-        klocki = new ArrayList<>();
+        System.out.println("Szerokosc "+width +" wysokosc " +heigth);
+        paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
+        pilka_ = new Pilka(width/2,heigth/2,heigth/40);
         pilka_.setPredkosc(2);
-        for (int i = 0; i < pos.length; i++) {
-            for (int[] p : pos) {
-                klocki.add(new Klocek(p[0], p[1], width_, heigth));
-            }
-           // System.out.println(width_);
-        }
-        //skaluj();
+        dodajKlocki(width,heigth);
         pauza=false;
         init = true;
     }
+    private void dodajKlocki(int width,int heigth){
+        bricksPos =new int[][]{
+                {6,6,6,0,1,0,0,1,},
+                {6,0,6,0,2,0,0,2,},
+                {6,6,6,0,3,3,3,3},
+                {6,0,0,0,4,0,0,4}
+        };
+        int X=width/20,Y=heigth/10;
+        System.out.println("Tablica klockow. LENGTH: "+bricksPos.length);
+        klocki = new ArrayList<>();
+            for (int[] row : bricksPos) {
+                for (int col :row){
+                    if(col!=0) {
+                        klocki.add(new Klocek(X, Y, width, heigth,col));
+                    }
+                    X += klocki.get(0).getSzer() + width / 20;
+                }
+                X=width/20;
+                Y+=klocki.get(0).getWys()+heigth/20;
+            }
+
+        for(Klocek kl :klocki)
+        {
+            System.out.println(kl.getBounds());
+        }
+    }
     private void rysuj_paletke(Graphics g){
+        g.setColor(Color.red);
         g.drawRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
         g.fillRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
     }
@@ -62,11 +81,13 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         g.fillOval(pilka_.getX_pos(), pilka_.getY_pos(), pilka_.getPromien(), pilka_.getPromien());
     }
     private void rysuj_klocki(Graphics g){
-        g.setColor(Color.red);
         for(Klocek k :klocki) {
-            g.drawRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
-            g.fillRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
-        }
+            g.setColor(k.getKolor());
+            if(k.getWytrzymalosc()!=0) {
+                g.drawRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
+                g.fillRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
+            }
+            }
     }
     @Override
     public void paint(Graphics g) {
@@ -115,6 +136,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         Rectangle rpaletka = paletka_.getBounds();
         Rectangle rpilka = pilka_.getBounds();
 
+        Klocek temp = new Klocek(0,0,0,0,0);
         for(Klocek kl : klocki){
             Rectangle rklocek = kl.getBounds();
 
@@ -123,9 +145,13 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
                 System.out.println("Zderzenie z klockiem");
                 //pilka_.setY_pos((kl.getPos_Y()+ kl.getSzer()));
                 pilka_.odwroc_Y();
+                kl.kolizja();
+                if (kl.getWytrzymalosc()==0){
+                    temp = kl;
+                }
             }
         }
-
+        klocki.remove(temp);
         if(rpaletka.intersects(rpilka)){
             pilka_.odwroc_Y();
         }

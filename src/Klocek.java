@@ -9,13 +9,27 @@ public class Klocek {
     private int pos_Y;
     private int szer;
     private int wys;
-    private int wytrzymalosc =5;
+    private int wytrzymalosc;
     private Color kolor=Color.RED;
-    Klocek(int x, int y, int szer_ekr, int wys_ekr){
+    Klocek(int x, int y, int szer_ekr, int wys_ekr,int zycie){
         pos_X = x;
         pos_Y = y;
         szer = szer_ekr/15;
         wys = wys_ekr/30;
+        wytrzymalosc=zycie;
+        switch (zycie){
+            case 1: kolor=Color.RED;
+                break;
+            case 2: kolor=Color.black;
+                break;
+            case 3:kolor=Color.blue;
+                break;
+            case 4:kolor=Color.orange;
+                break;
+            case 5:kolor=Color.green;
+                break;
+            default:kolor=Color.magenta;
+        }
     }
 
     public Color getKolor() {
@@ -45,8 +59,8 @@ public class Klocek {
             double b = (double)pos_Y/wys_stara;
             DecimalFormat df = new DecimalFormat();
             df.setMaximumFractionDigits(4);
-            // System.out.println("PosX="+x_pos+" szerokosc:"+szerokosc+" szer_stara="+szer_stara+" b="+df.format(a));
-             System.out.println("PosY="+pos_Y+" szerokosc:"+szerokosc+" szer_stara="+szer_stara+" b="+df.format(b));
+             System.out.println("PosX="+pos_X+" szerokosc:"+szerokosc+" szer_stara="+szer_stara+" b="+df.format(a));
+             System.out.println("PosY="+pos_Y+" wysokosc:"+wysokosc+" wys_stara="+wys_stara+" b="+df.format(b));
             pos_X=(int)(szerokosc*a);
             pos_Y =(int)(wysokosc*b);
             //   System.out.println("Wynik dzialania to:"+(int)(szerokosc*a)+" a pos_X to:"+x_pos);
@@ -55,6 +69,33 @@ public class Klocek {
 
         szer = szerokosc/15;
         wys = wysokosc/30;
+    }
+    public void kolizja(){
+        System.out.println("Nastapila kolizja z klockiem. Wytrzymalosc="+wytrzymalosc);
+        if(wytrzymalosc>0) {
+            wytrzymalosc--;
+        }
+            else{
+            try {
+                finalize();
+            }catch (Throwable e){
+                System.out.println(e.toString());
+            }
+
+        }
+        switch (wytrzymalosc){
+            case 1: kolor=Color.RED;
+                break;
+            case 2: kolor=Color.black;
+                break;
+            case 3:kolor=Color.blue;
+                break;
+            case 4:kolor=Color.orange;
+                break;
+            case 5:kolor=Color.green;
+                break;
+            default:kolor=Color.magenta;
+        }
     }
     public int getWytrzymalosc() {
         return wytrzymalosc;

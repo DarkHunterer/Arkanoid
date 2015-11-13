@@ -20,7 +20,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         Dimension rozmiar_okna = new Dimension(500,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setPreferredSize(rozmiar_okna);
-        this.getContentPane().setBackground(Color.BLUE);
+        this.getContentPane().setBackground(Color.DARK_GRAY);
 
         timerGlowny = new Timer(DELAY,this);
         addKeyListener(this);

@@ -14,6 +14,7 @@ public class paletka implements KeyListener {
     private int szer_;
     private int wys_;
     private int predkosc;
+    private Color kolor;
 
     private int dx;
     private int dy;
@@ -25,6 +26,15 @@ public class paletka implements KeyListener {
         wys_ = wysokosc;
         predkosc =1;
     }
+
+    public Color getKolor() {
+        return kolor;
+    }
+
+    public void setKolor(Color kolor) {
+        this.kolor = kolor;
+    }
+
     public void ustaw_pozycje(int x_start,int y_start,int szerokosc,int wysokosc){
         x_pos = x_start;
         y_pos = y_start;
