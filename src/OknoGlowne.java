@@ -12,6 +12,22 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private int width;
     private int heigth;
 
+    private String command_timer_off;
+    private String command_timer_on;
+    private String command_exit;
+    private String command_authors;
+    private String command_help;
+    private String command_start;
+
+    private String string_menuPomoc_title;
+    private String string_start;
+    private String string_end;
+    private String string_bestScore;
+    private String string_config;
+    private String string_rules;
+    private String string_authors;
+    private String string_menu;
+    private String string_menu_title;
     //
     pasekWyniku pasekWyniku_;
     panelGry panelgry_;
@@ -31,16 +47,34 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
     private void wczytaj_config(){
         kolor_background = config.OknoGlowne_kolor_background;
-         kolor_pasekWyniku = config.OknoGlowne_kolor_pasekWyniku;
-         kolor_panelGry = config.OknoGlowne_kolor_panelGry;
-         width = config.OknoGlowne_width;
-         heigth = config.OknoGlowne_heigth;
+        kolor_pasekWyniku = config.OknoGlowne_kolor_pasekWyniku;
+        kolor_panelGry = config.OknoGlowne_kolor_panelGry;
+        width = config.OknoGlowne_width;
+        heigth = config.OknoGlowne_heigth;
+        command_timer_off = config.OknoGlowne_command_timer_off;
+        command_timer_on = config.OknoGlowne_command_timer_on;
+        command_authors= config.OknoGlowne_command_authors;
+        command_exit=config.OknoGlowne_command_exit;
+        command_help=config.OknoGlowne_command_help;
+        command_start=config.OknoGlowne_command_start;
+
+        string_menuPomoc_title=config.OknoGlowne_string_menuPomoc_title;
+        string_start=config.OknoGlowne_string_start;
+        string_end=config.OknoGlowne_string_end;
+        string_bestScore=config.OknoGlowne_string_bestScore;
+        string_config=config.OknoGlowne_string_config;
+        string_rules=config.OknoGlowne_string_rules;
+        string_authors=config.OknoGlowne_string_authors;
+        string_menu=config.OknoGlowne_string_menu;
+        string_menu_title=config.OknoGlowne_string_menu_title;
+
+
 
         DELAY = config.OknoGlowne_Delay;
     }
     private  void dodajElementy(){
         panelgry_ = new panelGry(kolor_panelGry);
-        pasekWyniku_ = new pasekWyniku(kolor_background);
+        pasekWyniku_ = new pasekWyniku(kolor_pasekWyniku);
 
         Dimension rozmiar_okna = new Dimension(width,heigth);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +83,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
         timerGlowny = new Timer(DELAY,this);
         addKeyListener(this);
-        timerGlowny.setActionCommand("TIMER_MAIN_TICK_OFF");
+        timerGlowny.setActionCommand(command_timer_off);
         timerGlowny.start();
         this.addComponentListener(this);
 
@@ -74,7 +108,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             panelgry_.setVisible(true);
             graTrwa = true;
             panelgry_.start();
-            timerGlowny.setActionCommand("TIMER_MAIN_TICK");
+            timerGlowny.setActionCommand(command_timer_on);
      //  }
       //  else
       //      JOptionPane.showMessageDialog(getParent(),"Nie wczytano ustawien");
@@ -93,17 +127,17 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
         MenuBar mbar;
         Menu menu;
-        Menu menuPomoc = new Menu("Pomoc");
+        Menu menuPomoc = new Menu(string_menuPomoc_title);
 
-        MenuItem mStart = new MenuItem("Start gry");
-        MenuItem mKoniec = new MenuItem("Koniec gry");
-        MenuItem bestScore = new MenuItem("Najlepsze wyniki");
-        MenuItem mUstawienia = new MenuItem("Ustawienia");
-        MenuItem mPomoc = new MenuItem("Zasady gry");
-        MenuItem mAutorzy = new MenuItem("O autorach");
+        MenuItem mStart = new MenuItem(string_start);
+        MenuItem mKoniec = new MenuItem(string_end);
+        MenuItem bestScore = new MenuItem(string_bestScore);
+        MenuItem mUstawienia = new MenuItem(string_config);
+        MenuItem mPomoc = new MenuItem(string_rules);
+        MenuItem mAutorzy = new MenuItem(string_authors);
 
         mbar = new MenuBar();
-        menu = new Menu("Menu");
+        menu = new Menu(string_menu);
         setMenuBar(mbar);
         mbar.add(menu);
 
@@ -115,17 +149,17 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         menu.add(mKoniec);
         menuPomoc.add(mPomoc);
         menuPomoc.add(mAutorzy);
-        mbar.setName("Pasek Menu");
+        mbar.setName(string_menu_title);
 
         mKoniec.addActionListener(this);
         mAutorzy.addActionListener(this);
         mPomoc.addActionListener(this);
         mStart.addActionListener(this);
 
-        mKoniec.setActionCommand("EXIT");
-        mAutorzy.setActionCommand("AUTORZY");
-        mPomoc.setActionCommand("POMOC");
-        mStart.setActionCommand("START");
+        mKoniec.setActionCommand(command_exit);
+        mAutorzy.setActionCommand(command_authors);
+        mPomoc.setActionCommand(command_help);
+        mStart.setActionCommand(command_start);
     }
 
     @Override
