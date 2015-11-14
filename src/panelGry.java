@@ -21,7 +21,6 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     private int szer_stara;
     private int wys_stara;
     private Timer timer;
-    private final int DELAY = 10;
 
 
     public panelGry(Color color){
@@ -30,10 +29,6 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
 
         public void start(){
-            /*timer = new Timer(DELAY,this);
-            addKeyListener(this);
-            timer.start();
-            */
         int width = getWidth();
         int heigth= getHeight();
         System.out.println("Szerokosc "+width +" wysokosc " +heigth);

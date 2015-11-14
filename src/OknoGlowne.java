@@ -3,9 +3,18 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener{
-    pasekWyniku pasekWyniku_ = new pasekWyniku(Color.red);
-    panelGry panelgry_ = new panelGry(Color.red);
-    private final int DELAY = 10;
+    //Wszystko to idzie do konfigu
+    private static Data konfig = new Data();
+    private Color kolor_pasekWyniku;
+    private Color kolor_panelGry;
+    private Color kolor_background;
+    private int width;
+    private int heigth;
+
+    //
+    pasekWyniku pasekWyniku_;
+    panelGry panelgry_;
+    private int DELAY;
     private Timer timerGlowny;
     private Boolean pauza = false;
     private Boolean graTrwa = false;
@@ -13,15 +22,29 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
     public OknoGlowne(){
       //  super();
-        dodajMenu();
+        wczytaj_config();
         dodajElementy();
+        dodajMenu();
         dodajGUI();
     }
+
+    private void wczytaj_config(){
+        kolor_background = konfig.OknoGlowne_kolor_background;
+         kolor_pasekWyniku = konfig.OknoGlowne_kolor_pasekWyniku;
+         kolor_panelGry = konfig.OknoGlowne_kolor_panelGry;
+         width = konfig.OknoGlowne_width;
+         heigth = konfig.OknoGlowne_heigth;
+
+        DELAY = konfig.OknoGlowne_Delay;
+    }
     private  void dodajElementy(){
-        Dimension rozmiar_okna = new Dimension(500,500);
+        panelgry_ = new panelGry(kolor_panelGry);
+        pasekWyniku_ = new pasekWyniku(kolor_background);
+
+        Dimension rozmiar_okna = new Dimension(width,heigth);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setPreferredSize(rozmiar_okna);
-        this.getContentPane().setBackground(Color.DARK_GRAY);
+        this.getContentPane().setBackground(kolor_background);
 
         timerGlowny = new Timer(DELAY,this);
         addKeyListener(this);
