@@ -46,10 +46,10 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
     private void dodajKlocki(int width,int heigth){
         bricksPos =new int[][]{
-                {6,6,6,0,1,0,0,1,},
-                {6,0,6,0,2,0,0,2,},
-                {6,6,6,0,3,3,3,3},
-                {6,0,0,0,4,0,0,4}
+                {6,6,6,0,1,0,0,1,0,1,2,3,4},
+                {6,0,6,0,2,0,0,2,0,4,3,2,1},
+                {6,6,6,0,3,3,3,3,0,4,1,3,2},
+                {6,0,0,0,4,0,0,4,0,3,4,2,1}
         };
         int X=width/20,Y=heigth/10;
         System.out.println("Tablica klockow. LENGTH: "+bricksPos.length);
@@ -59,10 +59,10 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
                     if(col!=0) {
                         klocki.add(new Klocek(X, Y, width, heigth,col));
                     }
-                    X += klocki.get(0).getSzer() + width / 20;
+                    X += klocki.get(0).getSzer();
                 }
                 X=width/20;
-                Y+=klocki.get(0).getWys()+heigth/20;
+                Y+=klocki.get(0).getWys();
             }
 
         for(Klocek kl :klocki)
@@ -74,11 +74,14 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.red);
         g.drawRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
         g.fillRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
+
     }
     private void rysuj_pilke(Graphics g){
         g.setColor(Color.green);
         g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getPromien(),pilka_.getPromien());
         g.fillOval(pilka_.getX_pos(), pilka_.getY_pos(), pilka_.getPromien(), pilka_.getPromien());
+        g.setColor(Color.white);
+        g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getPromien(),pilka_.getPromien());
     }
     private void rysuj_klocki(Graphics g){
         for(Klocek k :klocki) {
@@ -86,6 +89,8 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             if(k.getWytrzymalosc()!=0) {
                 g.drawRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
                 g.fillRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
+                g.setColor(Color.black);
+                g.drawRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
             }
             }
     }
@@ -165,6 +170,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             JOptionPane.showMessageDialog(getParent(),"GAME OVER!");
         }
         else if(pilka_.getY_pos()<=0){
+            pilka_.setY_pos(1);
             pilka_.odwroc_Y();
         }
 

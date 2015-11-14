@@ -9,6 +9,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private Timer timerGlowny;
     private Boolean pauza = false;
     private Boolean graTrwa = false;
+    private Boolean init = false;
 
     public OknoGlowne(){
       //  super();
@@ -44,11 +45,15 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         add(panelgry_, c);
     }
     private void zacznijGre(){
-        pasekWyniku_.start();
-        panelgry_.setVisible(true);
-        graTrwa = true;
-        panelgry_.start();
-        timerGlowny.setActionCommand("TIMER_MAIN_TICK");
+     //   if(init) {
+            pasekWyniku_.start();
+            panelgry_.setVisible(true);
+            graTrwa = true;
+            panelgry_.start();
+            timerGlowny.setActionCommand("TIMER_MAIN_TICK");
+     //  }
+      //  else
+      //      JOptionPane.showMessageDialog(getParent(),"Nie wczytano ustawien");
     }
     private void dodajGUI(){
 
