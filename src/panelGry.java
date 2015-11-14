@@ -1,3 +1,5 @@
+import javafx.scene.shape.Circle;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,8 +22,6 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     private ArrayList<Klocek> klocki;
     private int szer_stara;
     private int wys_stara;
-    private Timer timer;
-
 
     public panelGry(Color color){
         this.setOpaque(true);
@@ -60,10 +60,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
                     if(row[i]!=0) {
                         klocki.add(new Klocek(X, Y, width, heigth,row[i]));
                     }
-                    else if(i==0&&klocki.isEmpty()) {
-                        klocki.add(new Klocek(X, Y, width, heigth,0));
-                    }
-                    X += klocki.get(0).getSzer();
+                    X += getWidth()/15;
                 }
                 X=width/20;
                 Y+=klocki.get(0).getWys();

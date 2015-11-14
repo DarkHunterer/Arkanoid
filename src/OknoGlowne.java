@@ -12,12 +12,13 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private int width;
     private int heigth;
 
-    private String command_timer_off;
-    private String command_timer_on;
-    private String command_exit;
-    private String command_authors;
-    private String command_help;
-    private String command_start;
+    private String string_command_timer_off;
+    private String string_command_timer_on;
+    private String string_command_exit;
+    private String string_command_authors;
+    private String string_command_help;
+    private String string_command_start;
+    private String string_command_settings;
 
     private String string_menuPomoc_title;
     private String string_start;
@@ -51,12 +52,14 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         kolor_panelGry = config.OknoGlowne_kolor_panelGry;
         width = config.OknoGlowne_width;
         heigth = config.OknoGlowne_heigth;
-        command_timer_off = config.OknoGlowne_command_timer_off;
-        command_timer_on = config.OknoGlowne_command_timer_on;
-        command_authors= config.OknoGlowne_command_authors;
-        command_exit=config.OknoGlowne_command_exit;
-        command_help=config.OknoGlowne_command_help;
-        command_start=config.OknoGlowne_command_start;
+
+        string_command_timer_off = config.OknoGlowne_command_timer_off;
+        string_command_timer_on = config.OknoGlowne_command_timer_on;
+        string_command_authors = config.OknoGlowne_command_authors;
+        string_command_exit =config.OknoGlowne_command_exit;
+        string_command_help =config.OknoGlowne_command_help;
+        string_command_start =config.OknoGlowne_command_start;
+        string_command_settings = config.OknoGlowne_command_settings;
 
         string_menuPomoc_title=config.OknoGlowne_string_menuPomoc_title;
         string_start=config.OknoGlowne_string_start;
@@ -83,7 +86,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
         timerGlowny = new Timer(DELAY,this);
         addKeyListener(this);
-        timerGlowny.setActionCommand(command_timer_off);
+        timerGlowny.setActionCommand(string_command_timer_off);
         timerGlowny.start();
         this.addComponentListener(this);
 
@@ -103,15 +106,15 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         add(panelgry_, c);
     }
     private void zacznijGre(){
-     //   if(init) {
+        if(init) {
             pasekWyniku_.start();
             panelgry_.setVisible(true);
             graTrwa = true;
             panelgry_.start();
-            timerGlowny.setActionCommand(command_timer_on);
-     //  }
-      //  else
-      //      JOptionPane.showMessageDialog(getParent(),"Nie wczytano ustawien");
+            timerGlowny.setActionCommand(string_command_timer_on);
+       }
+        else
+            JOptionPane.showMessageDialog(getParent(),"Nie wczytano ustawien");
     }
     private void dodajGUI(){
 
@@ -151,15 +154,17 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         menuPomoc.add(mAutorzy);
         mbar.setName(string_menu_title);
 
+        mKoniec.setActionCommand(string_command_exit);
+        mAutorzy.setActionCommand(string_command_authors);
+        mUstawienia.setActionCommand(string_command_settings);
+        mPomoc.setActionCommand(string_command_help);
+        mStart.setActionCommand(string_command_start);
+
         mKoniec.addActionListener(this);
         mAutorzy.addActionListener(this);
         mPomoc.addActionListener(this);
         mStart.addActionListener(this);
-
-        mKoniec.setActionCommand(command_exit);
-        mAutorzy.setActionCommand(command_authors);
-        mPomoc.setActionCommand(command_help);
-        mStart.setActionCommand(command_start);
+        mUstawienia.addActionListener(this);
     }
 
     @Override
@@ -198,21 +203,35 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
            panelgry_.actionPerformed(e);
            pasekWyniku_.actionPerformed(e);
        }
-        if (e.getActionCommand().equals("EXIT")){
+        if (e.getActionCommand().equals(string_command_exit)){
             //this.dispose(); to dziala ciekawie
             System.exit(1);
         }
-        else if(e.getActionCommand().equals("POMOC"))
+        else if(e.getActionCommand().equals(string_command_help))
         {
             JOptionPane.showMessageDialog(getParent(),"Serio...? Pilka zbija klocki.\nSterujesz strzalkami.\nW czym tu potrzeba pomocy?");
         }
-        else if(e.getActionCommand().equals("AUTORZY"))
+        else if(e.getActionCommand().equals(string_command_authors))
         {
             JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel R�kawek\n-Konrad J�drzejczak!");
         }
-        else if(e.getActionCommand().equals("START"))
+        else if(e.getActionCommand().equals(string_command_start))
         {
             zacznijGre();
+        }
+        else if (e.getActionCommand().equals(string_command_settings)){
+            System.out.println("Opcje ustawien");
+            JFileChooser chooser = new JFileChooser();
+            int returnVal = chooser.showOpenDialog(getParent());
+            if(returnVal == JFileChooser.APPROVE_OPTION) {
+                config.wczytaj_config(chooser.getSelectedFile().toString());
+                System.out.println(chooser.getSelectedFile().toString());
+                config.zapisz_config();
+                init = true;
+            }
+            else {
+                JOptionPane.showMessageDialog(getParent(),"Blad otwarcia pliku");
+            }
         }
            repaint();
      }
