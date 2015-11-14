@@ -2,9 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+
 public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener{
     //Wszystko to idzie do konfigu
-    private static Data konfig = new Data();
+    private  Data config = new Data();
     private Color kolor_pasekWyniku;
     private Color kolor_panelGry;
     private Color kolor_background;
@@ -29,13 +30,13 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     }
 
     private void wczytaj_config(){
-        kolor_background = konfig.OknoGlowne_kolor_background;
-         kolor_pasekWyniku = konfig.OknoGlowne_kolor_pasekWyniku;
-         kolor_panelGry = konfig.OknoGlowne_kolor_panelGry;
-         width = konfig.OknoGlowne_width;
-         heigth = konfig.OknoGlowne_heigth;
+        kolor_background = config.OknoGlowne_kolor_background;
+         kolor_pasekWyniku = config.OknoGlowne_kolor_pasekWyniku;
+         kolor_panelGry = config.OknoGlowne_kolor_panelGry;
+         width = config.OknoGlowne_width;
+         heigth = config.OknoGlowne_heigth;
 
-        DELAY = konfig.OknoGlowne_Delay;
+        DELAY = config.OknoGlowne_Delay;
     }
     private  void dodajElementy(){
         panelgry_ = new panelGry(kolor_panelGry);
@@ -173,7 +174,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
         else if(e.getActionCommand().equals("AUTORZY"))
         {
-            JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel Rêkawek\n-Konrad Jêdrzejczak!");
+            JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel Rï¿½kawek\n-Konrad Jï¿½drzejczak!");
         }
         else if(e.getActionCommand().equals("START"))
         {

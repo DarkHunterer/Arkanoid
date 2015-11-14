@@ -18,6 +18,12 @@ public class Klocek {
         wys = wys_ekr/30;
         wytrzymalosc=zycie;
         switch (zycie){
+            case 0: try{
+                this.finalize();
+            }catch (Throwable e){
+                System.out.println(e.toString());
+            }
+                break;
             case 1: kolor=Color.RED;
                 break;
             case 2: kolor=Color.black;

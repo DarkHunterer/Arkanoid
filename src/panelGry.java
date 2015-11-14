@@ -41,18 +41,27 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
     private void dodajKlocki(int width,int heigth){
         bricksPos =new int[][]{
-                {6,6,6,0,1,0,0,1,0,1,2,3,4},
-                {6,0,6,0,2,0,0,2,0,4,3,2,1},
-                {6,6,6,0,3,3,3,3,0,4,1,3,2},
-                {6,0,0,0,4,0,0,4,0,3,4,2,1}
+                {0,0,0,4,5,4,0,0,0,0,0,1},
+                {0,0,0,4,5,4,0,0,0,0,0,1},
+                {0,0,0,5,5,5,0,0,0,0,0,1},
+                {0,0,0,4,4,4,0,0,0,0,0,1},
+                {0,0,0,4,4,4,0,0,0,0,0,1},
+                {0,0,0,4,4,4,0,0,0,0,0,1},
+                {3,3,0,4,4,4,0,3,3,0,0,2},
+                {3,3,0,4,4,4,0,3,3,0,0,2},
+                {6,6,6,4,4,4,6,6,6,0,0,2},
+                {6,6,6,4,4,4,6,6,6,0,2,2},
         };
         int X=width/20,Y=heigth/10;
         System.out.println("Tablica klockow. LENGTH: "+bricksPos.length);
         klocki = new ArrayList<>();
             for (int[] row : bricksPos) {
-                for (int col :row){
-                    if(col!=0) {
-                        klocki.add(new Klocek(X, Y, width, heigth,col));
+                for (int i=0; i<row.length; i++){
+                    if(row[i]!=0) {
+                        klocki.add(new Klocek(X, Y, width, heigth,row[i]));
+                    }
+                    else if(i==0&&klocki.isEmpty()) {
+                        klocki.add(new Klocek(X, Y, width, heigth,0));
                     }
                     X += klocki.get(0).getSzer();
                 }

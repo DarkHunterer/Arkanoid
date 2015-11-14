@@ -15,13 +15,15 @@ public class pasekWyniku extends JPanel implements ActionListener{
     private int licznik=0;
     private Timer timer;
     private Boolean init=false;
+    private Color kolor_;
 
     private JLabel labelZycie;
     private JLabel labelWynik;
     private JLabel labelCzas;
 
     public pasekWyniku(Color col){
-        this.setBackground(col);
+        kolor_ = col;
+        this.setBackground(kolor_);
         setLayout(new FlowLayout());
 
         labelZycie= new JLabel("Zycie: "+ zycie);
