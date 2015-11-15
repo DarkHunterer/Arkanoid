@@ -63,7 +63,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
                     X += getWidth()/15;
                 }
                 X=width/20;
-                Y+=klocki.get(0).getWys();
+                Y+=getHeight()/30;
             }
 
         for(Klocek kl :klocki)
