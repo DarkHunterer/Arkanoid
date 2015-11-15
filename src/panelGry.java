@@ -1,9 +1,12 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -20,11 +23,17 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     private ArrayList<Klocek> klocki;
     private int szer_stara;
     private int wys_stara;
+    private Image img;
 
     public panelGry(Color color,Data config){
         this.setOpaque(true);
         this.setBackground(color);
         bricksPos = config.bricksPos;
+        try {
+            img = ImageIO.read(new File("tlo.jpg"));
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }
     }
 
         public void start(){
@@ -32,7 +41,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         int heigth= getHeight();
         System.out.println("Szerokosc "+width +" wysokosc " +heigth);
         paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
-        pilka_ = new Pilka(width/2,heigth/2,heigth/60);
+        pilka_ = new Pilka(width/2,heigth/2,heigth/30);
         pilka_.setPredkosc(1);
         dodajKlocki(width,heigth);
         pauza=false;
@@ -59,7 +68,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         }
     }
     private void rysuj_paletke(Graphics g){
-        g.setColor(Color.red);
+        g.setColor(paletka_.getKolor());
         g.drawRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
         g.fillRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
 
@@ -84,11 +93,19 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
     @Override
     public void paint(Graphics g) {
-        rysuj_paletke(g);
-        rysuj_pilke(g);
-        rysuj_klocki(g);
+        paintComponent(g);
+        if(init) {
+            rysuj_paletke(g);
+            rysuj_pilke(g);
+            rysuj_klocki(g);
+        }
     }
-
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        g.drawImage(img,0,0,getWidth(),getHeight(),null);
+    }
     @Override
     public void keyReleased(KeyEvent e) {
         paletka_.keyReleased(e);
@@ -125,6 +142,8 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
        // System.out.println("Paletka: X: "+ paletka_.getX()+" Y: "+paletka_.getY()+" szer i wys: "+paletka_.getSzer_() +" "+ paletka_.getWys_());
       //  System.out.println("Pilka: X: "+ pilka_.getX_pos()+" Y: "+pilka_.getY_pos()+" promien: "+pilka_.getSrednica());
     }
+
+
     public void sprawdzKolizje(){
         Rectangle rpaletka = paletka_.getBounds();
         Rectangle rpilka = pilka_.getBounds();

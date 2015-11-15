@@ -1,6 +1,9 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 
 public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener{
@@ -32,8 +35,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private String string_help_message;
 
     //
-    pasekWyniku pasekWyniku_;
-    panelGry panelgry_;
+    private pasekWyniku pasekWyniku_;
+    private panelGry panelgry_;
     private int DELAY;
     private Timer timerGlowny;
     private Boolean pauza = false;
@@ -46,6 +49,12 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         dodajElementy();
         dodajMenu();
         dodajGUI();
+    }
+    public static void main(String [] args){
+        OknoGlowne okno = new OknoGlowne();
+        okno.setVisible(true);
+        System.out.println(Color.darkGray.getRGB()+" "+Color.PINK.getRGB()+" "+Color.BLUE.getRGB());
+       // okno.panelgry_.setVisible(false);
     }
 
     private void wczytaj_config(){
@@ -105,25 +114,21 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         add(panelgry_, c);
     }
     private void zacznijGre(){
-        if(init) {
+        //if(init) {
             pasekWyniku_.start();
             panelgry_.setVisible(true);
             graTrwa = true;
             panelgry_.start();
             timerGlowny.setActionCommand(string_command_timer_on);
-       }
-        else
-            JOptionPane.showMessageDialog(getParent(),"Nie wczytano ustawien");
+      // }
+       // else
+       //     JOptionPane.showMessageDialog(getParent(),"Nie wczytano ustawien");
     }
     private void dodajGUI(){
 
         this.pack();
     }
-    public static void main(String [] args){
-        OknoGlowne okno = new OknoGlowne();
-        okno.setVisible(true);
-        okno.panelgry_.setVisible(false);
-    }
+
 
     private void dodajMenu(){
 
@@ -209,7 +214,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
         else if(e.getActionCommand().equals(string_command_authors))
         {
-            JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel R�kawek\n-Konrad J�drzejczak!");
+            JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel R�kawek\n-Konrad J�drzejczak");
         }
         else if(e.getActionCommand().equals(string_command_start))
         {

@@ -11,8 +11,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import javax.json.Json;
-
 /**
  * Created by Daniel on 14.11.2015.
  */

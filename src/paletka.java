@@ -25,6 +25,7 @@ public class paletka implements KeyListener {
         szer_=szerokosc;
         wys_ = wysokosc;
         predkosc =1;
+        kolor=Color.blue;
     }
 
     public Color getKolor() {
