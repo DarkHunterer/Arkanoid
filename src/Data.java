@@ -5,8 +5,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Iterator;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+import javax.json.Json;
 
 /**
  * Created by Daniel on 14.11.2015.
@@ -40,6 +45,9 @@ public class Data {
     ///
     public int PasekWyniku_const_zycie;
     public int PasekWyniku_const_czas;
+    ///
+    int bricksPos[][];
+    ///
 
     Data(){
         wczytaj_config("domyslny_config.json");
@@ -48,15 +56,19 @@ public class Data {
     public void zapisz_config(){
         try {
             FileWriter writer = new FileWriter("testjson.json");
+            FileWriter writerMapa = new FileWriter("mapa.json");
+
             StringWriter out = new StringWriter();
             JSONObject objMain = new JSONObject();
             JSONObject objOknoGlowne = new JSONObject();
             JSONObject objPasekWyniku = new JSONObject();
             JSONObject objPilka = new JSONObject();
+            JSONObject objMapa = new JSONObject();
 
             zapisz_OknoGlowne(objOknoGlowne);
             zapisz_PasekWyniku(objPasekWyniku);
             zapisz_Pilke(objPilka);
+            zapisz_mape(objMapa);
 
             objMain.put("OknoGlowne",objOknoGlowne);
             objMain.put("PasekWyniku",objPasekWyniku);
@@ -65,6 +77,11 @@ public class Data {
             objMain.writeJSONString(out);
             writer.write(out.toString());
             writer.close();
+
+            out.getBuffer().setLength(0);
+            objMapa.writeJSONString(out);
+            writerMapa.write(out.toString());
+            writerMapa.close();
         }catch (Exception e){
             System.out.println(e.toString());
         }
@@ -73,12 +90,17 @@ public class Data {
         try {
             org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
             Object obj = parser.parse(new FileReader(sciezka));
+            Object objMapa = parser.parse(new FileReader("mapa.json"));
+
             JSONObject jsonObjMain = (JSONObject) obj;
+            JSONObject jsonObjMapa = (JSONObject) objMapa;
+
             JSONObject jsonObjOknoGlowne = (JSONObject) jsonObjMain.get("OknoGlowne");
             JSONObject jsonObjPasekWyniku = (JSONObject) jsonObjMain.get("PasekWyniku");
 
             wczytaj_OknoGlowne(jsonObjOknoGlowne);
             wczytaj_PasekWyniku(jsonObjPasekWyniku);
+            wczytaj_Mape(jsonObjMapa);
         }
         catch (Exception ex){
                     System.out.println("Zlapano wyjatek: "+ ex.toString());
@@ -125,6 +147,27 @@ public class Data {
         temp = (long)(jsonObjPasekWyniku.get("czas"));
         PasekWyniku_const_czas= (int)temp;
     }
+    private void wczytaj_Mape(JSONObject jsonObjMapa) {
+
+        JSONArray tabex = (JSONArray) jsonObjMapa.get("MAPA");
+        JSONArray tabin = new JSONArray();
+        Boolean init=false;
+
+        for(int i=0;i<tabex.size();i++){
+            tabin = (JSONArray) tabex.get(i);
+            for(int j=0; j<tabin.size();j++){
+               if(!init){
+                   bricksPos = new int[tabex.size()][tabin.size()];
+                   init=true;
+               }
+                bricksPos[i][j] = (int)((long)(tabin.get(j)));
+            }
+        }
+
+
+
+
+    }
     private void zapisz_OknoGlowne(JSONObject objOknoGlowne){
         objOknoGlowne.put("Delay", OknoGlowne_Delay);
         objOknoGlowne.put("width", OknoGlowne_width);
@@ -153,6 +196,21 @@ public class Data {
     private void zapisz_PasekWyniku(JSONObject ObjPasekWyniku){
         ObjPasekWyniku.put("zycie",PasekWyniku_const_zycie);
         ObjPasekWyniku.put("czas",PasekWyniku_const_czas);
+    }
+    private void zapisz_mape(JSONObject ObjMapa){
+        JSONArray asd = new JSONArray();
+
+        JSONArray mapa = new JSONArray();
+        int j=0;
+        for (int[] row : bricksPos) {
+            for (int i=0; i<row.length; i++){
+                mapa.add(row[i]);
+            }
+            asd.add(j,mapa);
+            j++;
+            mapa = new JSONArray();
+        }
+        ObjMapa.put("MAPA",asd);
     }
     private void zapisz_Pilke(JSONObject ObjPilka){
     }

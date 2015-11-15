@@ -21,9 +21,10 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     private int szer_stara;
     private int wys_stara;
 
-    public panelGry(Color color){
+    public panelGry(Color color,Data config){
         this.setOpaque(true);
         this.setBackground(color);
+        bricksPos = config.bricksPos;
     }
 
         public void start(){
@@ -38,18 +39,6 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         init = true;
     }
     private void dodajKlocki(int width,int heigth){
-        bricksPos =new int[][]{
-                {0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,6,0,6,0,6,0,6,0,6,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,2,0,2,0,2,0,2,0,2,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,1,0,1,0,1,0,1,0,1,0,1},
-                {0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,5,0,5,0,5,0,5,0,5,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0},
-        };
         int X=width/20,Y=heigth/10;
         System.out.println("Tablica klockow. LENGTH: "+bricksPos.length);
         klocki = new ArrayList<>();

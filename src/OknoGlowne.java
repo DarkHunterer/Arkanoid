@@ -75,7 +75,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         string_help_message = config.OknoGlowne_string_help_message;
     }
     private  void dodajElementy(){
-        panelgry_ = new panelGry(kolor_panelGry);
+        panelgry_ = new panelGry(kolor_panelGry,config);
         pasekWyniku_ = new pasekWyniku(kolor_pasekWyniku,config);
 
         Dimension rozmiar_okna = new Dimension(width,heigth);
