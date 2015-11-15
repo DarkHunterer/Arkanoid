@@ -82,11 +82,11 @@ public class Klocek {
             wytrzymalosc--;
         }
         if(wytrzymalosc==0){
-        //    try {
-         //       finalize();
-         //   }catch (Throwable e){
-         //       System.out.println(e.toString());
-        //    }
+            try {
+                finalize();
+            }catch (Throwable e){
+                System.out.println(e.toString());
+            }
         }
         switch (wytrzymalosc){
             case 1: kolor=Color.RED;

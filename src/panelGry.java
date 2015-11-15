@@ -41,13 +41,13 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         bricksPos =new int[][]{
                 {0,0,0,0,0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,1,0,2,0,0,0,0,0},
-                {0,0,0,0,1,0,2,0,0,0,0,0},
-                {0,0,0,0,1,0,2,0,0,0,0,0},
-                {0,0,0,0,1,0,2,0,0,0,0,0},
-                {0,0,0,0,1,0,2,0,0,0,0,0},
-                {0,0,0,0,1,0,2,0,0,0,0,0},
-                {0,0,0,0,1,0,2,0,0,0,0,0},
+                {0,6,0,6,0,6,0,6,0,6,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,2,0,2,0,2,0,2,0,2,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,1,0,1,0,1,0,1,0,1,0,1},
+                {0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,5,0,5,0,5,0,5,0,5,0},
                 {0,0,0,0,0,0,0,0,0,0,0,0},
         };
         int X=width/20,Y=heigth/10;
@@ -147,7 +147,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
 
             if(rklocek.intersects(rpilka)) {
                 if (kl.getWytrzymalosc() != 0) {
-                    pG = new Point((int) rpilka.getX()+pilka_.getSrednica()/2, 0);
+                 /*   pG = new Point((int) rpilka.getX()+pilka_.getSrednica()/2, 0);
                     pD = new Point((int) rpilka.getX()+pilka_.getSrednica()/2 , (int) rpilka.getY());
                     pL = new Point(0, (int) rpilka.getY()+pilka_.getSrednica()/2);
                     pP = new Point((int) rpilka.getX(), (int) rpilka.getY()+pilka_.getSrednica()/2);
@@ -157,22 +157,20 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
                     pointTab[1] = pD;
                     pointTab[2] = pL;
                     pointTab[3] = pP;
+                   */
+                    kl.kolizja();
+                    pilka_.odwroc_Y();
+                    if (kl.getWytrzymalosc() == 0) {
+                        temp = kl;
+                    }
 
                 /*//pilka_.setY_pos((kl.getPos_Y()+ kl.getSzer()));
                 System.out.println("Zderzenie z klockiem");
                 pilka_.odwroc_Y();
                 */
-                    for (Point p : pointTab) {
+                    //  for (Point p : pointTab) {
 
-                      //  if ((p.getX() >= rklocek.getX() && p.getX() <= rklocek.getMaxX()) && (p.getY() >= rklocek.getY() && p.getY() <= rklocek.getMaxY()))
-                     //   {
-                       /* System.out.println("Klocek: getX"+rklocek.getX() + " MaxX:"+rklocek.getMaxX()+"getMinX:"+rklocek.getMinX());
-                        System.out.println("Klocek: getY"+rklocek.getY() + " MaxY:"+rklocek.getMaxY()+"getMinY:"+rklocek.getMinY());
-                        System.out.println(pG.toString());
-                        System.out.println(pD.toString());
-                        System.out.println(pL.toString());
-                        System.out.println(pP.toString());*/
-                        if(p.getX()>=rklocek.getX()&&p.getX()<=rklocek.getMaxX()) {
+                       /* if(p.getX()>=rklocek.getX()&&p.getX()<=rklocek.getMaxX()) {
                             System.out.println("DUPA1");
                             if(p.getY()>=rklocek.getY()&&p.getY()<=rklocek.getMaxY()){
                                 System.out.println("DUPA2");
@@ -202,15 +200,12 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
                             }
                             //   }
                         }
-                        }
-                    }
-                    //kl.kolizja();
-                    // if (kl.getWytrzymalosc()==0){
-                    //    temp = kl;
-                    // }
+                        }*/
+                    //   }
                 }
             }
         }
+        klocki.remove(temp);
         if(rpaletka.intersects(rpilka)){
             pilka_.odwroc_Y();
         }
