@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener{
     //Wszystko to idzie do konfigu
-    private  Data config = new Data();
+    private  Data config;
     private Color kolor_pasekWyniku;
     private Color kolor_panelGry;
     private Color kolor_background;
@@ -29,6 +29,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private String string_authors;
     private String string_menu;
     private String string_menu_title;
+    private String string_help_message;
+
     //
     pasekWyniku pasekWyniku_;
     panelGry panelgry_;
@@ -47,12 +49,13 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     }
 
     private void wczytaj_config(){
+        config = new Data();
         kolor_background = config.OknoGlowne_kolor_background;
         kolor_pasekWyniku = config.OknoGlowne_kolor_pasekWyniku;
         kolor_panelGry = config.OknoGlowne_kolor_panelGry;
         width = config.OknoGlowne_width;
         heigth = config.OknoGlowne_heigth;
-
+        DELAY = config.OknoGlowne_Delay;
         string_command_timer_off = config.OknoGlowne_command_timer_off;
         string_command_timer_on = config.OknoGlowne_command_timer_on;
         string_command_authors = config.OknoGlowne_command_authors;
@@ -60,7 +63,6 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         string_command_help =config.OknoGlowne_command_help;
         string_command_start =config.OknoGlowne_command_start;
         string_command_settings = config.OknoGlowne_command_settings;
-
         string_menuPomoc_title=config.OknoGlowne_string_menuPomoc_title;
         string_start=config.OknoGlowne_string_start;
         string_end=config.OknoGlowne_string_end;
@@ -70,14 +72,11 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         string_authors=config.OknoGlowne_string_authors;
         string_menu=config.OknoGlowne_string_menu;
         string_menu_title=config.OknoGlowne_string_menu_title;
-
-
-
-        DELAY = config.OknoGlowne_Delay;
+        string_help_message = config.OknoGlowne_string_help_message;
     }
     private  void dodajElementy(){
         panelgry_ = new panelGry(kolor_panelGry);
-        pasekWyniku_ = new pasekWyniku(kolor_pasekWyniku);
+        pasekWyniku_ = new pasekWyniku(kolor_pasekWyniku,config);
 
         Dimension rozmiar_okna = new Dimension(width,heigth);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -196,9 +195,6 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
     @Override
     public void actionPerformed(ActionEvent e) {
-       // System.out.println("Szer okna to: "+getWidth() +" a wys okna: "+ getHeight());
-       // System.out.println("Szer panelu gry to: "+panelgry_.getWidth() +" a wys panelu gry to: "+ panelgry_.getHeight());
-
         if(graTrwa) {
            panelgry_.actionPerformed(e);
            pasekWyniku_.actionPerformed(e);
@@ -209,7 +205,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
         else if(e.getActionCommand().equals(string_command_help))
         {
-            JOptionPane.showMessageDialog(getParent(),"Serio...? Pilka zbija klocki.\nSterujesz strzalkami.\nW czym tu potrzeba pomocy?");
+            JOptionPane.showMessageDialog(getParent(),string_help_message);
         }
         else if(e.getActionCommand().equals(string_command_authors))
         {
@@ -220,13 +216,14 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             zacznijGre();
         }
         else if (e.getActionCommand().equals(string_command_settings)){
-            System.out.println("Opcje ustawien");
             JFileChooser chooser = new JFileChooser();
             int returnVal = chooser.showOpenDialog(getParent());
             if(returnVal == JFileChooser.APPROVE_OPTION) {
-                config.wczytaj_config(chooser.getSelectedFile().toString());
-                System.out.println(chooser.getSelectedFile().toString());
                 config.zapisz_config();
+                config.wczytaj_config(chooser.getSelectedFile().toString());
+                wczytaj_config();
+                /*dodajElementy();
+                dodajGUI();*/
                 init = true;
             }
             else {
