@@ -1,5 +1,3 @@
-import javafx.scene.shape.Circle;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,24 +31,24 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         int heigth= getHeight();
         System.out.println("Szerokosc "+width +" wysokosc " +heigth);
         paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
-        pilka_ = new Pilka(width/2,heigth/2,heigth/40);
-        pilka_.setPredkosc(2);
+        pilka_ = new Pilka(width/2,heigth/2,heigth/60);
+        pilka_.setPredkosc(1);
         dodajKlocki(width,heigth);
         pauza=false;
         init = true;
     }
     private void dodajKlocki(int width,int heigth){
         bricksPos =new int[][]{
-                {0,0,0,4,5,4,0,0,0,0,0,6},
-                {0,0,0,4,5,4,0,0,0,0,0,5},
-                {0,0,0,5,5,5,0,0,0,0,0,4},
-                {0,0,0,4,4,4,0,0,0,0,0,3},
-                {0,0,0,4,4,4,0,0,0,0,0,2},
-                {0,0,0,4,4,4,0,0,0,0,0,1},
-                {3,3,0,4,4,4,0,3,3,0,0,2},
-                {3,3,0,4,4,4,0,3,3,0,0,3},
-                {6,6,6,4,4,4,6,6,6,0,0,4},
-                {6,6,6,4,4,4,6,6,6,0,0,5},
+                {0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,1,0,2,0,0,0,0,0},
+                {0,0,0,0,1,0,2,0,0,0,0,0},
+                {0,0,0,0,1,0,2,0,0,0,0,0},
+                {0,0,0,0,1,0,2,0,0,0,0,0},
+                {0,0,0,0,1,0,2,0,0,0,0,0},
+                {0,0,0,0,1,0,2,0,0,0,0,0},
+                {0,0,0,0,1,0,2,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0},
         };
         int X=width/20,Y=heigth/10;
         System.out.println("Tablica klockow. LENGTH: "+bricksPos.length);
@@ -63,7 +61,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
                     X += getWidth()/15;
                 }
                 X=width/20;
-                Y+=klocki.get(0).getWys();
+                Y+=getHeight()/30;
             }
 
         for(Klocek kl :klocki)
@@ -79,10 +77,10 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
     private void rysuj_pilke(Graphics g){
         g.setColor(Color.green);
-        g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getPromien(),pilka_.getPromien());
-        g.fillOval(pilka_.getX_pos(), pilka_.getY_pos(), pilka_.getPromien(), pilka_.getPromien());
+        g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getSrednica(),pilka_.getSrednica());
+        g.fillOval(pilka_.getX_pos(), pilka_.getY_pos(), pilka_.getSrednica(), pilka_.getSrednica());
         g.setColor(Color.white);
-        g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getPromien(),pilka_.getPromien());
+        g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getSrednica(),pilka_.getSrednica());
     }
     private void rysuj_klocki(Graphics g){
         for(Klocek k :klocki) {
@@ -136,38 +134,93 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         }
        // System.out.println("Szer panelu gry to: "+getWidth() +" a wys panelu gry to: "+ getHeight());
        // System.out.println("Paletka: X: "+ paletka_.getX()+" Y: "+paletka_.getY()+" szer i wys: "+paletka_.getSzer_() +" "+ paletka_.getWys_());
-      //  System.out.println("Pilka: X: "+ pilka_.getX_pos()+" Y: "+pilka_.getY_pos()+" promien: "+pilka_.getPromien());
+      //  System.out.println("Pilka: X: "+ pilka_.getX_pos()+" Y: "+pilka_.getY_pos()+" promien: "+pilka_.getSrednica());
     }
     public void sprawdzKolizje(){
         Rectangle rpaletka = paletka_.getBounds();
         Rectangle rpilka = pilka_.getBounds();
 
+        Point pG,pD,pL,pP;
         Klocek temp = new Klocek(0,0,0,0,0);
         for(Klocek kl : klocki){
             Rectangle rklocek = kl.getBounds();
 
-            if(rklocek.intersects(rpilka))
-            {
+            if(rklocek.intersects(rpilka)) {
+                if (kl.getWytrzymalosc() != 0) {
+                    pG = new Point((int) rpilka.getX()+pilka_.getSrednica()/2, 0);
+                    pD = new Point((int) rpilka.getX()+pilka_.getSrednica()/2 , (int) rpilka.getY());
+                    pL = new Point(0, (int) rpilka.getY()+pilka_.getSrednica()/2);
+                    pP = new Point((int) rpilka.getX(), (int) rpilka.getY()+pilka_.getSrednica()/2);
+
+                    Point[] pointTab = new Point[4];
+                    pointTab[0] = pG;
+                    pointTab[1] = pD;
+                    pointTab[2] = pL;
+                    pointTab[3] = pP;
+
+                /*//pilka_.setY_pos((kl.getPos_Y()+ kl.getSzer()));
                 System.out.println("Zderzenie z klockiem");
-                //pilka_.setY_pos((kl.getPos_Y()+ kl.getSzer()));
                 pilka_.odwroc_Y();
-                kl.kolizja();
-                if (kl.getWytrzymalosc()==0){
-                    temp = kl;
+                */
+                    for (Point p : pointTab) {
+
+                      //  if ((p.getX() >= rklocek.getX() && p.getX() <= rklocek.getMaxX()) && (p.getY() >= rklocek.getY() && p.getY() <= rklocek.getMaxY()))
+                     //   {
+                       /* System.out.println("Klocek: getX"+rklocek.getX() + " MaxX:"+rklocek.getMaxX()+"getMinX:"+rklocek.getMinX());
+                        System.out.println("Klocek: getY"+rklocek.getY() + " MaxY:"+rklocek.getMaxY()+"getMinY:"+rklocek.getMinY());
+                        System.out.println(pG.toString());
+                        System.out.println(pD.toString());
+                        System.out.println(pL.toString());
+                        System.out.println(pP.toString());*/
+                        if(p.getX()>=rklocek.getX()&&p.getX()<=rklocek.getMaxX()) {
+                            System.out.println("DUPA1");
+                            if(p.getY()>=rklocek.getY()&&p.getY()<=rklocek.getMaxY()){
+                                System.out.println("DUPA2");
+                                if (p.equals(pL) || p.equals(pP)) {
+                                    System.out.println("PL PUNKT LEWY");
+                                    pilka_.odwroc_X();
+                                }
+
+                                  if (p.equals(pG) || p.equals(pD)) {
+                                      System.out.println("PG PUNKT GORNY");
+                                      pilka_.odwroc_Y();
+                                 }
+                            if (p.equals(pD)) {
+                                System.out.println("PD PUNKT DOLNY");
+                                pilka_.odwroc_Y();
+                            }
+
+                            if (p.equals(pP)) {
+                                System.out.println("PP PUNKT PRAWY");
+                                pilka_.odwroc_X();
+                            }
+                            if (kl.getWytrzymalosc() == 0) {
+                                //temp = kl;
+                                klocki.remove(kl);
+                            } else {
+                                kl.kolizja();
+                            }
+                            //   }
+                        }
+                        }
+                    }
+                    //kl.kolizja();
+                    // if (kl.getWytrzymalosc()==0){
+                    //    temp = kl;
+                    // }
                 }
             }
         }
-        klocki.remove(temp);
         if(rpaletka.intersects(rpilka)){
             pilka_.odwroc_Y();
         }
-        else if((pilka_.getX_pos()>=getWidth()-pilka_.getPromien())||(pilka_.getX_pos()<=1))
+        else if((pilka_.getX_pos()>=getWidth()-pilka_.getSrednica())||(pilka_.getX_pos()<=1))
         {
             pilka_.odwroc_X();
         }
-        else if((pilka_.getY_pos()+pilka_.getPromien()>=getHeight())) {
+        else if((pilka_.getY_pos()+pilka_.getSrednica()>=getHeight())) {
             pilka_.odwroc_Y();
-            pilka_.setY_pos(getHeight()-pilka_.getPromien());
+            pilka_.setY_pos(getHeight()-pilka_.getSrednica());
             JOptionPane.showMessageDialog(getParent(),"GAME OVER!");
         }
         else if(pilka_.getY_pos()<=0){

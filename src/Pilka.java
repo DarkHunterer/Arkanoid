@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
 public class Pilka {
     private int x_pos;
     private int y_pos;
-    private int promien;
+    private int srednica;
     private int predkosc;
     private int dx=1;
     private int dy=1;
@@ -16,7 +16,7 @@ public class Pilka {
         System.out.println("Dodano pilke");
         x_pos = x_start;
         y_pos = y_start;
-        promien=szerokosc;
+        srednica =szerokosc;
         predkosc=1;
     }
 
@@ -31,15 +31,15 @@ public class Pilka {
     public void ustaw_pozycje(int x_start,int y_start,int prom){
         x_pos = x_start;
         y_pos = y_start;
-        promien=prom;
+        srednica =prom;
     }
     public void porusz(int maxX,int maxY){
         x_pos += predkosc*dx;
         y_pos += predkosc*dy;
         if(x_pos<1)
             x_pos=1;
-        else if(x_pos+promien>maxX)
-            x_pos=maxX-promien;
+        else if(x_pos+ srednica >maxX)
+            x_pos=maxX- srednica;
     }
 
     public void setY_pos(int y_pos) {
@@ -58,11 +58,11 @@ public class Pilka {
         return y_pos;
     }
 
-    public int getPromien() {
-        return promien;
+    public int getSrednica() {
+        return srednica;
     }
     public Rectangle getBounds(){
-        return new Rectangle(x_pos,y_pos,promien,promien);
+        return new Rectangle(x_pos,y_pos, srednica, srednica);
     }
     public void odwroc_Y()
     {
@@ -74,7 +74,7 @@ public class Pilka {
         System.out.println("Odwroc X");
     }
     public void skaluj(int szerokosc, int wysokosc,int szer_stara, int wys_stara,int szer_paletki){
-        if(promien!=0) {
+        if(srednica !=0) {
             double a = (double)x_pos/szer_stara;
             double b = (double)y_pos/wys_stara;
             DecimalFormat df = new DecimalFormat();
@@ -84,7 +84,7 @@ public class Pilka {
             y_pos=(int)(wysokosc*b);
             System.out.println("Wynik dzialania to:"+(int)(szerokosc*a)+" a pos_X to:"+x_pos);
         }
-        promien = szerokosc/40;
+        srednica = szerokosc/40;
     }
 }
 
