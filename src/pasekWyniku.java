@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Created by Daniel on 29.10.2015.
+ * Klasa paska wyniku
  */
 public class pasekWyniku extends JPanel implements ActionListener{
 
@@ -21,6 +22,11 @@ public class pasekWyniku extends JPanel implements ActionListener{
     private JLabel labelWynik;
     private JLabel labelCzas;
 
+    /**
+     *
+     * @param col Kolor przyjmowany przez konstuktor
+     * @param config Obiekt odpowiadajacy za konfiguracje
+     */
     public pasekWyniku(Color col,Data config){
         kolor_ = col;
         this.setBackground(kolor_);
@@ -37,9 +43,16 @@ public class pasekWyniku extends JPanel implements ActionListener{
         this.setOpaque(true);
     }
 
+    /**
+     * Metoda odpowiadajaca za inicjacje paska
+     */
     public void start(){
         ustawGUI();
     }
+
+    /**
+     * Metoda odpowiadajaca za dodanie labeli wyniku, ¿ycia i czasu do panelu paska wyniku
+     */
     private void ustawGUI(){
         add(labelWynik);
         add(labelZycie);
@@ -47,6 +60,10 @@ public class pasekWyniku extends JPanel implements ActionListener{
         init=true;
     }
 
+    /**
+     * Metoda obs³uguj¹ca zdarzenia. Zmniejsza czas pozosta³y do koñca
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (init) {

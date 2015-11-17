@@ -3,6 +3,7 @@ import java.text.DecimalFormat;
 
 /**
  * Created by Daniel on 03.11.2015.
+ * Klasa odpowiadaj¹ca za klocek (przeszkoda do zbicia pi³k¹)
  */
 public class Klocek {
     private int pos_X;
@@ -38,26 +39,53 @@ public class Klocek {
         }
     }
 
+    /**
+     * Klasa zwracajaca kolor
+     * @return
+     */
     public Color getKolor() {
         return kolor;
     }
 
+    /**
+     * Zwraca pozycje X
+     * @return
+     */
     public int getPos_X() {
         return pos_X;
     }
 
+    /**
+     * Zwraca pozycje Y
+     * @return
+     */
     public int getPos_Y() {
         return pos_Y;
     }
 
+    /**
+     * Zwraca szerokoœæ klocka
+     * @return
+     */
     public int getSzer() {
         return szer;
     }
 
+    /**
+     * Zwraca wysokoœæ klocka
+     * @return
+     */
     public int getWys() {
         return wys;
     }
 
+    /**
+     * Metoda która skaluje klocek wzglêdem rozmiarów okna
+     * @param szerokosc Nowa szerokosc okna
+     * @param wysokosc  Nowa wysokosc okna
+     * @param szer_stara Stara szerokosc okna
+     * @param wys_stara Stara wysokosc okna
+     */
     public void skaluj(int szerokosc, int wysokosc,int szer_stara, int wys_stara)
     {
         if(szer!=0) {
@@ -76,6 +104,10 @@ public class Klocek {
         szer = szerokosc/15;
         wys = wysokosc/30;
     }
+
+    /**
+     * Obsluga kolizji z pilka
+     */
     public void kolizja(){
         System.out.println("Nastapila kolizja z klockiem. Wytrzymalosc="+wytrzymalosc);
         if(wytrzymalosc>0) {
@@ -102,9 +134,19 @@ public class Klocek {
             default:kolor=Color.magenta;
         }
     }
+
+    /**
+     * Zwraca wytrzyma³oœæ klocka
+     * @return
+     */
     public int getWytrzymalosc() {
         return wytrzymalosc;
     }
+
+    /**
+     * Zwraca obiekt typu Rectangle który jest u¿ywany do wykrywania kolizji
+     * @return
+     */
     public Rectangle getBounds(){
         return new Rectangle(pos_X,pos_Y,szer,wys);
     }

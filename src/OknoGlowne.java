@@ -5,6 +5,9 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+/**
+ * Główna klasa, w której umieszczane komponenty panelGry i pasekWyniku
+ */
 
 public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener{
     //Wszystko to idzie do konfigu
@@ -43,6 +46,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private Boolean graTrwa = false;
     private Boolean init = false;
 
+    /**
+     * Konstruktor okna głównego
+     */
     public OknoGlowne(){
       //  super();
         wczytaj_config();
@@ -50,6 +56,11 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         dodajMenu();
         dodajGUI();
     }
+
+    /**
+     * Main okna głównego. Tworzy obiekt okna i pojawia go na ekranie
+     *
+     */
     public static void main(String [] args){
         OknoGlowne okno = new OknoGlowne();
         okno.setVisible(true);
@@ -57,6 +68,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
        // okno.panelgry_.setVisible(false);
     }
 
+    /**
+     * Metoda wczytująca konfiguracje
+     */
     private void wczytaj_config(){
         config = new Data();
         kolor_background = config.OknoGlowne_kolor_background;
@@ -83,8 +97,12 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         string_menu_title=config.OknoGlowne_string_menu_title;
         string_help_message = config.OknoGlowne_string_help_message;
     }
+
+    /**
+     * Metoda tworząca obiekty panelu gry i pasku wyniku oraz dodająca je do głównego okna na GridBackLayout'cie
+     */
     private  void dodajElementy(){
-        panelgry_ = new panelGry(kolor_panelGry,config);
+        panelgry_ = new panelGry(config);
         pasekWyniku_ = new pasekWyniku(kolor_pasekWyniku,config);
 
         Dimension rozmiar_okna = new Dimension(width,heigth);
@@ -113,6 +131,10 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         c.weighty=0.95;
         add(panelgry_, c);
     }
+
+    /**
+     * Metoda uruchamiająca logikę gry
+     */
     private void zacznijGre(){
         //if(init) {
             pasekWyniku_.start();
@@ -124,11 +146,18 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
        // else
        //     JOptionPane.showMessageDialog(getParent(),"Nie wczytano ustawien");
     }
+
+    /**
+     * Metoda rysujaca okno na ekranie
+     */
     private void dodajGUI(){
 
         this.pack();
     }
 
+    /**
+     * Metoda dodajaca pasek menu do głównego okna
+     */
 
     private void dodajMenu(){
 
@@ -171,16 +200,28 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         mUstawienia.addActionListener(this);
     }
 
+    /**
+     *  Metoda odpowiadajaca za przechwycenie puszczenia klawisza
+     * @param e Obiekt typu KeyEvent
+     */
     @Override
     public void keyReleased(KeyEvent e) {
             panelgry_.keyReleased(e);
         }
 
+    /**
+     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * @param e Obiekt typu KeyEvent
+     */
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
 
+    /**
+     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * @param e Obiekt typu KeyEvent
+     */
     @Override
         public void keyPressed(KeyEvent e) {
         panelgry_.keyPressed(e);
@@ -198,6 +239,11 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             }
     }
 
+    /**
+     *
+     *  Metoda odpowiadajaca za obsluge zdarzen w obiekcie
+     * @param e Obiekt typu KeyEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(graTrwa) {
@@ -238,22 +284,38 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
            repaint();
      }
 
+    /**
+     * Metoda odpowiadajaca za obsluge zdarzenia skalowania okna
+     * @param e Obiekt typu ComponentEvent
+     */
     @Override
     public void componentResized(ComponentEvent e) {
         System.out.println("Komponent resized");
         panelgry_.skaluj();
     }
 
+    /**
+     * Metoda odpowiadajaca za obsluge zdarzenia przesuniecia okna
+     * @param e Obiekt typu ComponentEvent
+     */
     @Override
     public void componentMoved(ComponentEvent e) {
         System.out.println("Komponent moved");
     }
 
+    /**
+     *
+     * @param e Obiekt typu ComponentEvent
+     */
     @Override
     public void componentShown(ComponentEvent e) {
 
     }
 
+    /**
+     *
+     * @param e Obiekt typu ComponentEvent
+     */
     @Override
     public void componentHidden(ComponentEvent e) {
 

@@ -25,9 +25,13 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     private int wys_stara;
     private Image img;
 
-    public panelGry(Color color,Data config){
+    /**
+     * Konstruktor klasy panelGry
+     * @param config Klasa obiektu w którym jest konfiguracja
+     */
+    public panelGry(Data config){
         this.setOpaque(true);
-        this.setBackground(color);
+        this.setBackground(config.OknoGlowne_kolor_panelGry);
         bricksPos = config.bricksPos;
         try {
             img = ImageIO.read(new File("tlo.jpg"));
@@ -36,6 +40,9 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    /**
+     * Metoda tworz¹ca obiekty paletki,pilki oraz tworzy klocki oraz uruchamia logikê gry.
+     */
         public void start(){
         int width = getWidth();
         int heigth= getHeight();
@@ -47,6 +54,12 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         pauza=false;
         init = true;
     }
+
+    /**
+     * Wype³nia listê klocków z wczytanej mapy
+     * @param width Szerokoœæ okna wzglêdem którego skalowany jest klocek
+     * @param heigth Wysokoœc okna wzglêdem której skalowany jest klocek
+     */
     private void dodajKlocki(int width,int heigth){
         int X=width/20,Y=heigth/10;
         System.out.println("Tablica klockow. LENGTH: "+bricksPos.length);
@@ -67,12 +80,22 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             System.out.println(kl.getBounds());
         }
     }
+
+    /**
+     * Metoda odpowiadaj¹ca za rysowanie paletki
+     * @param g
+     */
     private void rysuj_paletke(Graphics g){
         g.setColor(paletka_.getKolor());
         g.drawRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
         g.fillRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
 
     }
+
+    /**
+     * Metoda odpowiadaj¹ca za rysowanie pi³ki
+     * @param g
+     */
     private void rysuj_pilke(Graphics g){
         g.setColor(Color.green);
         g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getSrednica(),pilka_.getSrednica());
@@ -80,6 +103,11 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.white);
         g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getSrednica(),pilka_.getSrednica());
     }
+
+    /**
+     * Metoda odpowiadaj¹ca za narysowanie na ekranie klocków
+     * @param g
+     */
     private void rysuj_klocki(Graphics g){
         for(Klocek k :klocki) {
             g.setColor(k.getKolor());
@@ -91,6 +119,11 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             }
             }
     }
+
+    /**
+     * Metoda odpowiadaj¹ca za rysowanie
+     * @param g
+     */
     @Override
     public void paint(Graphics g) {
         paintComponent(g);
@@ -100,29 +133,55 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             rysuj_klocki(g);
         }
     }
+
+    /**
+     * Metoda odpowiadaj¹ca za narysowanie t³a
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
         g.drawImage(img,0,0,getWidth(),getHeight(),null);
     }
+    /**
+     *  Metoda odpowiadajaca za przechwycenie puszczenia klawisza
+     * @param e Obiekt typu KeyEvent
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         paletka_.keyReleased(e);
     }
 
+    /**
+     * Metoda pauzuj¹ca rozgrywkê
+     * @param pauza
+     */
     public void setPauza(Boolean pauza) {
         this.pauza = pauza;
     }
+    /**
+     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * @param e Obiekt typu KeyEvent
+     */
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
+    /**
+     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * @param e Obiekt typu KeyEvent
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         paletka_.keyPressed(e);
     }
 
+    /**
+     *
+     *  Metoda odpowiadajaca za obsluge zdarzen w obiekcie
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
 
         if (e.getActionCommand().equals("TIMER_MAIN_TICK")) {
@@ -143,7 +202,9 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
       //  System.out.println("Pilka: X: "+ pilka_.getX_pos()+" Y: "+pilka_.getY_pos()+" promien: "+pilka_.getSrednica());
     }
 
-
+    /**
+     * Metoda sprawdzaj¹ca wyst¹pienie kolizji
+     */
     public void sprawdzKolizje(){
         Rectangle rpaletka = paletka_.getBounds();
         Rectangle rpilka = pilka_.getBounds();
@@ -232,6 +293,10 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         }
 
         }
+
+    /**
+     * Metoda odpowiadaj¹ca za skalowanie elementów panelu gry wzglêdem rozmiaru ekranu
+     */
     public void skaluj()
     {
         if(init) {

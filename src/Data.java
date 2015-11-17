@@ -13,44 +13,130 @@ import org.json.simple.JSONValue;
 
 /**
  * Created by Daniel on 14.11.2015.
+ * Klasa odpowiadajaca za konfiguracje
  */
+
 public class Data {
     ///
     ///
+    /**
+     * Zmienna odpowiadajaca za opóźnienie zegara
+     */
     public int OknoGlowne_Delay =10;
+    /**
+     * Zmienna odpowiadająca za szerokosc ekranu
+     */
     public int OknoGlowne_width=500;
+    /**
+     * Zmienna odpowiadająca za wysokosc ekranu
+     */
     public int OknoGlowne_heigth=500;
+    /**
+     * Zmienna odpowiadająca za komende wylaczenia zegara
+     */
     public String OknoGlowne_command_timer_off;//="TIMER_MAIN_TICK_OFF";
+    /**
+     * Zmienna odpowiadająca za komende włączenia zegara
+     */
     public String OknoGlowne_command_timer_on;//="TIMER_MAIN_TICK";
+    /**
+     * Zmienna odpowiadajaca za komende wyłączenia gry
+     */
     public String OknoGlowne_command_exit;//="EXIT";
+    /**
+     * Zmienna odpowiadająca za wlaczenia okna o autorach
+     */
     public String OknoGlowne_command_authors;//="AUTORZY";
+    /**
+     * Zmienna odpowiadająca za wlaczenie okna pomocy
+     */
     public String OknoGlowne_command_help;//="POMOC";
+    /**
+     * Zmienna odpowiadająca za start gry
+     */
     public String OknoGlowne_command_start;//="START";
+    /**
+     * Zmienna odpowiadająca za wlaczenie ustawień
+     */
     public String OknoGlowne_command_settings;//="USTAWIENIA";
+    /**
+     * Zmienna odpowiadająca za tytuł menu pomocy
+     */
     public String OknoGlowne_string_menuPomoc_title;//="Pomoc";
+    /**
+     * Zmienna odpowiadająca za napis start
+     */
     public String OknoGlowne_string_start;//="Start";
+    /**
+     * Zmienna odpowiadająca za napis koniec
+     */
     public String OknoGlowne_string_end;//="Koniec";
+    /**
+     * Zmienna odpowiadaja za napis najlepsze wyniki
+     */
     public String OknoGlowne_string_bestScore;//="Najlepsze wyniki";
+    /**
+     * Zmienna odpowiadająca za napis ustawienia
+     */
     public String OknoGlowne_string_config;//="Ustawienia";
+    /**
+     * Zmienna odpowiadająca za napis zasady gry
+     */
     public String OknoGlowne_string_rules;//="Zasady gry";
+    /**
+     * Zmienna odpowiadająca za napis o autorach
+     */
     public String OknoGlowne_string_authors;//="O autorach";
+    /**
+     * Zmienna odpowiadająca za napis menu
+     */
     public String OknoGlowne_string_menu;//="Menu";
+    /**
+     * Zmienna odpowiadająca za napis pasek menu
+     */
     public String OknoGlowne_string_menu_title;//="Pasek menu";
+    /**
+     * Zmienna odpowiadająca za napis komunikatu pomocy
+     */
     public String OknoGlowne_string_help_message;//="Serio...? Pilka zbija klocki.\nSterujesz strzalkami.\nW czym tu potrzeba pomocy?";
+    /**
+     * Zmienna odpowiadająca za kolor paska wyniku
+     */
     public Color OknoGlowne_kolor_pasekWyniku;// = Color.red;
+    /**
+     * Zmienna odpowiadająca za kolor panelu gry
+     */
     public Color OknoGlowne_kolor_panelGry;// = Color.red;
+    /**
+     * Zmienna odpowiadająca za kolor tła panelu gry
+     */
     public Color OknoGlowne_kolor_background;// = Color.darkGray;
     ///
+    /**
+     *  Zmienna odpowiadajaca za pozostałą ilość żyć
+     */
     public int PasekWyniku_const_zycie;
+    /**
+     * Zmienna odpowiadająca za pozostałą ilość czasu
+     */
     public int PasekWyniku_const_czas;
     ///
+    /**
+     * Dwuwymiarowa tablica pozycji klocków. 0 - brak klocka 1-6 zdrowie klocka
+     */
     int bricksPos[][];
     ///
 
+    /**
+     * Konstruktor klasy, wczytuje domyslna konfiguracje z pliku.
+     */
     Data(){
         wczytaj_config("domyslny_config.json");
     }
 
+    /**
+     * Metoda odpowiadająca za zapisanie konfiguracji do pliku
+     */
     public void zapisz_config(){
         try {
             FileWriter writer = new FileWriter("testjson.json");
@@ -84,6 +170,11 @@ public class Data {
             System.out.println(e.toString());
         }
     }
+
+    /**
+     * Metoda odpowiadajaca za wczytanie konfiguracji z pliku
+     * @param sciezka Sciezka do wybranego pliku konfiguracji
+     */
     public void wczytaj_config(String sciezka){
         try {
             org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
@@ -104,6 +195,11 @@ public class Data {
                     System.out.println("Zlapano wyjatek: "+ ex.toString());
             }
     }
+
+    /**
+     *  Metoda odpowiadajaca za wczytanie konfiguracji okna głównego
+     * @param jsonObjOknoGlowne Obiekt typu JSONObject
+     */
     private void wczytaj_OknoGlowne(JSONObject jsonObjOknoGlowne){
         long temp = (long) jsonObjOknoGlowne.get("Delay");
         OknoGlowne_Delay = (int)temp;
@@ -139,12 +235,22 @@ public class Data {
         temp2 = (int) temp;
         OknoGlowne_kolor_background= new Color(temp2);
     }
+
+    /**
+     * Metoda odpowiadająca za wczytanie konfiguracji paska wyniku
+     * @param jsonObjPasekWyniku Obiekt typu JSONObject
+     */
     private void wczytaj_PasekWyniku(JSONObject jsonObjPasekWyniku){
         long temp = (long) jsonObjPasekWyniku.get("zycie");
         PasekWyniku_const_zycie= (int)temp;
         temp = (long)(jsonObjPasekWyniku.get("czas"));
         PasekWyniku_const_czas= (int)temp;
     }
+
+    /**
+     * Metoda odpowiadająca za wczytanie mapy pozycji klocków i ich zdrowia
+     * @param jsonObjMapa Obiekt typu JSONObject
+     */
     private void wczytaj_Mape(JSONObject jsonObjMapa) {
 
         JSONArray tabex = (JSONArray) jsonObjMapa.get("MAPA");
@@ -161,11 +267,12 @@ public class Data {
                 bricksPos[i][j] = (int)((long)(tabin.get(j)));
             }
         }
-
-
-
-
     }
+
+    /**
+     * Metoda odpowiadająca za zapis konfiguracji do pliku
+     * @param objOknoGlowne Obiekt typu JSONObject
+     */
     private void zapisz_OknoGlowne(JSONObject objOknoGlowne){
         objOknoGlowne.put("Delay", OknoGlowne_Delay);
         objOknoGlowne.put("width", OknoGlowne_width);
@@ -191,12 +298,22 @@ public class Data {
         objOknoGlowne.put("color_panelgry", OknoGlowne_kolor_panelGry.getRGB());
         objOknoGlowne.put("color_background", OknoGlowne_kolor_background.getRGB());
     }
+
+    /**
+     * Metoda odpowiadajaca za zapis paska wyniku
+     * @param ObjPasekWyniku Obiekt typu JSONObject
+     */
     private void zapisz_PasekWyniku(JSONObject ObjPasekWyniku){
         ObjPasekWyniku.put("zycie",PasekWyniku_const_zycie);
         ObjPasekWyniku.put("czas",PasekWyniku_const_czas);
     }
+
+    /**
+     *  Metoda odpowiadająca za zapis pozycji klocków
+     * @param ObjMapa Obiekt typu JSONObject
+     */
     private void zapisz_mape(JSONObject ObjMapa){
-        JSONArray asd = new JSONArray();
+        JSONArray tabTemp = new JSONArray();
 
         JSONArray mapa = new JSONArray();
         int j=0;
@@ -204,12 +321,17 @@ public class Data {
             for (int i=0; i<row.length; i++){
                 mapa.add(row[i]);
             }
-            asd.add(j,mapa);
+            tabTemp.add(j, mapa);
             j++;
             mapa = new JSONArray();
         }
-        ObjMapa.put("MAPA",asd);
+        ObjMapa.put("MAPA",tabTemp);
     }
+
+    /**
+     * Metoda odpowiadająca za zapis piłki
+     * @param ObjPilka Obiekt typu JSONObject
+     */
     private void zapisz_Pilke(JSONObject ObjPilka){
     }
 }

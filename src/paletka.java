@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 
 /**
  * Created by Daniel on 02.11.2015.
+ * Klasa odpowiadaj¹ca za paletkê
  */
 public class paletka implements KeyListener {
 
@@ -18,6 +19,13 @@ public class paletka implements KeyListener {
 
     private int dx;
     private int dy;
+
+    /**
+     * @param x_start Pozycja pocz¹tkowa X
+     * @param y_start Pozycja pocz¹tkowa Y
+     * @param szerokosc Szerokoœæ paletki
+     * @param wysokosc Wysokoœæ paletki
+     */
     paletka(int x_start,int y_start,int szerokosc,int wysokosc){
         System.out.println("Dodano paletke");
         x_pos = x_start;
@@ -28,14 +36,29 @@ public class paletka implements KeyListener {
         kolor=Color.blue;
     }
 
+    /**
+     * Zwraca kolor paletki
+     * @return
+     */
     public Color getKolor() {
         return kolor;
     }
 
+    /**
+     * Ustawia kolor paletki
+     * @param kolor
+     */
     public void setKolor(Color kolor) {
         this.kolor = kolor;
     }
 
+    /**
+     * Ustawia pozycje paletki
+     * @param x_start
+     * @param y_start
+     * @param szerokosc
+     * @param wysokosc
+     */
     public void ustaw_pozycje(int x_start,int y_start,int szerokosc,int wysokosc){
         x_pos = x_start;
         y_pos = y_start;
@@ -43,6 +66,10 @@ public class paletka implements KeyListener {
         wys_ = wysokosc;
     }
 
+    /**
+     * Metoda odpowiadaj¹ca za poruszanie siê paletki
+     * @param maxX
+     */
     public void porusz(int maxX){
         x_pos += 2*dx;
         if(x_pos<1)
@@ -51,23 +78,47 @@ public class paletka implements KeyListener {
             x_pos=maxX-szer_;
     }
 
+    /**
+     * Metoda zwracaj¹ca szerokoœæ paletki
+     * @return
+     */
     public int getSzer_() {
         return szer_;
     }
 
+    /**
+     * Metoda zwracaj¹ca wysokoœæ paletki
+     * @return
+     */
     public int getWys_() {
         return wys_;
     }
 
+    /**
+     * Metoda zwracaj¹ca pozycjê X
+     * @return
+     */
     public int getX()
     {
         return x_pos;
     }
+
+    /**
+     * Metoda zwracaj¹ca pozycjê Y
+     * @return
+     */
     public int getY()
     {
         return y_pos;
     }
 
+    /**
+     * Metoda odpowiadaj¹ca za skalowanie paletki wzglêdem rozmiaru okna
+     * @param szerokosc Nowa szerokosc okna
+     * @param wysokosc  Nowa wysokosc okna
+     * @param szer_stara Stara szerokosc okna
+     * @param wys_stara Stara wysokosc okna
+     */
     public void skaluj(int szerokosc,int wysokosc,int szer_stara, int wys_stara){
         if(szer_!=0) {
             double a = (double)x_pos/szer_stara;
@@ -82,11 +133,18 @@ public class paletka implements KeyListener {
         szer_ = szerokosc/5;
         wys_ = wysokosc/25;
     }
+    /**
+     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * @param e Obiekt typu KeyEvent
+     */
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
-
+    /**
+     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * @param e Obiekt typu KeyEvent
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -99,7 +157,10 @@ public class paletka implements KeyListener {
         dx=predkosc;
     }
     }
-
+    /**
+     *  Metoda odpowiadajaca za przechwycenie puszczenia klawisza
+     * @param e Obiekt typu KeyEvent
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
@@ -110,7 +171,10 @@ public class paletka implements KeyListener {
             }
         }
     }
-
+    /**
+     * Zwraca obiekt typu Rectangle który jest u¿ywany do wykrywania kolizji
+     * @return
+     */
     public Rectangle getBounds(){
         return new Rectangle(x_pos,y_pos,szer_,wys_);
     }
