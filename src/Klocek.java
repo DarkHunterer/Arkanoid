@@ -12,11 +12,11 @@ public class Klocek {
     private int wys;
     private int wytrzymalosc;
     private Color kolor=Color.RED;
-    Klocek(int x, int y, int szer_ekr, int wys_ekr,int zycie){
+    Klocek(int x, int y, int szerokosc, int wysokosc,int zycie){
         pos_X = x;
         pos_Y = y;
-        szer = szer_ekr/15;
-        wys = wys_ekr/30;
+        szer = szerokosc;
+        wys = wysokosc;
         wytrzymalosc=zycie;
         switch (zycie){
             case 0: try{
@@ -45,6 +45,22 @@ public class Klocek {
      */
     public Color getKolor() {
         return kolor;
+    }
+
+    /**
+     * Ustawia pozycje X
+     * @param pos_X
+     */
+    public void setPos_X(int pos_X) {
+        this.pos_X = pos_X;
+    }
+
+    /**
+     * Ustawia pozycje Y
+     * @param pos_Y
+     */
+    public void setPos_Y(int pos_Y) {
+        this.pos_Y = pos_Y;
     }
 
     /**

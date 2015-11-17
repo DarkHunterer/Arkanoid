@@ -14,7 +14,6 @@ public class pasekWyniku extends JPanel implements ActionListener{
     private int wynik;
     private int czas ;
     private int licznik;
-    private Timer timer;
     private Boolean init=false;
     private Color kolor_;
 
@@ -24,18 +23,17 @@ public class pasekWyniku extends JPanel implements ActionListener{
 
     /**
      *
-     * @param col Kolor przyjmowany przez konstuktor
      * @param config Obiekt odpowiadajacy za konfiguracje
      */
-    public pasekWyniku(Color col,Data config){
-        kolor_ = col;
+    public pasekWyniku(Data config){
+        licznik=0;
+        wynik=0;
+        kolor_ = config.OknoGlowne_kolor_pasekWyniku;
         this.setBackground(kolor_);
         setLayout(new FlowLayout());
 
         zycie = config.PasekWyniku_const_zycie;
         czas = config.PasekWyniku_const_czas;
-        licznik=0;
-        wynik=0;
 
         labelZycie= new JLabel("Zycie: "+ zycie);
         labelWynik= new JLabel("Wynik: "+ wynik);

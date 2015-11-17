@@ -1,9 +1,8 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 
 /**
  * Główna klasa, w której umieszczane komponenty panelGry i pasekWyniku
@@ -25,6 +24,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private String string_command_help;
     private String string_command_start;
     private String string_command_settings;
+    private String string_command_bestScore;
 
     private String string_menuPomoc_title;
     private String string_start;
@@ -65,6 +65,11 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         OknoGlowne okno = new OknoGlowne();
         okno.setVisible(true);
         System.out.println(Color.darkGray.getRGB()+" "+Color.PINK.getRGB()+" "+Color.BLUE.getRGB());
+        //okno.panelgry_ = null;
+      //  Frame f = new Frame();
+      //  f.setPreferredSize(new Dimension(500,500));
+      //  f.pack();
+      //  f.setVisible(true);
        // okno.panelgry_.setVisible(false);
     }
 
@@ -86,6 +91,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         string_command_help =config.OknoGlowne_command_help;
         string_command_start =config.OknoGlowne_command_start;
         string_command_settings = config.OknoGlowne_command_settings;
+        string_command_bestScore = config.OknoGlowne_command_bestScore;
         string_menuPomoc_title=config.OknoGlowne_string_menuPomoc_title;
         string_start=config.OknoGlowne_string_start;
         string_end=config.OknoGlowne_string_end;
@@ -102,8 +108,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      * Metoda tworząca obiekty panelu gry i pasku wyniku oraz dodająca je do głównego okna na GridBackLayout'cie
      */
     private  void dodajElementy(){
-        panelgry_ = new panelGry(config);
-        pasekWyniku_ = new pasekWyniku(kolor_pasekWyniku,config);
+        panelgry_ =  new panelGry(config);
+        pasekWyniku_ = new pasekWyniku(config);
 
         Dimension rozmiar_okna = new Dimension(width,heigth);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,19 +119,16 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         timerGlowny = new Timer(DELAY,this);
         addKeyListener(this);
         timerGlowny.setActionCommand(string_command_timer_off);
-        timerGlowny.start();
         this.addComponentListener(this);
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-
         c.weightx=1;
         c.weighty=0.01;
         c.gridx=0;
         c.gridy=0;
         this.add(pasekWyniku_,c);
-
         c.gridx=0;
         c.gridy=1;
         c.weighty=0.95;
@@ -138,9 +141,10 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private void zacznijGre(){
         //if(init) {
             pasekWyniku_.start();
-            panelgry_.setVisible(true);
+            //panelgry_.setVisible(true);
             graTrwa = true;
             panelgry_.start();
+            timerGlowny.start();
             timerGlowny.setActionCommand(string_command_timer_on);
       // }
        // else
@@ -167,7 +171,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
         MenuItem mStart = new MenuItem(string_start);
         MenuItem mKoniec = new MenuItem(string_end);
-        MenuItem bestScore = new MenuItem(string_bestScore);
+        MenuItem mbestScore = new MenuItem(string_bestScore);
         MenuItem mUstawienia = new MenuItem(string_config);
         MenuItem mPomoc = new MenuItem(string_rules);
         MenuItem mAutorzy = new MenuItem(string_authors);
@@ -180,7 +184,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         mbar.setHelpMenu(menuPomoc);
         mbar.add(menuPomoc);
         menu.add(mStart);
-        menu.add(bestScore);
+        menu.add(mbestScore);
         menu.add(mUstawienia);
         menu.add(mKoniec);
         menuPomoc.add(mPomoc);
@@ -192,12 +196,14 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         mUstawienia.setActionCommand(string_command_settings);
         mPomoc.setActionCommand(string_command_help);
         mStart.setActionCommand(string_command_start);
+        mbestScore.setActionCommand(string_command_bestScore);
 
         mKoniec.addActionListener(this);
         mAutorzy.addActionListener(this);
         mPomoc.addActionListener(this);
         mStart.addActionListener(this);
         mUstawienia.addActionListener(this);
+        mbestScore.addActionListener(this);
     }
 
     /**
@@ -260,26 +266,30 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
         else if(e.getActionCommand().equals(string_command_authors))
         {
-            JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel R�kawek\n-Konrad J�drzejczak");
+            JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel Rękawek\n-Konrad Jędrzejczak");
         }
         else if(e.getActionCommand().equals(string_command_start))
         {
             zacznijGre();
         }
+        else if(e.getActionCommand().equals(string_command_bestScore)){
+            BestScoreFrame scoreFrame = new BestScoreFrame(getWidth()/2,getHeight()/2,this);
+        }
         else if (e.getActionCommand().equals(string_command_settings)){
-            JFileChooser chooser = new JFileChooser();
+         /*   JFileChooser chooser = new JFileChooser();
             int returnVal = chooser.showOpenDialog(getParent());
             if(returnVal == JFileChooser.APPROVE_OPTION) {
                 config.zapisz_config();
                 config.wczytaj_config(chooser.getSelectedFile().toString());
                 wczytaj_config();
                 /*dodajElementy();
-                dodajGUI();*/
+                dodajGUI();*//*
                 init = true;
             }
             else {
                 JOptionPane.showMessageDialog(getParent(),"Blad otwarcia pliku");
-            }
+            }*/
+         SettingsFrame settFrame = new SettingsFrame(getWidth()/2,getHeight()/2,this);
         }
            repaint();
      }
@@ -321,4 +331,88 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
     }
 
+    private class SettingsFrame extends JFrame implements ActionListener{
+        JButton acceptButton;
+        JTextField textField;
+        private Inet4Address addressIP;
+        public SettingsFrame(int width,int heigth,Frame parentFrame){
+
+            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            setPreferredSize(new Dimension(width,heigth));
+            parentFrame.setEnabled(false);
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    parentFrame.setEnabled(true);
+                    super.windowClosing(e);
+                }
+            });
+            setVisible(true);
+            dodajElementy();
+            pack();
+        }
+       private void dodajElementy(){
+           this.setLayout(new GridBagLayout());
+           GridBagConstraints c = new GridBagConstraints();
+           c.fill = GridBagConstraints.BOTH;
+            acceptButton = new JButton("Akceptuj");
+           acceptButton.setSize(new Dimension(getWidth(),getHeight()));
+           textField = new JTextField("    Wprowadz tu swoje ip     ");
+           textField.setBackground(Color.white);
+           textField.setCaretColor(Color.red);
+           c.weightx=0.2;
+           c.gridx=0;
+           c.gridy=0;
+           c.weighty=0.8;
+           add(textField);
+           c.weighty=0.2;
+           c.gridx=0;
+           c.gridy=1;
+           add(acceptButton,c);
+           acceptButton.addActionListener(this);
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          //  if(e.equals(acceptButton)){
+                try {
+                    addressIP = (Inet4Address) Inet4Address.getByName(textField.getText());
+                    JOptionPane.showMessageDialog(getParent(), addressIP);
+                }catch (UnknownHostException ex){
+                    JOptionPane.showMessageDialog(getParent(), ex.getMessage());
+           //     }
+            }
+        }
+    }
+    private class BestScoreFrame extends JFrame{
+        JTextField textField;
+        public BestScoreFrame(int width,int heigth,Frame parentFrame){
+            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            setPreferredSize(new Dimension(width,heigth));
+            parentFrame.setEnabled(false);
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    parentFrame.setEnabled(true);
+                    super.windowClosing(e);
+                }
+            });
+            setVisible(true);
+            dodajElementy();
+            pack();
+        }
+        private void dodajElementy(){
+            textField = new JTextField("Do zrobienia");
+            this.setLayout(new GridBagLayout());
+            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.BOTH;
+            textField.setBackground(Color.white);
+            textField.setCaretColor(Color.red);
+            c.weightx=0.2;
+            c.gridx=0;
+            c.gridy=0;
+            c.weighty=0.8;
+            textField.setText("Yet to be done...");
+            add(textField);
+        }
+    }
 }

@@ -17,8 +17,6 @@ import org.json.simple.JSONValue;
  */
 
 public class Data {
-    ///
-    ///
     /**
      * Zmienna odpowiadajaca za opóźnienie zegara
      */
@@ -55,6 +53,10 @@ public class Data {
      * Zmienna odpowiadająca za start gry
      */
     public String OknoGlowne_command_start;//="START";
+    /**
+     * Zmienna odpowiadajaca za bestscore
+     */
+    public String OknoGlowne_command_bestScore;
     /**
      * Zmienna odpowiadająca za wlaczenie ustawień
      */
@@ -130,8 +132,10 @@ public class Data {
     /**
      * Konstruktor klasy, wczytuje domyslna konfiguracje z pliku.
      */
-    Data(){
+    Data()
+    {
         wczytaj_config("domyslny_config.json");
+        zapisz_config();
     }
 
     /**
@@ -214,6 +218,7 @@ public class Data {
         OknoGlowne_command_help=(String) jsonObjOknoGlowne.get("command_help");
         OknoGlowne_command_start=(String) jsonObjOknoGlowne.get("command_start");
         OknoGlowne_command_settings=(String) jsonObjOknoGlowne.get("command_settings");
+        OknoGlowne_command_bestScore= (String) jsonObjOknoGlowne.get("command_bestscore");
 
         OknoGlowne_string_menuPomoc_title=(String) jsonObjOknoGlowne.get("string_menuPomoc_title");
         OknoGlowne_string_start=(String) jsonObjOknoGlowne.get("string_start");
@@ -284,6 +289,7 @@ public class Data {
         objOknoGlowne.put("command_help", OknoGlowne_command_help);
         objOknoGlowne.put("command_start", OknoGlowne_command_start);
         objOknoGlowne.put("command_settings", OknoGlowne_command_settings);
+        objOknoGlowne.put("command_bestscore",OknoGlowne_command_bestScore);
         objOknoGlowne.put("string_menuPomoc_title", OknoGlowne_string_menuPomoc_title);
         objOknoGlowne.put("string_start", OknoGlowne_string_start);
         objOknoGlowne.put("string_end", OknoGlowne_string_end);

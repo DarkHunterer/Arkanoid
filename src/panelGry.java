@@ -39,6 +39,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             System.out.println(e.toString());
         }
     }
+    public panelGry(){};
 
     /**
      * Metoda tworz¹ca obiekty paletki,pilki oraz tworzy klocki oraz uruchamia logikê gry.
@@ -61,18 +62,25 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
      * @param heigth Wysokoœc okna wzglêdem której skalowany jest klocek
      */
     private void dodajKlocki(int width,int heigth){
-        int X=width/20,Y=heigth/10;
+        int X=0,Y=heigth/10;
+        int maxRow=0,maxCol;
+        int brickWidth=0,brickHeigth=0;
+        maxRow = bricksPos.length;
+        maxCol = bricksPos[0].length;
+        brickWidth = width/maxCol;
+        brickHeigth = (int)(heigth/maxRow/(2.5));
         System.out.println("Tablica klockow. LENGTH: "+bricksPos.length);
+       // X=brickWidth;
         klocki = new ArrayList<>();
             for (int[] row : bricksPos) {
                 for (int i=0; i<row.length; i++){
                     if(row[i]!=0) {
-                        klocki.add(new Klocek(X, Y, width, heigth,row[i]));
+                        klocki.add(new Klocek(X, Y, brickWidth, brickHeigth,row[i]));
                     }
-                    X += getWidth()/15;
+                    X += brickWidth;
                 }
-                X=width/20;
-                Y+=getHeight()/30;
+                X=0;
+                Y+=brickHeigth;
             }
 
         for(Klocek kl :klocki)
@@ -185,16 +193,16 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getActionCommand().equals("TIMER_MAIN_TICK")) {
+            szer_stara = getWidth();
+            wys_stara = getHeight();
          //   System.out.println(e.getActionCommand());
             if (!pauza) {
                 if (init) {
-                    szer_stara = getWidth();
-                    wys_stara = getHeight();
                     paletka_.porusz(getWidth());
                     pilka_.porusz(getWidth(), getHeight());
                     sprawdzKolizje();
-                    repaint();
                 }
+                repaint();
             }
         }
        // System.out.println("Szer panelu gry to: "+getWidth() +" a wys panelu gry to: "+ getHeight());
