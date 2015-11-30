@@ -10,7 +10,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created by Daniel on 02.11.2015.
+ *
+ * Klasa odpowiadajaca za panel gry
  */
 
 public class panelGry extends JPanel implements ActionListener, KeyListener {
@@ -27,7 +28,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
 
     /**
      * Konstruktor klasy panelGry
-     * @param config Klasa obiektu w którym jest konfiguracja
+     * @param config Klasa obiektu w ktï¿½rym jest konfiguracja
      */
     public panelGry(Data config){
         this.setOpaque(true);
@@ -42,7 +43,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     public panelGry(){};
 
     /**
-     * Metoda tworz¹ca obiekty paletki,pilki oraz tworzy klocki oraz uruchamia logikê gry.
+     * Metoda tworzï¿½ca obiekty paletki,pilki oraz tworzy klocki oraz uruchamia logikï¿½ gry.
      */
         public void start(){
         int width = getWidth();
@@ -50,16 +51,16 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         System.out.println("Szerokosc "+width +" wysokosc " +heigth);
         paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
         pilka_ = new Pilka(width/2,heigth/2,heigth/30);
-        pilka_.setPredkosc(1);
+      //  pilka_.setPredkosc(1);
         dodajKlocki(width,heigth);
         pauza=false;
         init = true;
     }
 
     /**
-     * Wype³nia listê klocków z wczytanej mapy
-     * @param width Szerokoœæ okna wzglêdem którego skalowany jest klocek
-     * @param heigth Wysokoœc okna wzglêdem której skalowany jest klocek
+     * Wypeï¿½nia listï¿½ klockï¿½w z wczytanej mapy
+     * @param width Szerokoï¿½ï¿½ okna wzglï¿½dem ktï¿½rego skalowany jest klocek
+     * @param heigth Wysokoï¿½c okna wzglï¿½dem ktï¿½rej skalowany jest klocek
      */
     private void dodajKlocki(int width,int heigth){
         int X=0,Y=heigth/10;
@@ -90,7 +91,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
 
     /**
-     * Metoda odpowiadaj¹ca za rysowanie paletki
+     * Metoda odpowiadajï¿½ca za rysowanie paletki
      * @param g
      */
     private void rysuj_paletke(Graphics g){
@@ -101,7 +102,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
 
     /**
-     * Metoda odpowiadaj¹ca za rysowanie pi³ki
+     * Metoda odpowiadajï¿½ca za rysowanie piï¿½ki
      * @param g
      */
     private void rysuj_pilke(Graphics g){
@@ -113,7 +114,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
 
     /**
-     * Metoda odpowiadaj¹ca za narysowanie na ekranie klocków
+     * Metoda odpowiadajï¿½ca za narysowanie na ekranie klockï¿½w
      * @param g
      */
     private void rysuj_klocki(Graphics g){
@@ -129,7 +130,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
 
     /**
-     * Metoda odpowiadaj¹ca za rysowanie
+     * Metoda odpowiadajï¿½ca za rysowanie
      * @param g
      */
     @Override
@@ -143,7 +144,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
 
     /**
-     * Metoda odpowiadaj¹ca za narysowanie t³a
+     * Metoda odpowiadajï¿½ca za narysowanie tï¿½a
      * @param g
      */
     @Override
@@ -162,7 +163,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
 
     /**
-     * Metoda pauzuj¹ca rozgrywkê
+     * Metoda pauzujï¿½ca rozgrywkï¿½
      * @param pauza
      */
     public void setPauza(Boolean pauza) {
@@ -191,16 +192,27 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
-
+        int FPS = 30;
         if (e.getActionCommand().equals("TIMER_MAIN_TICK")) {
             szer_stara = getWidth();
             wys_stara = getHeight();
          //   System.out.println(e.getActionCommand());
             if (!pauza) {
                 if (init) {
+                    long now = System.nanoTime();
                     paletka_.porusz(getWidth());
                     pilka_.porusz(getWidth(), getHeight());
                     sprawdzKolizje();
+                    long update = System.nanoTime() - now;
+                    double milis = (double)update/1000000.0;
+
+                    if (milis<(double)1000/25) {
+                        try {
+                            Thread.sleep(1000/25 - (long)milis);
+                        } catch (Exception ex) {
+                            System.out.println(e.toString());
+                        }
+                    }
                 }
                 repaint();
             }
@@ -211,7 +223,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     }
 
     /**
-     * Metoda sprawdzaj¹ca wyst¹pienie kolizji
+     * Metoda sprawdzajï¿½ca wystï¿½pienie kolizji
      */
     public void sprawdzKolizje(){
         Rectangle rpaletka = paletka_.getBounds();
@@ -284,6 +296,9 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         }
         klocki.remove(temp);
         if(rpaletka.intersects(rpilka)){
+            obliczKat((int)rpilka.getX());
+            pilka_.obliczPredkosc(pilka_.getKat());
+            System.out.println(pilka_.getKat());
             pilka_.odwroc_Y();
         }
         else if((pilka_.getX_pos()>=getWidth()-pilka_.getSrednica())||(pilka_.getX_pos()<=1))
@@ -300,10 +315,28 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             pilka_.odwroc_Y();
         }
 
-        }
+    }
 
     /**
-     * Metoda odpowiadaj¹ca za skalowanie elementów panelu gry wzglêdem rozmiaru ekranu
+     * Metoda obliczajaca kat odbicia pilki od paletki
+     */
+    private void obliczKat(int X_ball) {
+        int middlePaddle =(paletka_.getX()+paletka_.getSzer_()/2);
+        int beginPaddle = paletka_.getX();
+        int X_collision = X_ball+pilka_.getSrednica()/2 - beginPaddle;
+        System.out.println("Srodek paletki to "+middlePaddle+" X_collision to "+X_collision);
+        System.out.print("Szerokosc paletki to "+paletka_.getSzer_()+"\n");
+
+        int kat = 90 * (X_collision - paletka_.getSzer_() / 2) / (paletka_.getSzer_() / 2);
+        if(kat <= -90)
+            kat = -90;
+        else if (kat >=90)
+            kat = 90;
+        pilka_.setKat(kat);
+    }
+
+    /**
+     * Metoda odpowiadajï¿½ca za skalowanie elementï¿½w panelu gry wzglï¿½dem rozmiaru ekranu
      */
     public void skaluj()
     {

@@ -32,7 +32,7 @@ public class paletka implements KeyListener {
         y_pos = y_start;
         szer_=szerokosc;
         wys_ = wysokosc;
-        predkosc =1;
+        predkosc =200;
         kolor=Color.blue;
     }
 
@@ -71,7 +71,7 @@ public class paletka implements KeyListener {
      * @param maxX
      */
     public void porusz(int maxX){
-        x_pos += 2*dx;
+        x_pos += dx/60;
         if(x_pos<1)
             x_pos=1;
         if(x_pos+szer_>maxX)

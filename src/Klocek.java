@@ -2,7 +2,7 @@ import java.awt.*;
 import java.text.DecimalFormat;
 
 /**
- * Created by Daniel on 03.11.2015.
+ *
  * Klasa odpowiadaj¹ca za klocek (przeszkoda do zbicia pi³k¹)
  */
 public class Klocek {

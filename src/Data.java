@@ -12,7 +12,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 /**
- * Created by Daniel on 14.11.2015.
+ *
  * Klasa odpowiadajaca za konfiguracje
  */
 

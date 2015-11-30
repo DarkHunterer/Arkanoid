@@ -355,7 +355,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
            this.setLayout(new GridBagLayout());
            GridBagConstraints c = new GridBagConstraints();
            c.fill = GridBagConstraints.BOTH;
-            acceptButton = new JButton("Akceptuj");
+           acceptButton = new JButton("Akceptuj");
            acceptButton.setSize(new Dimension(getWidth(),getHeight()));
            textField = new JTextField("    Wprowadz tu swoje ip     ");
            textField.setBackground(Color.white);

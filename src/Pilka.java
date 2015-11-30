@@ -1,8 +1,9 @@
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.Map;
 
 /**
- * Created by Daniel on 02.11.2015.
+ *
  * Klasa odpowiadaj¹ca za pi³ke
  */
 public class Pilka {
@@ -10,8 +11,10 @@ public class Pilka {
     private int y_pos;
     private int srednica;
     private int predkosc;
+    private int kat;
     private int dx=1;
     private int dy=1;
+    private int velVect;
 
     /**
      * Konsturktor pi³ki
@@ -25,6 +28,46 @@ public class Pilka {
         y_pos = y_start;
         srednica =szerokosc;
         predkosc=1;
+        dx = 100;
+        dy = 100;
+        velVect = (int)Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
+    }
+
+    /**
+     * Metoda wyznaczaj¹ca sk³adowe X i Y prêdkoœci wzglêdem k¹ta padania
+     * @param kat
+     */
+    public void obliczPredkosc(int kat)
+    {
+
+        double tangens=Math.tan(Math.toRadians(kat));
+       // double sumVel = Math.sqrt(Math.pow(dx,2)+ Math.pow(dy,2));
+        int skl_Y = (int)Math.round(Math.sqrt(Math.pow(velVect,2)/(Math.pow(tangens,2)+1)));
+        int skl_X = (int)Math.round(Math.sqrt(Math.pow(velVect,2)-Math.pow(skl_Y,2)));
+        if(tangens>0)
+            dx= skl_X;
+        if(tangens<0)
+            dx= -skl_X;
+        dy= skl_Y;
+        System.out.println("Tanens wynosi " + tangens+".Skl_X wynosi "+ skl_X+".Skl_Y wynosi "+skl_Y);
+
+
+
+    }
+    /**
+     * Getter zmiennej kat
+     * @return
+     */
+    public int getKat() {
+        return kat;
+    }
+
+    /**
+     * Setter pola kat
+     * @param kat
+     */
+    public void setKat(int kat) {
+        this.kat = kat;
     }
 
     /**
@@ -61,8 +104,8 @@ public class Pilka {
      * @param maxY Maksymalny Y jaki pi³ka mo¿e przyj¹æ
      */
     public void porusz(int maxX,int maxY){
-        x_pos += predkosc*dx;
-        y_pos += predkosc*dy;
+        x_pos += predkosc*dx/30;
+        y_pos += predkosc*dy/30;
         if(x_pos<1)
             x_pos=1;
         else if(x_pos+ srednica >maxX)

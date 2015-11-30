@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Daniel on 29.10.2015.
+ *
  * Klasa paska wyniku
  */
 public class pasekWyniku extends JPanel implements ActionListener{
