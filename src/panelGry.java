@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
  * Klasa odpowiadajaca za panel gry
  */
 
-public class panelGry extends JPanel implements ActionListener, KeyListener {
+public class panelGry extends JPanel implements KeyListener,Runnable {
 
     private int[][] bricksPos;
     private paletka paletka_;
@@ -25,7 +24,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     private int szer_stara;
     private int wys_stara;
     private Image img;
-
+    Thread thread;
     /**
      * Konstruktor klasy panelGry
      * @param config Klasa obiektu w kt�rym jest konfiguracja
@@ -40,8 +39,6 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
             System.out.println(e.toString());
         }
     }
-    public panelGry(){};
-
     /**
      * Metoda tworz�ca obiekty paletki,pilki oraz tworzy klocki oraz uruchamia logik� gry.
      */
@@ -51,10 +48,14 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
         System.out.println("Szerokosc "+width +" wysokosc " +heigth);
         paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
         pilka_ = new Pilka(width/2,heigth/2,heigth/30);
-      //  pilka_.setPredkosc(1);
         dodajKlocki(width,heigth);
         pauza=false;
         init = true;
+            if (thread == null)
+            {
+                thread = new Thread (this, "Watek panelu gry");
+            }
+            thread.start ();
     }
 
     /**
@@ -86,7 +87,7 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
 
         for(Klocek kl :klocki)
         {
-            System.out.println(kl.getBounds());
+           // System.out.println(kl.getBounds());
         }
     }
 
@@ -189,14 +190,16 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     /**
      *
      *  Metoda odpowiadajaca za obsluge zdarzen w obiekcie
-     * @param e
+     *
      */
-    public void actionPerformed(ActionEvent e) {
+
+    @Override
+    public void run() {
         int FPS = 30;
-        if (e.getActionCommand().equals("TIMER_MAIN_TICK")) {
+        while(true) {
             szer_stara = getWidth();
             wys_stara = getHeight();
-         //   System.out.println(e.getActionCommand());
+            //   System.out.println(e.getActionCommand());
             if (!pauza) {
                 if (init) {
                     long now = System.nanoTime();
@@ -204,17 +207,18 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
                     pilka_.porusz(getWidth(), getHeight());
                     sprawdzKolizje();
                     long update = System.nanoTime() - now;
-                    double milis = (double)update/1000000.0;
+                    double milis = (double) update / 1000000.0;
 
-                    if (milis<(double)1000/25) {
+                    if (milis < (double) 1000 / FPS) {
                         try {
-                            Thread.sleep(1000/25 - (long)milis);
+                            Thread.currentThread().sleep((1000 / FPS - (long) milis));
                         } catch (Exception ex) {
-                            System.out.println(e.toString());
+                            //  System.out.println(e.toString());
                         }
                     }
+                    repaint();
+
                 }
-                repaint();
             }
         }
        // System.out.println("Szer panelu gry to: "+getWidth() +" a wys panelu gry to: "+ getHeight());
@@ -341,12 +345,22 @@ public class panelGry extends JPanel implements ActionListener, KeyListener {
     public void skaluj()
     {
         if(init) {
+            int maxRow=0,maxCol;
+            int brickWidth=0,brickHeigth=0;
+            maxRow = bricksPos.length;
+            maxCol = bricksPos[0].length;
+            brickWidth = getWidth()/maxCol;
+            brickHeigth = (int)(getHeight()/maxRow/(2.5));
+
+
             paletka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
             pilka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara,paletka_.getSzer_());
             for (Klocek k : klocki) {
-                k.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
+                k.skaluj(getWidth(), getHeight(), szer_stara, wys_stara,brickWidth,brickHeigth);
             }
             repaint();
         }
     }
+
+
 }

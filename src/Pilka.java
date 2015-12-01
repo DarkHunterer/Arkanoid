@@ -10,10 +10,10 @@ public class Pilka {
     private int x_pos;
     private int y_pos;
     private int srednica;
-    private int predkosc;
+    private double predkosc;
     private int kat;
-    private int dx=1;
-    private int dy=1;
+    private int dx;
+    private int dy;
     private int velVect;
 
     /**
@@ -27,9 +27,9 @@ public class Pilka {
         x_pos = x_start;
         y_pos = y_start;
         srednica =szerokosc;
-        predkosc=1;
-        dx = 100;
-        dy = 100;
+        predkosc=0.5;
+        dx = 120;
+        dy = 120;
         velVect = (int)Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
     }
 
@@ -44,12 +44,15 @@ public class Pilka {
        // double sumVel = Math.sqrt(Math.pow(dx,2)+ Math.pow(dy,2));
         int skl_Y = (int)Math.round(Math.sqrt(Math.pow(velVect,2)/(Math.pow(tangens,2)+1)));
         int skl_X = (int)Math.round(Math.sqrt(Math.pow(velVect,2)-Math.pow(skl_Y,2)));
+
+
         if(tangens>0)
             dx= skl_X;
         if(tangens<0)
             dx= -skl_X;
         dy= skl_Y;
         System.out.println("Tanens wynosi " + tangens+".Skl_X wynosi "+ skl_X+".Skl_Y wynosi "+skl_Y);
+       // velVect = (int)Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
 
 
 
@@ -74,7 +77,7 @@ public class Pilka {
      * Zwraca predkosc pi³ki
      * @return
      */
-    public int getPredkosc() {
+    public double getPredkosc() {
         return predkosc;
     }
 
@@ -104,8 +107,8 @@ public class Pilka {
      * @param maxY Maksymalny Y jaki pi³ka mo¿e przyj¹æ
      */
     public void porusz(int maxX,int maxY){
-        x_pos += predkosc*dx/30;
-        y_pos += predkosc*dy/30;
+        x_pos += dx/30;
+        y_pos += dy/30;
         if(x_pos<1)
             x_pos=1;
         else if(x_pos+ srednica >maxX)

@@ -71,7 +71,7 @@ public class paletka implements KeyListener {
      * @param maxX
      */
     public void porusz(int maxX){
-        x_pos += dx/60;
+        x_pos += dx/30;
         if(x_pos<1)
             x_pos=1;
         if(x_pos+szer_>maxX)

@@ -17,6 +17,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private int width;
     private int heigth;
 
+    private Image dbImage;
+    private Graphics dbGfx;
+
     private String string_command_timer_off;
     private String string_command_timer_on;
     private String string_command_exit;
@@ -253,9 +256,12 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     @Override
     public void actionPerformed(ActionEvent e) {
         if(graTrwa) {
-           panelgry_.actionPerformed(e);
+          // panelgry_.actionPerformed(e);
            pasekWyniku_.actionPerformed(e);
-       }
+            //panelgry_.startWatek();
+            repaint();
+
+        }
         if (e.getActionCommand().equals(string_command_exit)){
             //this.dispose(); to dziala ciekawie
             System.exit(1);
@@ -291,7 +297,6 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             }*/
          SettingsFrame settFrame = new SettingsFrame(getWidth()/2,getHeight()/2,this);
         }
-           repaint();
      }
 
     /**
