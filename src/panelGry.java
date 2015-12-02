@@ -21,6 +21,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     private Boolean init = false;
     private Boolean pauza = true;
     private ArrayList<Klocek> klocki;
+    private ArrayList<perk> perks;
     private int szer_stara;
     private int wys_stara;
     private Image img;
@@ -49,6 +50,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
         pilka_ = new Pilka(width/2,heigth/2,heigth/30);
         dodajKlocki(width,heigth);
+            perks = new ArrayList<>();
         pauza=false;
         init = true;
             if (thread == null)
@@ -85,10 +87,10 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 Y+=brickHeigth;
             }
 
-        for(Klocek kl :klocki)
+   /*     for(Klocek kl :klocki)
         {
            // System.out.println(kl.getBounds());
-        }
+        }*/
     }
 
     /**
@@ -131,6 +133,22 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     }
 
     /**
+     * Metoda odpowiadajaca za narysowanie bonusow
+     */
+    public void rysuj_perki(Graphics g){
+        if(!perks.isEmpty()) {
+            for (perk p : perks) {
+                g.setColor(p.col);
+                g.drawRect(p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight());
+                g.fillRect(p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight());
+                g.setColor(Color.cyan);
+                g.fillRect(p.getPos_x()+p.getWidth()/10,p.getPos_y()+p.getHeight()/10,p.getWidth()-2*p.getWidth()/10,p.getHeight()-2*p.getHeight()/10);
+                g.setColor(Color.magenta);
+                g.fillRect(p.getPos_x()+p.getWidth()/5,p.getPos_y()+p.getHeight()/5,p.getWidth()-2*p.getWidth()/5,p.getHeight()-2*p.getHeight()/5);
+            }
+        }
+    }
+    /**
      * Metoda odpowiadaj�ca za rysowanie
      * @param g
      */
@@ -141,8 +159,10 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             rysuj_paletke(g);
             rysuj_pilke(g);
             rysuj_klocki(g);
+            rysuj_perki(g);
         }
     }
+
 
     /**
      * Metoda odpowiadaj�ca za narysowanie t�a
@@ -205,7 +225,13 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                     long now = System.nanoTime();
                     paletka_.porusz(getWidth());
                     pilka_.porusz(getWidth(), getHeight());
+                    if(!perks.isEmpty()){
+                        for(perk p : perks){
+                            p.porusz();
+                        }
+                    }
                     sprawdzKolizje();
+
                     long update = System.nanoTime() - now;
                     double milis = (double) update / 1000000.0;
 
@@ -255,6 +281,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                     pilka_.odwroc_Y();
                     if (kl.getWytrzymalosc() == 0) {
                         temp = kl;
+                        perks.add(new perk(kl.getPos_X(),kl.getPos_Y(),kl.getSzer(),kl.getWys()));
                     }
 
                 /*//pilka_.setY_pos((kl.getPos_Y()+ kl.getSzer()));
@@ -299,6 +326,18 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             }
         }
         klocki.remove(temp);
+        if(!perks.isEmpty()) {
+            int index=-1;
+                for(perk p : perks){
+                    if (p.getPos_y() == paletka_.getY()) {
+                     index = perks.indexOf(p);
+                     }
+            }
+            if(index!=-1){
+                perks.remove(index);
+            }
+        }
+
         if(rpaletka.intersects(rpilka)){
             obliczKat((int)rpilka.getX());
             pilka_.obliczPredkosc(pilka_.getKat());
@@ -331,11 +370,11 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         System.out.println("Srodek paletki to "+middlePaddle+" X_collision to "+X_collision);
         System.out.print("Szerokosc paletki to "+paletka_.getSzer_()+"\n");
 
-        int kat = 90 * (X_collision - paletka_.getSzer_() / 2) / (paletka_.getSzer_() / 2);
-        if(kat <= -90)
-            kat = -90;
-        else if (kat >=90)
-            kat = 90;
+        int kat = 80 * (X_collision - paletka_.getSzer_() / 2) / (paletka_.getSzer_() / 2);
+        if(kat <= -80)
+            kat = -80;
+        else if (kat >=80)
+            kat = 80;
         pilka_.setKat(kat);
     }
 

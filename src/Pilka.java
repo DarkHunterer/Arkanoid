@@ -107,8 +107,8 @@ public class Pilka {
      * @param maxY Maksymalny Y jaki pi³ka mo¿e przyj¹æ
      */
     public void porusz(int maxX,int maxY){
-        x_pos += dx/30;
-        y_pos += dy/30;
+        x_pos += dx/28;
+        y_pos += dy/28;
         if(x_pos<1)
             x_pos=1;
         else if(x_pos+ srednica >maxX)
