@@ -1,12 +1,11 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -24,8 +23,10 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     private ArrayList<perk> perks;
     private int szer_stara;
     private int wys_stara;
-    private Image img;
+    private Image imgTlo, imgPaddle,imgBall;
     Thread thread;
+    Random generator = new Random();
+
     /**
      * Konstruktor klasy panelGry
      * @param config Klasa obiektu w kt�rym jest konfiguracja
@@ -35,7 +36,9 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         this.setBackground(config.OknoGlowne_kolor_panelGry);
         bricksPos = config.bricksPos;
         try {
-            img = ImageIO.read(new File("tlo.jpg"));
+            imgTlo = ImageIO.read(new File("tlo.jpg"));
+            imgPaddle = ImageIO.read(new File("paddle.png"));
+            imgBall =ImageIO.read(new File("ball.png"));
         }catch (Exception e){
             System.out.println(e.toString());
         }
@@ -98,10 +101,10 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
      * @param g
      */
     private void rysuj_paletke(Graphics g){
-        g.setColor(paletka_.getKolor());
-        g.drawRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
-        g.fillRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
-
+       // g.setColor(paletka_.getKolor());
+      //  g.drawRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
+      //  g.fillRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
+        g.drawImage(imgPaddle,paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_(),null);
     }
 
     /**
@@ -109,11 +112,13 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
      * @param g
      */
     private void rysuj_pilke(Graphics g){
-        g.setColor(Color.green);
+      /*  g.setColor(Color.green);
         g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getSrednica(),pilka_.getSrednica());
         g.fillOval(pilka_.getX_pos(), pilka_.getY_pos(), pilka_.getSrednica(), pilka_.getSrednica());
         g.setColor(Color.white);
         g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getSrednica(),pilka_.getSrednica());
+    */
+        g.drawImage(imgBall,pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getSrednica(),pilka_.getSrednica(),null);
     }
 
     /**
@@ -141,10 +146,6 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 g.setColor(p.col);
                 g.drawRect(p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight());
                 g.fillRect(p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight());
-                g.setColor(Color.cyan);
-                g.fillRect(p.getPos_x()+p.getWidth()/10,p.getPos_y()+p.getHeight()/10,p.getWidth()-2*p.getWidth()/10,p.getHeight()-2*p.getHeight()/10);
-                g.setColor(Color.magenta);
-                g.fillRect(p.getPos_x()+p.getWidth()/5,p.getPos_y()+p.getHeight()/5,p.getWidth()-2*p.getWidth()/5,p.getHeight()-2*p.getHeight()/5);
             }
         }
     }
@@ -172,7 +173,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.drawImage(img,0,0,getWidth(),getHeight(),null);
+        g.drawImage(imgTlo,0,0,getWidth(),getHeight(),null);
     }
     /**
      *  Metoda odpowiadajaca za przechwycenie puszczenia klawisza
@@ -281,7 +282,14 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                     pilka_.odwroc_Y();
                     if (kl.getWytrzymalosc() == 0) {
                         temp = kl;
-                        perks.add(new perk(kl.getPos_X(),kl.getPos_Y(),kl.getSzer(),kl.getWys()));
+                        int i = generator.nextInt(10);
+                        System.out.println("Wynik losowania to:"+i);
+                        if(i==1){
+                            perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p",paletka_));
+                        }
+                        else if(i==2){
+                            perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z",paletka_));
+                        }
                     }
 
                 /*//pilka_.setY_pos((kl.getPos_Y()+ kl.getSzer()));
@@ -329,7 +337,12 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         if(!perks.isEmpty()) {
             int index=-1;
                 for(perk p : perks){
-                    if (p.getPos_y() == paletka_.getY()) {
+                    Rectangle rperk = p.getBounds();
+                    if (rperk.intersects(rpaletka)){
+                        p.akcja();
+                        index = perks.indexOf(p);
+                    }
+                    else if (p.getPos_y() == paletka_.getY()) {
                      index = perks.indexOf(p);
                      }
             }

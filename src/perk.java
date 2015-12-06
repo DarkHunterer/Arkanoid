@@ -8,15 +8,50 @@ public class perk {
     private int pos_y;
     private int height;
     private int width;
+    private String kod;
     Color col = Color.yellow;
     private int dy;
-    public perk(int spawn_x,int spawn_y,int szer,int wys){
+    paletka paletka_;
+
+    public perk(int spawn_x,int spawn_y,int szer,int wys,String code,paletka pale){
         pos_x = spawn_x;
         pos_y = spawn_y;
         height = wys;
         width = szer;
-        dy = 1;
+        dy = 3;
+        kod = code;
+        paletka_ = pale;
+        switch (code){
+            case "z":{
+                col = Color.magenta;
+            }
+            break;
+            case "p":{
+                col = Color.black;
+            }
+            break;
+            default:
+                break;
+        }
         System.out.println("Perk spawn!");
+    }
+
+    public void akcja(){
+        switch (kod){
+            case "z":{
+                col = Color.magenta;
+                paletka_.setSzer_(paletka_.getSzer_()*3/4);
+            }
+            break;
+            case "p":{
+                col = Color.black;
+                paletka_.setSzer_(paletka_.getSzer_()*4/3);
+
+            }
+            break;
+            default:
+                break;
+        }
     }
 
     public int getPos_x() {
@@ -55,4 +90,8 @@ public class perk {
 
             pos_y+=dy;
     }
+    public Rectangle getBounds(){
+        return new Rectangle(pos_x,pos_y,width,height);
+    }
+
 }

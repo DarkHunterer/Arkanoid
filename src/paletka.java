@@ -53,6 +53,14 @@ public class paletka implements KeyListener {
     }
 
     /**
+     * Ustawia szerokosc paletki
+     * @param szer_
+     */
+    public void setSzer_(int szer_) {
+        this.szer_ = szer_;
+    }
+
+    /**
      * Ustawia pozycje paletki
      * @param x_start
      * @param y_start
