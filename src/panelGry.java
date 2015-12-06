@@ -23,7 +23,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     private ArrayList<perk> perks;
     private int szer_stara;
     private int wys_stara;
-    private Image imgTlo, imgPaddle,imgBall;
+    private Image imgTlo, imgPaddle,imgBall,imgPerk;
     Thread thread;
     Random generator = new Random();
 
@@ -38,7 +38,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         try {
             imgTlo = ImageIO.read(new File("tlo.jpg"));
             imgPaddle = ImageIO.read(new File("paddle.png"));
-            imgBall =ImageIO.read(new File("ball.png"));
+            imgBall = ImageIO.read(new File("ball.png"));
         }catch (Exception e){
             System.out.println(e.toString());
         }
@@ -143,9 +143,11 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     public void rysuj_perki(Graphics g){
         if(!perks.isEmpty()) {
             for (perk p : perks) {
-                g.setColor(p.col);
+              /*  g.setColor(p.col);
                 g.drawRect(p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight());
                 g.fillRect(p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight());
+            */
+                g.drawImage(p.imgPerk,p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight(),null);
             }
         }
     }
@@ -403,7 +405,6 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             maxCol = bricksPos[0].length;
             brickWidth = getWidth()/maxCol;
             brickHeigth = (int)(getHeight()/maxRow/(2.5));
-
 
             paletka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
             pilka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara,paletka_.getSzer_());

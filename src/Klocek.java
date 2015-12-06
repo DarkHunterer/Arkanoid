@@ -37,6 +37,7 @@ public class Klocek {
                 break;
             default:kolor=Color.magenta;
         }
+
     }
 
     /**

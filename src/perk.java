@@ -1,4 +1,6 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
 
 /**
  * Created by Daniel on 02.12.2015.
@@ -12,6 +14,7 @@ public class perk {
     Color col = Color.yellow;
     private int dy;
     paletka paletka_;
+    Image imgPerk;
 
     public perk(int spawn_x,int spawn_y,int szer,int wys,String code,paletka pale){
         pos_x = spawn_x;
@@ -21,13 +24,20 @@ public class perk {
         dy = 3;
         kod = code;
         paletka_ = pale;
+
         switch (code){
             case "z":{
                 col = Color.magenta;
+                try {
+                    imgPerk = ImageIO.read(new File("perk_zwezenie.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case "p":{
                 col = Color.black;
+                try {
+                    imgPerk = ImageIO.read(new File("perk_poszerzenie.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             default:
@@ -46,7 +56,6 @@ public class perk {
             case "p":{
                 col = Color.black;
                 paletka_.setSzer_(paletka_.getSzer_()*4/3);
-
             }
             break;
             default:
