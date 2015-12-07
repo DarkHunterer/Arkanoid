@@ -111,8 +111,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      * Metoda tworząca obiekty panelu gry i pasku wyniku oraz dodająca je do głównego okna na GridBackLayout'cie
      */
     private  void dodajElementy(){
-        panelgry_ =  new panelGry(config);
         pasekWyniku_ = new pasekWyniku(config);
+        panelgry_ =  new panelGry(config,pasekWyniku_);
 
         Dimension rozmiar_okna = new Dimension(width,heigth);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -143,7 +143,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      */
     private void zacznijGre(){
         //if(init) {
-            pasekWyniku_.start();
+            pasekWyniku_.start(config);
             //panelgry_.setVisible(true);
             graTrwa = true;
             panelgry_.start();
@@ -158,7 +158,6 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      * Metoda rysujaca okno na ekranie
      */
     private void dodajGUI(){
-
         this.pack();
     }
 
@@ -235,17 +234,19 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         public void keyPressed(KeyEvent e) {
         panelgry_.keyPressed(e);
         if (e.getKeyCode()==KeyEvent.VK_P) {
-            System.out.println("Pauza wcisnieta");
             if(!pauza) {
                 pauza = true;
-                getMenuBar().getMenu(0).setEnabled(true);
+            //    getMenuBar().getMenu(0).setEnabled(pauza);
+                panelgry_.wlaczPauze();
+                System.out.println("Pauza wlaczona");
             }
             else {
                 pauza = false;
-                getMenuBar().getMenu(0).setEnabled(false);
+             //   getMenuBar().getMenu(0).setEnabled(pauza);
+                panelgry_.wylaczPauze();
+                System.out.println("Pauza wylaczona");
             }
-            panelgry_.setPauza(pauza);
-            }
+        }
     }
 
     /**
@@ -258,7 +259,6 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         if(graTrwa) {
           // panelgry_.actionPerformed(e);
            pasekWyniku_.actionPerformed(e);
-            //panelgry_.startWatek();
             repaint();
 
         }

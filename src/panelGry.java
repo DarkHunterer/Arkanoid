@@ -18,7 +18,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     private paletka paletka_;
     private Pilka pilka_;
     private Boolean init = false;
-    private Boolean pauza = true;
+    private Boolean pauza = false;
     private ArrayList<Klocek> klocki;
     private ArrayList<perk> perks;
     private int szer_stara;
@@ -26,14 +26,19 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     private Image imgTlo, imgPaddle,imgBall,imgPerk;
     Thread thread;
     Random generator = new Random();
-
+   // public int punkty;
+   // public int szanse;
+    private pasekWyniku pasekwyniku_;
     /**
      * Konstruktor klasy panelGry
      * @param config Klasa obiektu w kt�rym jest konfiguracja
      */
-    public panelGry(Data config){
+    public panelGry(Data config,pasekWyniku pasek){
         this.setOpaque(true);
         this.setBackground(config.OknoGlowne_kolor_panelGry);
+     //   punkty =0;
+      //  szanse = 5;
+        pasekwyniku_ = pasek;
         bricksPos = config.bricksPos;
         try {
             imgTlo = ImageIO.read(new File("tlo.jpg"));
@@ -47,20 +52,23 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
      * Metoda tworz�ca obiekty paletki,pilki oraz tworzy klocki oraz uruchamia logik� gry.
      */
         public void start(){
-        int width = getWidth();
-        int heigth= getHeight();
-        System.out.println("Szerokosc "+width +" wysokosc " +heigth);
-        paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
-        pilka_ = new Pilka(width/2,heigth/2,heigth/30);
-        dodajKlocki(width,heigth);
+            int width = getWidth();
+            int heigth= getHeight();
+            System.out.println("Szerokosc "+width +" wysokosc " +heigth);
+            paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
+            pilka_ = new Pilka(width/2,heigth/2,heigth/30);
+            dodajKlocki(width,heigth);
             perks = new ArrayList<>();
-        pauza=false;
-        init = true;
+            pasekwyniku_.wylacz_pauze();
+            wylaczPauze();
+            //  pauza=false;
+
+            init = true;
             if (thread == null)
             {
                 thread = new Thread (this, "Watek panelu gry");
             }
-            thread.start ();
+            thread.start();
     }
 
     /**
@@ -134,7 +142,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 g.setColor(Color.black);
                 g.drawRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
             }
-            }
+        }
     }
 
     /**
@@ -188,10 +196,19 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
 
     /**
      * Metoda pauzuj�ca rozgrywk�
-     * @param pauza
+     *
      */
-    public void setPauza(Boolean pauza) {
-        this.pauza = pauza;
+    public void wlaczPauze() {
+       // thread = null;
+        pasekwyniku_.wlacz_pauze();
+        pauza = true;
+    }
+    public void wylaczPauze(){
+       // thread = new Thread (this, "Watek panelu gry");
+        if(pasekwyniku_.zwrocZycie()>0) {
+            pasekwyniku_.wylacz_pauze();
+            pauza = false;
+        }
     }
     /**
      *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
@@ -240,15 +257,14 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
 
                     if (milis < (double) 1000 / FPS) {
                         try {
-                            Thread.currentThread().sleep((1000 / FPS - (long) milis));
+                            thread.currentThread().sleep((1000 / FPS - (long) milis));
                         } catch (Exception ex) {
                             //  System.out.println(e.toString());
                         }
                     }
-                    repaint();
-
                 }
             }
+            repaint();
         }
        // System.out.println("Szer panelu gry to: "+getWidth() +" a wys panelu gry to: "+ getHeight());
        // System.out.println("Paletka: X: "+ paletka_.getX()+" Y: "+paletka_.getY()+" szer i wys: "+paletka_.getSzer_() +" "+ paletka_.getWys_());
@@ -268,6 +284,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             Rectangle rklocek = kl.getBounds();
 
             if(rklocek.intersects(rpilka)) {
+                pasekwyniku_.dodajPunkty();
                 if (kl.getWytrzymalosc() != 0) {
                  /*   pG = new Point((int) rpilka.getX()+pilka_.getSrednica()/2, 0);
                     pD = new Point((int) rpilka.getX()+pilka_.getSrednica()/2 , (int) rpilka.getY());
@@ -366,8 +383,19 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         else if((pilka_.getY_pos()+pilka_.getSrednica()>=getHeight())) {
             pilka_.odwroc_Y();
             pilka_.setY_pos(getHeight()-pilka_.getSrednica());
-            JOptionPane.showMessageDialog(getParent(),"GAME OVER!");
+              //
+             //Pilka uderzyla w podloge
+            //
+            pasekwyniku_.zmniejszZycie();
+            pilka_ = new Pilka(getWidth()/2,getHeight()/2,getHeight()/30);
+
+            if(pasekwyniku_.zwrocZycie()==0){
+                JOptionPane.showMessageDialog(getParent(),"GAME OVER!");
+                wlaczPauze();
+                //    init = false;
+            }
         }
+
         else if(pilka_.getY_pos()<=0){
             pilka_.setY_pos(1);
             pilka_.odwroc_Y();

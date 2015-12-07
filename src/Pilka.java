@@ -31,6 +31,7 @@ public class Pilka {
         dx = 120;
         dy = 120;
         velVect = (int)Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
+        dx=0; //aby pilka po pojawieniu leciala pionowo w dol
     }
 
     /**

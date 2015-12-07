@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +10,6 @@ import java.awt.event.ActionListener;
  */
 public class pasekWyniku extends JPanel implements ActionListener{
 
-    //Dimension wymiar = new Dimension(50,200);
     private int zycie;
     private int wynik;
     private int czas ;
@@ -20,6 +20,7 @@ public class pasekWyniku extends JPanel implements ActionListener{
     private JLabel labelZycie;
     private JLabel labelWynik;
     private JLabel labelCzas;
+    private JLabel labelPauza;
 
     /**
      *
@@ -28,24 +29,37 @@ public class pasekWyniku extends JPanel implements ActionListener{
     public pasekWyniku(Data config){
         licznik=0;
         wynik=0;
+        zycie = config.PasekWyniku_const_zycie;
+        czas = config.PasekWyniku_const_czas;
         kolor_ = config.OknoGlowne_kolor_pasekWyniku;
         this.setBackground(kolor_);
         setLayout(new FlowLayout());
 
-        zycie = config.PasekWyniku_const_zycie;
-        czas = config.PasekWyniku_const_czas;
-
-        labelZycie= new JLabel("Zycie: "+ zycie);
-        labelWynik= new JLabel("Wynik: "+ wynik);
-        labelCzas= new JLabel("Czas: "+ czas);
+        labelZycie= new JLabel();
+        labelWynik= new JLabel();
+        labelCzas= new JLabel();
+        labelPauza = new JLabel("PAUZA");
+        labelPauza.setVisible(false);
         this.setOpaque(true);
     }
-
+    public void dodajPunkty(){
+        wynik+=10;
+    }
+    public void zmniejszZycie(){
+        zycie--;
+    }
+    public void dodajZycie(){
+        zycie++;
+    }
+    public int zwrocZycie(){
+        return zycie;
+    }
     /**
      * Metoda odpowiadajaca za inicjacje paska
      */
-    public void start(){
+    public void start(Data config){
         ustawGUI();
+        zerujWartosci(config);
     }
 
     /**
@@ -55,9 +69,25 @@ public class pasekWyniku extends JPanel implements ActionListener{
         add(labelWynik);
         add(labelZycie);
         add(labelCzas);
+        add(labelPauza);
         init=true;
     }
-
+    private void zerujWartosci(Data config){
+        licznik=0;
+        wynik=0;
+        zycie = config.PasekWyniku_const_zycie;
+        czas = config.PasekWyniku_const_czas;
+    }
+    private void zaktualizujWynik(int wynik_){
+        wynik = wynik_;
+    }
+    private void zaktualizujZycie(int zycie_){
+        zycie = zycie_;
+    }
+    public void zaktualizujWartosci(int wynik_, int zycie_){
+        zaktualizujWynik(wynik_);
+        zaktualizujZycie(zycie_);
+    }
     /**
      * Metoda obs³uguj¹ca zdarzenia. Zmniejsza czas pozosta³y do koñca
      * @param e
@@ -66,10 +96,20 @@ public class pasekWyniku extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (init) {
             licznik += 10;
+            labelCzas.setText("Czas: " + czas);
+            labelWynik.setText("Wynik: "+wynik);
+            labelZycie.setText("Zycie: "+ zycie);
             if ((licznik % 1000) == 0) {
                 czas--;
-                labelCzas.setText("Czas: " + czas);
             }
         }
+    }
+    public void wlacz_pauze(){
+        init = false;
+        labelPauza.setVisible(true);
+    }
+    public void wylacz_pauze(){
+        labelPauza.setVisible(false);
+        init=true;
     }
 }
