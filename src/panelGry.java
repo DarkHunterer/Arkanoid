@@ -1,6 +1,8 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -24,6 +26,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     private int szer_stara;
     private int wys_stara;
     private Image imgTlo, imgPaddle,imgBall,imgPerk;
+    private OknoGlowne oknoGlowneUchwyt;
     Thread thread;
     Random generator = new Random();
    // public int punkty;
@@ -33,12 +36,14 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
      * Konstruktor klasy panelGry
      * @param config Klasa obiektu w kt�rym jest konfiguracja
      */
-    public panelGry(Data config,pasekWyniku pasek){
+    public panelGry(Data config,OknoGlowne OknoGlowneUchwyt_){
         this.setOpaque(true);
         this.setBackground(config.OknoGlowne_kolor_panelGry);
      //   punkty =0;
       //  szanse = 5;
-        pasekwyniku_ = pasek;
+        oknoGlowneUchwyt = OknoGlowneUchwyt_;
+        pasekwyniku_ = oknoGlowneUchwyt.getPasekWyniku_();
+
         bricksPos = config.bricksPos;
         try {
             imgTlo = ImageIO.read(new File("tlo.jpg"));
@@ -390,9 +395,12 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             pilka_ = new Pilka(getWidth()/2,getHeight()/2,getHeight()/30);
 
             if(pasekwyniku_.zwrocZycie()==0){
-                JOptionPane.showMessageDialog(getParent(),"GAME OVER!");
+                ///Dodac sprawdzenie czy rekord. Jeśli tak, to zapytac o nick i zapisac. Zapisac wtedy bestscores do pliku
                 wlaczPauze();
+                String nick = JOptionPane.showInputDialog(null,"Twoj wynik to "+ pasekwyniku_.getWynik(),"Koniec gry",JOptionPane.PLAIN_MESSAGE);
                 //    init = false;
+            /// Poniżej dodać wygraną z powodu zbitych klockow
+                // Dodac taki bonus za czas ==>  pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas()*5);
             }
         }
 

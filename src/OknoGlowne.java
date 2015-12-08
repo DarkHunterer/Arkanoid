@@ -1,8 +1,16 @@
+import org.json.simple.JSONObject;
+
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.StringWriter;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Główna klasa, w której umieszczane komponenty panelGry i pasekWyniku
@@ -41,6 +49,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private String string_help_message;
 
     //
+    private SettingsFrame settFrame;
+    private BestScoreFrame scoreFrame;
     private pasekWyniku pasekWyniku_;
     private panelGry panelgry_;
     private int DELAY;
@@ -107,12 +117,17 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         string_help_message = config.OknoGlowne_string_help_message;
     }
 
+
+    public pasekWyniku getPasekWyniku_() {
+        return pasekWyniku_;
+    }
+
     /**
      * Metoda tworząca obiekty panelu gry i pasku wyniku oraz dodająca je do głównego okna na GridBackLayout'cie
      */
     private  void dodajElementy(){
         pasekWyniku_ = new pasekWyniku(config);
-        panelgry_ =  new panelGry(config,pasekWyniku_);
+        panelgry_ = new panelGry(config,this);
 
         Dimension rozmiar_okna = new Dimension(width,heigth);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -279,7 +294,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             zacznijGre();
         }
         else if(e.getActionCommand().equals(string_command_bestScore)){
-            BestScoreFrame scoreFrame = new BestScoreFrame(getWidth()/2,getHeight()/2,this);
+             scoreFrame = new BestScoreFrame(getWidth()/2,getHeight()/2,this);
         }
         else if (e.getActionCommand().equals(string_command_settings)){
          /*   JFileChooser chooser = new JFileChooser();
@@ -295,9 +310,14 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             else {
                 JOptionPane.showMessageDialog(getParent(),"Blad otwarcia pliku");
             }*/
-         SettingsFrame settFrame = new SettingsFrame(getWidth()/2,getHeight()/2,this);
+          settFrame = new SettingsFrame(getWidth()/2,getHeight()/2,this);
         }
      }
+
+
+    public BestScoreFrame getScoreFrame() {
+        return scoreFrame;
+    }
 
     /**
      * Metoda odpowiadajaca za obsluge zdarzenia skalowania okna
@@ -357,25 +377,25 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             pack();
         }
        private void dodajElementy(){
-           this.setLayout(new GridBagLayout());
-           GridBagConstraints c = new GridBagConstraints();
-           c.fill = GridBagConstraints.BOTH;
+           this.setLayout(new GridLayout(4,4));
+       //    GridBagConstraints c = new GridBagConstraints();
+        //   c.fill = GridBagConstraints.BOTH;
+      /*     c.weightx=0.2;
+           c.gridx=0;
+           c.gridy=0;
+           c.weighty=0.8;
+           c.weighty=0.2;
+           c.gridx=0;
+           c.gridy=1;*/
            acceptButton = new JButton("Akceptuj");
            acceptButton.setSize(new Dimension(getWidth(),getHeight()));
            textField = new JTextField("    Wprowadz tu swoje ip     ");
            textField.setBackground(Color.white);
            textField.setCaretColor(Color.red);
-           c.weightx=0.2;
-           c.gridx=0;
-           c.gridy=0;
-           c.weighty=0.8;
            add(textField);
-           c.weighty=0.2;
-           c.gridx=0;
-           c.gridy=1;
-           add(acceptButton,c);
+           add(acceptButton);
            acceptButton.addActionListener(this);
-        }
+       }
         @Override
         public void actionPerformed(ActionEvent e) {
           //  if(e.equals(acceptButton)){
@@ -389,7 +409,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
     }
     private class BestScoreFrame extends JFrame{
-        JTextField textField;
+        Map<String,Integer> highScore = new HashMap<String,Integer>();
+        JButton acceptButton;
+
         public BestScoreFrame(int width,int heigth,Frame parentFrame){
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             setPreferredSize(new Dimension(width,heigth));
@@ -402,22 +424,58 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
                 }
             });
             setVisible(true);
+            wczytajZPliku();
             dodajElementy();
             pack();
         }
         private void dodajElementy(){
-            textField = new JTextField("Do zrobienia");
-            this.setLayout(new GridBagLayout());
-            GridBagConstraints c = new GridBagConstraints();
-            c.fill = GridBagConstraints.BOTH;
-            textField.setBackground(Color.white);
-            textField.setCaretColor(Color.red);
-            c.weightx=0.2;
-            c.gridx=0;
-            c.gridy=0;
-            c.weighty=0.8;
-            textField.setText("Yet to be done...");
-            add(textField);
+          //  this.setLayout(new BorderLayout());
+
+            String[] columnNames = {"Nick","Wynik"};
+            Object[][] data = new Object[highScore.size()][2];
+
+
+            int i=0;
+
+            for(Map.Entry<String,Integer> entr : highScore.entrySet()){
+                data[i][0] = entr.getKey();
+                data[i][1] = entr.getValue();
+                i++;
+            }
+            JTable table = new JTable(data,columnNames);
+            table.setAutoCreateRowSorter(true);
+            JScrollPane scrollPane = new JScrollPane(table);
+            table.setFillsViewportHeight(true);
+
+            add(scrollPane);
+        }
+        private void zapiszDoPliku(){
+            try {
+                FileWriter writer = new FileWriter("HighScore.txt");
+                StringWriter out = new StringWriter();
+                Map highScore2 = new HashMap<String,Integer>();
+
+                JSONObject objMain = new JSONObject();
+                objMain.put("HighScore",highScore2);
+
+                objMain.writeJSONString(out);
+                writer.write(out.toString());
+                writer.close();
+            }catch (Exception e){
+                System.out.println(e.toString());
+            }
+        }
+        private void wczytajZPliku(){try {
+            org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
+            Object obj = parser.parse(new FileReader("HighScore.txt"));
+
+            JSONObject jsonObjMain = (JSONObject) obj;
+            highScore.putAll((Map)jsonObjMain.get("HighScore"));
+            System.out.println("Najlepsze wyniki: "+ highScore);
+        }
+        catch (Exception ex){
+            System.out.println("Zlapano wyjatek: "+ ex.toString());
+        }
         }
     }
 }

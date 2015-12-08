@@ -35,15 +35,25 @@ public class pasekWyniku extends JPanel implements ActionListener{
         this.setBackground(kolor_);
         setLayout(new FlowLayout());
 
+        zycie = config.PasekWyniku_const_zycie;
+        czas = config.PasekWyniku_const_czas;
+
+        labelZycie= new JLabel("Zycie: "+ zycie);
+        labelWynik= new JLabel("Wynik: "+ wynik);
+        labelCzas= new JLabel("Czas: "+ czas);
         labelZycie= new JLabel();
         labelWynik= new JLabel();
         labelCzas= new JLabel();
         labelPauza = new JLabel("PAUZA");
         labelPauza.setVisible(false);
+
         this.setOpaque(true);
     }
     public void dodajPunkty(){
         wynik+=10;
+    }
+    public void dodajPunkty(int pkt){
+        wynik+=pkt;
     }
     public void zmniejszZycie(){
         zycie--;
@@ -54,12 +64,24 @@ public class pasekWyniku extends JPanel implements ActionListener{
     public int zwrocZycie(){
         return zycie;
     }
+
     /**
      * Metoda odpowiadajaca za inicjacje paska
      */
     public void start(Data config){
         ustawGUI();
         zerujWartosci(config);
+
+    }
+
+    public int getCzas() {
+        if(czas>0)
+           return czas;
+        else return 0;
+    }
+
+    public int getWynik() {
+        return wynik;
     }
 
     /**
@@ -70,6 +92,19 @@ public class pasekWyniku extends JPanel implements ActionListener{
         add(labelZycie);
         add(labelCzas);
         add(labelPauza);
+
+               ////
+            ////
+           ////
+        ////
+        /*
+        do zrobienia
+           ImageIcon pauzaIcon = new ImageIcon("pauza.png");
+        Image img = pauzaIcon.getImage();
+        img = img.getScaledInstance(getWidth(),getHeight(), Image.SCALE_SMOOTH);
+        pauzaIcon = new ImageIcon(img);
+        labelPauza.setIcon(pauzaIcon);
+         */
         init=true;
     }
     private void zerujWartosci(Data config){
