@@ -58,6 +58,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private Boolean pauza = false;
     private Boolean graTrwa = false;
     private Boolean init = false;
+    private long weightx;
 
     /**
      * Konstruktor okna głównego
@@ -115,6 +116,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         string_menu=config.OknoGlowne_string_menu;
         string_menu_title=config.OknoGlowne_string_menu_title;
         string_help_message = config.OknoGlowne_string_help_message;
+        weightx=config.OknoGlowne_weightx;
     }
 
 
@@ -142,7 +144,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-        c.weightx=1;
+       // c.weightx=1;
+        c.weightx=weightx;
         c.weighty=0.01;
         c.gridx=0;
         c.gridy=0;

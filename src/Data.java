@@ -128,7 +128,10 @@ public class Data {
      */
     int bricksPos[][];
     ///
-
+    /**
+     * Stała do rozmairu paska wyniku
+     */
+    long OknoGlowne_weightx;
     /**
      * Konstruktor klasy, wczytuje domyslna konfiguracje z pliku.
      */
@@ -239,6 +242,7 @@ public class Data {
         temp = (long) jsonObjOknoGlowne.get("color_background");
         temp2 = (int) temp;
         OknoGlowne_kolor_background= new Color(temp2);
+        OknoGlowne_weightx = (long) jsonObjOknoGlowne.get("weightx");
     }
 
     /**

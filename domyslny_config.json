@@ -24,10 +24,12 @@
     "width": 500,
     "string_menuPomoc_title": "Pomoc",
     "string_rules": "Zasady gry",
-    "string_help_message": "Zasady gry:\nNale¿y zbiæ klocki pi³k¹. Inne zasady dojd¹ w przysz³oœci.\n",
+    "string_help_message": "Zasady gry:\nNaleï¿½y zbiï¿½ klocki piï¿½kï¿½. Inne zasady dojdï¿½ w przyszï¿½oï¿½ci.\n",
     "string_menu": "Menu",
     "color_pasekwyniku": -292561,
     "command_bestscore": "BESTSCORE",
-    "string_authors": "O autorach"
+    "string_authors": "O autorach",
+    "weightx": 1
+
   }
 }
