@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  *
- * Klasa odpowiadaj¹ca za pi³ke
+ * Klasa odpowiadajï¿½ca za piï¿½ke
  */
 public class Pilka {
     private int x_pos;
@@ -17,10 +17,10 @@ public class Pilka {
     private int velVect;
 
     /**
-     * Konsturktor pi³ki
+     * Konsturktor piï¿½ki
      * @param x_start Pozycja startowa X'owa
      * @param y_start Pozycja startowa Y'owa
-     * @param szerokosc Srednica pi³ki
+     * @param szerokosc Srednica piï¿½ki
      */
     Pilka(int x_start,int y_start,int szerokosc){
         System.out.println("Dodano pilke");
@@ -35,7 +35,7 @@ public class Pilka {
     }
 
     /**
-     * Metoda wyznaczaj¹ca sk³adowe X i Y prêdkoœci wzglêdem k¹ta padania
+     * Metoda wyznaczajï¿½ca skï¿½adowe X i Y prï¿½dkoï¿½ci wzglï¿½dem kï¿½ta padania
      * @param kat
      */
     public void obliczPredkosc(int kat)
@@ -75,13 +75,26 @@ public class Pilka {
     }
 
     /**
-     * Zwraca predkosc pi³ki
+     * Zwraca predkosc piï¿½ki
      * @return
      */
     public double getPredkosc() {
         return predkosc;
     }
-
+    /**
+     * Zwraca dx piÅ‚ki
+     * @return
+     */
+    public double getDx() {
+        return dx;
+    }
+    /**
+     * Zwraca dy pilki
+     * @return
+     */
+    public double getDy() {
+        return dy;
+    }
     /**
      * Ustawia predkosc pilki
      * @param predkosc
@@ -104,8 +117,8 @@ public class Pilka {
 
     /**
      * Metoda odpowiadajca za poruszenie pilki
-     * @param maxX Maksymalny X jaki pi³ka mo¿e przyj¹æ
-     * @param maxY Maksymalny Y jaki pi³ka mo¿e przyj¹æ
+     * @param maxX Maksymalny X jaki piï¿½ka moï¿½e przyjï¿½ï¿½
+     * @param maxY Maksymalny Y jaki piï¿½ka moï¿½e przyjï¿½ï¿½
      */
     public void porusz(int maxX,int maxY){
         x_pos += dx/28;
@@ -149,7 +162,7 @@ public class Pilka {
     }
 
     /**
-     * Zwraca œrednice
+     * Zwraca ï¿½rednice
      * @return
      */
     public int getSrednica() {
@@ -157,7 +170,7 @@ public class Pilka {
     }
 
     /**
-     * Zwraca obiekt typu Rectangle który jest u¿ywany do wykrywania kolizji
+     * Zwraca obiekt typu Rectangle ktï¿½ry jest uï¿½ywany do wykrywania kolizji
      * @return
      */
     public Rectangle getBounds(){
@@ -182,7 +195,7 @@ public class Pilka {
     }
 
     /**
-     * Skaluje pi³ke wzglêdem okna
+     * Skaluje piï¿½ke wzglï¿½dem okna
      * @param szerokosc Nowa szerokosc okna
      * @param wysokosc  Nowa wysokosc okna
      * @param szer_stara Stara szerokosc okna

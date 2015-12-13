@@ -61,7 +61,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             int heigth= getHeight();
             System.out.println("Szerokosc "+width +" wysokosc " +heigth);
             paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
-            pilka_ = new Pilka(width/2,heigth/2,heigth/30);
+            pilka_ = new Pilka(width/2,heigth/2,heigth/45);
             dodajKlocki(width,heigth);
             perks = new ArrayList<>();
             pasekwyniku_.wylacz_pauze();
@@ -283,14 +283,212 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         Rectangle rpaletka = paletka_.getBounds();
         Rectangle rpilka = pilka_.getBounds();
 
-        Point pG,pD,pL,pP;
+        //poczate moich zmian
+        // 2 razy elce po calej tablicy klockow, na przyszlosc to ograniczyc zapamietujac otzrebe klocki z kolizja
+        Point pPG,pPD,pLD,pLG;
         Klocek temp = new Klocek(0,0,0,0,0);
+        pLG = new Point((int) rpilka.getX(), (int) rpilka.getY());
+        pLD = new Point((int) rpilka.getX(), (int) rpilka.getMaxY());
+        pPG = new Point((int) rpilka.getMaxX(), (int) rpilka.getY());
+        pPD = new Point((int) rpilka.getMaxX(), (int) rpilka.getMaxY());
+
+        Point[] pointTab = new Point[4];
+        pointTab[0] = pLG;
+        pointTab[1] = pLD;
+        pointTab[2] = pPG;
+        pointTab[3] = pPD;
+        //kiedys perki zabrac z kolizji i wyonywac je po sprawdzneiu wsyztskeigo a nie w kazdym z 3 przypadkow
+        int ilosc_kolizji=0;
+        for (Klocek kl :klocki){
+            Rectangle rklocek = kl.getBounds();
+            if (rklocek.intersects(rpilka)){
+                if(kl.getWytrzymalosc()!=0) {
+                    ilosc_kolizji++;
+                }
+            }
+        }
+
+
+        if (ilosc_kolizji==1){
+            int zderzenia_rogi=0;
+        for (Klocek kl : klocki)
+
+
+        {
+            if (kl.getWytrzymalosc() != 0){//zabezpieczenie do zliczenia tylko zyjacych
+                Rectangle rklocek = kl.getBounds();
+
+            //sytuacja 1 klocek do ogarniecia
+            //rozpatruje rogami na pilce zalozenie: pierwszenstwo ma odbicie po Y na razie nie uwzgledniamy rogow, moze kiedys
+            //porzebna mi tablica punktow na pilce
+            //przejdz po tablicy i sr ile punktow wezslo 1 czy 2
+            //kolizja i bonus po sprawdzeniyu wsyztskeigo najpierw odwrocic pilke
+            for (Point p : pointTab) {
+                if (rklocek.contains(p)) {
+                    zderzenia_rogi++;
+                }
+            }
+        }
+        }
+            if(zderzenia_rogi==1)
+            {
+
+                zderzenia_rogi=0;
+                pilka_.odwroc_Y();//zalzoenie ze jak 1 rog pierwszensto ma odbicie gora dol
+                /*//sytuacja gdy jeden rog odbicie gora dol pierwszenstwo
+                    for (Klocek kl : klocki) {
+                        Rectangle rklocek = kl.getBounds();
+                        if (rklocek.contains(pLG) || rklocek.contains(pPG))
+                        {
+                            pilka_.odwroc_Y();
+                        }
+                    }
+                */
+            }//koniec 1 rogowej kolizji
+            if(zderzenia_rogi==2)
+            {
+
+                zderzenia_rogi=0;//kiedys pozbyc sie tu petli po klockach
+                for (Klocek kl : klocki)
+                {
+                    if (kl.getWytrzymalosc()!=0){
+                    Rectangle rklocek = kl.getBounds();
+                    if ((rklocek.contains(pLG) && rklocek.contains(pPG)) || (rklocek.contains(pLD) && rklocek.contains(pPD)))
+                    {
+                        pilka_.odwroc_Y();
+                       // w tej wersji nie mozna tu kl.kolizja();
+                    }
+                    if ((rklocek.contains(pLG) && rklocek.contains(pLD)) || (rklocek.contains(pPG) && rklocek.contains(pPD)))
+                    {
+                        pilka_.odwroc_X();
+                       // kl.kolizja();
+                    }
+                }
+                }
+                //sytuacja ze uderzylo na pewno w bok lub na pewno w podstawy
+
+            }//koniec 2 rogow
+            //dodac bonusy i kolizje na klocku
+            for (Klocek kl : klocki) {
+                Rectangle rklocek = kl.getBounds();
+                if (rklocek.intersects(rpilka)){
+                    if(kl.getWytrzymalosc()!=0)
+                    {
+                        kl.kolizja();
+                        pasekwyniku_.dodajPunkty();
+                    }
+                    if (kl.getWytrzymalosc()==0)
+                    {
+                        //wklej tu bonus
+                        temp = kl;
+                        int i = generator.nextInt(10);
+                        System.out.println("Wynik losowania to:"+i);
+                        if(i==1){
+                            perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p",paletka_));
+                        }
+                        else if(i==2){
+                            perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z",paletka_));
+                        }
+                    }
+                }
+            }
+
+
+    }//koniec przypadku kolizji z 1 klockiem
+        if(ilosc_kolizji==2)
+        {
+            int zmLG=0;
+            int zmLD=0;
+            int zmPD=0;
+            int zmPG=0;
+            for (Klocek kl : klocki) {
+                if (kl.getWytrzymalosc() != 0) {
+                    Rectangle rklocek = kl.getBounds();
+                    if (rklocek.contains(pLG)) {
+                        zmLG = 1;
+                    }
+                    if (rklocek.contains(pLD)) {
+                        zmLD = 1;
+                    }
+                    if (rklocek.contains(pPG)) {
+                        zmPG = 1;
+                    }
+                    if (rklocek.contains(pPD)) {
+                        zmPD = 1;
+                    }
+                    if (rklocek.intersects(rpilka)) {
+                        kl.kolizja();
+                        pasekwyniku_.dodajPunkty();
+                    }
+                }
+
+                if (kl.getWytrzymalosc() == 0) {
+                    //wklej tu bonus
+                    temp = kl;
+                    int i = generator.nextInt(10);
+                    System.out.println("Wynik losowania to:" + i);
+                    if (i == 1) {
+                        perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p", paletka_));
+                    } else if (i == 2) {
+                        perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z", paletka_));
+                    }
+                }
+            }
+
+            if((zmPG==1 && zmLG==1)||(zmPD==1 && zmLD==1))
+            {
+                pilka_.odwroc_Y();
+            }
+            if((zmLG==1 && zmLD==1)||(zmPD==1 && zmPG==1))
+            {
+                pilka_.odwroc_X();
+            }
+            //sytuacja 2 klocki zderzenie
+            //latwo, sprawdzic ktore 2 rogi pilki uderzyly i to jednoznacznie okresla odbicie
+        }
+        if (ilosc_kolizji==3)
+        {
+            //sytuacja 3 klocki zderzenie
+            //kazdemu zabierz zycie
+            //odiji obie wspolrzedne pilki zawsze, bo L ksztaltne
+            for(Klocek kl: klocki)
+            {
+            Rectangle rklocek = kl.getBounds();
+                if(rklocek.intersects(rpilka))
+                {
+                    if(kl.getWytrzymalosc()!=0) {
+                        pasekwyniku_.dodajPunkty();
+                        kl.kolizja();
+
+                       // pilka_.odwroc_X();
+                       // pilka_.odwroc_Y();
+                        if (kl.getWytrzymalosc() == 0) {
+                            temp = kl;
+                            int i = generator.nextInt(10);
+                            System.out.println("Wynik losowania to:"+i);
+                            if(i==1){
+                                perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p",paletka_));
+                            }
+                            else if(i==2){
+                                perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z",paletka_));
+                            }
+                        }
+                    }
+                }
+            }
+            pilka_.odwroc_X();
+            pilka_.odwroc_Y();
+            ilosc_kolizji=0;//dla pewnosci napisalem...
+        }
+        //poniez stary kod daniela cz1
+        /*
         for(Klocek kl : klocki){
             Rectangle rklocek = kl.getBounds();
 
             if(rklocek.intersects(rpilka)) {
                 pasekwyniku_.dodajPunkty();
                 if (kl.getWytrzymalosc() != 0) {
+
                  /*   pG = new Point((int) rpilka.getX()+pilka_.getSrednica()/2, 0);
                     pD = new Point((int) rpilka.getX()+pilka_.getSrednica()/2 , (int) rpilka.getY());
                     pL = new Point(0, (int) rpilka.getY()+pilka_.getSrednica()/2);
@@ -301,7 +499,10 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                     pointTab[1] = pD;
                     pointTab[2] = pL;
                     pointTab[3] = pP;
-                   */
+                    koniec komentarza spod spodu byl tu zostaw go! wykorzystal sie 2 razy
+                   */ //stary kod daniela
+        //cd starego kodu daniela: olac i tak sie wsztskie komenatze juz pomeiszlay -.-
+        /*
                     kl.kolizja();
                     pilka_.odwroc_Y();
                     if (kl.getWytrzymalosc() == 0) {
@@ -316,7 +517,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                         }
                     }
 
-                /*//pilka_.setY_pos((kl.getPos_Y()+ kl.getSzer()));
+                //pilka_.setY_pos((kl.getPos_Y()+ kl.getSzer()));
                 System.out.println("Zderzenie z klockiem");
                 pilka_.odwroc_Y();
                 */
@@ -352,11 +553,15 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                             }
                             //   }
                         }
-                        }*/
+                        }
                     //   }
                 }
             }
         }
+        */ //koniec usunietego Danielowego kodu
+        //koniec moich zmian
+
+
         klocki.remove(temp);
         if(!perks.isEmpty()) {
             int index=-1;
@@ -392,7 +597,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
              //Pilka uderzyla w podloge
             //
             pasekwyniku_.zmniejszZycie();
-            pilka_ = new Pilka(getWidth()/2,getHeight()/2,getHeight()/30);
+            pilka_ = new Pilka(getWidth()/2,getHeight()/2,getHeight()/45);
 
             if(pasekwyniku_.zwrocZycie()==0){
                 ///Dodac sprawdzenie czy rekord. Jeśli tak, to zapytac o nick i zapisac. Zapisac wtedy bestscores do pliku
