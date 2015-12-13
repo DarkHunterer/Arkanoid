@@ -98,6 +98,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                         klocki.add(new Klocek(X, Y, brickWidth, brickHeigth,row[i]));
                     }
                     X += brickWidth;
+                    // tutaj dodawac ilosc klockow
                 }
                 X=0;
                 Y+=brickHeigth;
@@ -292,13 +293,16 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         pointTab[1] = pLD;
         pointTab[2] = pPG;
         pointTab[3] = pPD;
+        int flaga=0;
         //kiedys perki zabrac z kolizji i wyonywac je po sprawdzneiu wsyztskeigo a nie w kazdym z 3 przypadkow
         int ilosc_kolizji=0;
         for (Klocek kl :klocki){
+
             Rectangle rklocek = kl.getBounds();
             if (rklocek.intersects(rpilka)){
                 if(kl.getWytrzymalosc()!=0) {
                     ilosc_kolizji++;
+
                 }
             }
         }
@@ -413,18 +417,17 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                     if (rklocek.intersects(rpilka)) {
                         kl.kolizja();
                         pasekwyniku_.dodajPunkty();
-                    }
-                }
-
-                if (kl.getWytrzymalosc() == 0) {
-                    //wklej tu bonus
-                   // temp = kl;
-                    int i = generator.nextInt(10);
-                    System.out.println("Wynik losowania to:" + i);
-                    if (i == 1) {
-                        perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p", paletka_));
-                    } else if (i == 2) {
-                        perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z", paletka_));
+                        if (kl.getWytrzymalosc() == 0) {
+                            //wklej tu bonus
+                            // temp = kl;
+                            int i = generator.nextInt(10);
+                            System.out.println("Wynik losowania to:" + i);
+                            if (i == 1) {
+                                perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p", paletka_));
+                            } else if (i == 2) {
+                                perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z", paletka_));
+                            }
+                        }
                     }
                 }
             }
@@ -562,7 +565,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     public void skaluj()
     {
         if(init) {
-            wlaczPauze();
+
             int X=0,Y=getHeight()/10;
             int maxRow=0,maxCol;
             int brickWidth=0,brickHeigth=0;
@@ -570,7 +573,6 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             maxCol = bricksPos[0].length;
             brickWidth = getWidth()/maxCol;
             brickHeigth = (int)(getHeight()/maxRow/(2.5));
-
             paletka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
             pilka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara,paletka_.getSzer_());
 
@@ -589,7 +591,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 Y+=brickHeigth;
             }
             repaint();
-            wylaczPauze();
+
         }
     }
 
