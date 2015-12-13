@@ -157,7 +157,10 @@ public class Data {
      *
      */
     int OknoGlowne_gridy_panel_gry;
-
+    /**
+     *
+     */
+    String OknoGlowne_string_authors_data;
     /**
      *
      */
@@ -166,6 +169,7 @@ public class Data {
      *
      */
     String SettingFrame_string_ip;
+
     /**
      * Konstruktor klasy, wczytuje domyslna konfiguracje z pliku.
      */
@@ -248,6 +252,7 @@ public class Data {
         OknoGlowne_Delay = (int)temp;
         temp = (long)(jsonObjOknoGlowne.get("width"));
         OknoGlowne_width = (int)temp;
+
         temp = (long) (jsonObjOknoGlowne.get("heigth"));
         OknoGlowne_heigth=(int)temp;
         OknoGlowne_command_timer_off=(String) jsonObjOknoGlowne.get("command_timer_off");
@@ -289,6 +294,7 @@ public class Data {
         temp=(long) jsonObjOknoGlowne.get ("gridy_panel_gry");
         OknoGlowne_gridy_panel_gry=(int) temp;
         OknoGlowne_weighty_panel_gry=(double) jsonObjOknoGlowne.get("weighty_panel_gry");
+        OknoGlowne_string_authors_data= (String) jsonObjOknoGlowne.get("string_authors_data");
     }
 
     /**

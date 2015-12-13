@@ -65,6 +65,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private int gridx_panel_gry;
     private int gridy_panel_gry;
     private double weighty_panel_gry;
+    private String string_authors_data;
 
     /**
      * Konstruktor okna głównego
@@ -129,6 +130,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         gridx_panel_gry=config.OknoGlowne_gridx_panel_gry;
         gridy_panel_gry=config.OknoGlowne_gridy_panel_gry;
         weighty_panel_gry=config.OknoGlowne_weighty_panel_gry;
+        string_authors_data=config.OknoGlowne_string_authors_data;
 
     }
 
@@ -310,7 +312,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
         else if(e.getActionCommand().equals(string_command_authors))
         {
-            JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel Rękawek\n-Konrad Jędrzejczak");
+      //      JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel Rękawek\n-Konrad Jędrzejczak");
+            JOptionPane.showMessageDialog(getParent(), string_authors_data);
         }
         else if(e.getActionCommand().equals(string_command_start))
         {

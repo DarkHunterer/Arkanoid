@@ -24,7 +24,7 @@
     "width": 500,
     "string_menuPomoc_title": "Pomoc",
     "string_rules": "Zasady gry",
-    "string_help_message": "Zasady gry:\nNale�y zbi� klocki pi�k�. Inne zasady dojd� w przysz�o�ci.\n",
+    "string_help_message": "Zasady gry:\nNależy zbić klocki piłką. Inne zasady dojdą w przyszłości.\n",
     "string_menu": "Menu",
     "color_pasekwyniku": -292561,
     "command_bestscore": "BESTSCORE",
@@ -35,7 +35,8 @@
     "gridy_pasek_wyniku":0,
     "gridx_panel_gry":0,
     "gridy_panel_gry":1,
-    "weighty_panel_gry":0.95
+    "weighty_panel_gry":0.95,
+    "string_authors_data":"Autorzy gry:\n-Daniel Rękawek\n-Konrad Jędrzejczak"
 
   },
   "SettingFrame":{
