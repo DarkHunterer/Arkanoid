@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 /**
  *
@@ -302,7 +301,6 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             if (rklocek.intersects(rpilka)){
                 if(kl.getWytrzymalosc()!=0) {
                     ilosc_kolizji++;
-
                 }
             }
         }
@@ -518,7 +516,6 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 koniecGry();
             }
         }
-
         else if(pilka_.getY_pos()<=0){
             pilka_.setY_pos(1);
             pilka_.odwroc_Y();
@@ -531,13 +528,32 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
      *
      */
     private void koniecGry(){
-///Dodac sprawdzenie czy rekord. Jeśli tak, to zapytac o nick i zapisac. Zapisac wtedy bestscores do pliku
-
-        wlaczPauze();
-        String nick = JOptionPane.showInputDialog(null,"Twoj wynik to "+ pasekwyniku_.getWynik(),"Koniec gry",JOptionPane.PLAIN_MESSAGE);
-
         /// Poniżej dodać wygraną z powodu zbitych klockow
         // Dodac taki bonus za czas ==>  pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas()*5);
+
+        Boolean czyRekord =false;
+        wlaczPauze();
+        int wynik = pasekwyniku_.getWynik();
+        Map.Entry<String,Long> tempEntry = new AbstractMap.SimpleEntry<String, Long>("Nick", 0l);
+           for(Map.Entry<String,Long> tempMap : oknoGlowneUchwyt.highScore.entrySet()){
+            if((long)wynik > tempMap.getValue()){
+                czyRekord = true;
+                tempEntry = tempMap;
+                System.out.println("Dziala");
+                break;
+            }
+        }
+        if(czyRekord){
+            String nick = JOptionPane.showInputDialog(null,"Twoj wynik to "+ pasekwyniku_.getWynik(),"Koniec gry",JOptionPane.PLAIN_MESSAGE);
+            oknoGlowneUchwyt.highScore.remove(tempEntry.getKey());
+            oknoGlowneUchwyt.highScore.put(nick,(long)wynik);
+            OknoGlowne.BestScoreFrame bestscore;
+            bestscore = oknoGlowneUchwyt.getScoreFrame();
+            bestscore.zapiszDoPliku();
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Twoj wynik to "+ pasekwyniku_.getWynik(),"Koniec gry",JOptionPane.PLAIN_MESSAGE);
+        }
 
     }
 
@@ -574,7 +590,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             brickWidth = getWidth()/maxCol;
             brickHeigth = (int)(getHeight()/maxRow/(2.5));
             paletka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
-            pilka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara,paletka_.getSzer_());
+            pilka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
 
             int j=0;
             Klocek temp = new Klocek(0,0,0,0,0);

@@ -67,6 +67,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private double weighty_panel_gry;
     private String string_authors_data;
 
+    Map<String,Long> highScore = new HashMap<String,Long>();
+
     /**
      * Konstruktor okna głównego
      */
@@ -76,6 +78,20 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         dodajElementy();
         dodajMenu();
         dodajGUI();
+
+        ///wczytuje bestscore
+        try {
+            org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
+            Object obj = parser.parse(new FileReader("HighScore.txt"));
+
+            JSONObject jsonObjMain = (JSONObject) obj;
+            highScore.putAll((Map)jsonObjMain.get("HighScore"));
+            System.out.println("Najlepsze wyniki: "+ highScore);
+        }
+        catch (Exception ex){
+            System.out.println("Zlapano wyjatek: "+ ex.toString());
+        }
+        ///
     }
 
     /**
@@ -321,6 +337,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
         else if(e.getActionCommand().equals(string_command_bestScore)){
              scoreFrame = new BestScoreFrame(getWidth()/2,getHeight()/2,this);
+            scoreFrame.rysuj();
+            scoreFrame.wczytajZPliku();
+            scoreFrame.dodajElementy();
         }
         else if (e.getActionCommand().equals(string_command_settings)){
          /*   JFileChooser chooser = new JFileChooser();
@@ -443,16 +462,13 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             }
         }
     }
-    private class BestScoreFrame extends JFrame{
+    public class BestScoreFrame extends JFrame{
 
-
-        Map<String,Integer> highScore = new HashMap<String,Integer>();
-        JButton acceptButton;
-
+        Frame parentFrame_;
         public BestScoreFrame(int width,int heigth,Frame parentFrame){
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             setPreferredSize(new Dimension(width,heigth));
-            parentFrame.setEnabled(false);
+            parentFrame_ = parentFrame;
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -460,9 +476,10 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
                     super.windowClosing(e);
                 }
             });
+        }
+        public void rysuj(){
+            parentFrame_.setEnabled(false);
             setVisible(true);
-            wczytajZPliku();
-            dodajElementy();
             pack();
         }
         private void dodajElementy(){
@@ -474,7 +491,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
             int i=0;
 
-            for(Map.Entry<String,Integer> entr : highScore.entrySet()){
+            for(Map.Entry<String,Long> entr : highScore.entrySet()){
                 data[i][0] = entr.getKey();
                 data[i][1] = entr.getValue();
                 i++;
@@ -486,11 +503,11 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
             add(scrollPane);
         }
-        private void zapiszDoPliku(){
+        public void zapiszDoPliku(){
             try {
                 FileWriter writer = new FileWriter("HighScore.txt");
                 StringWriter out = new StringWriter();
-                Map highScore2 = new HashMap<String,Integer>();
+                Map highScore2 = new HashMap<String,Long>();
 
                 JSONObject objMain = new JSONObject();
                 objMain.put("HighScore",highScore2);
@@ -507,7 +524,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             Object obj = parser.parse(new FileReader("HighScore.txt"));
 
             JSONObject jsonObjMain = (JSONObject) obj;
-            highScore.putAll((Map)jsonObjMain.get("HighScore"));
+            highScore.putAll((Map<String,Long>)jsonObjMain.get("HighScore"));
             System.out.println("Najlepsze wyniki: "+ highScore);
         }
         catch (Exception ex){
