@@ -213,7 +213,7 @@ public class Pilka {
             y_pos=(int)(wysokosc*b);
             System.out.println("Wynik dzialania to:"+(int)(szerokosc*a)+" a pos_X to:"+x_pos);
         }
-        srednica = szerokosc/30;
+        srednica = szerokosc/45;
     }
 }
 

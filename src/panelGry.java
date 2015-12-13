@@ -102,11 +102,6 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 X=0;
                 Y+=brickHeigth;
             }
-
-   /*     for(Klocek kl :klocki)
-        {
-           // System.out.println(kl.getBounds());
-        }*/
     }
 
     /**
@@ -286,7 +281,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         //poczate moich zmian
         // 2 razy elce po calej tablicy klockow, na przyszlosc to ograniczyc zapamietujac otzrebe klocki z kolizja
         Point pPG,pPD,pLD,pLG;
-        Klocek temp = new Klocek(0,0,0,0,0);
+      //  Klocek temp = new Klocek(0,0,0,0,0);
         pLG = new Point((int) rpilka.getX(), (int) rpilka.getY());
         pLD = new Point((int) rpilka.getX(), (int) rpilka.getMaxY());
         pPG = new Point((int) rpilka.getMaxX(), (int) rpilka.getY());
@@ -311,10 +306,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
 
         if (ilosc_kolizji==1){
             int zderzenia_rogi=0;
-        for (Klocek kl : klocki)
-
-
-        {
+        for (Klocek kl : klocki) {
             if (kl.getWytrzymalosc() != 0){//zabezpieczenie do zliczenia tylko zyjacych
                 Rectangle rklocek = kl.getBounds();
 
@@ -382,7 +374,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                     if (kl.getWytrzymalosc()==0)
                     {
                         //wklej tu bonus
-                        temp = kl;
+                       // temp = kl;
                         int i = generator.nextInt(10);
                         System.out.println("Wynik losowania to:"+i);
                         if(i==1){
@@ -426,7 +418,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
 
                 if (kl.getWytrzymalosc() == 0) {
                     //wklej tu bonus
-                    temp = kl;
+                   // temp = kl;
                     int i = generator.nextInt(10);
                     System.out.println("Wynik losowania to:" + i);
                     if (i == 1) {
@@ -465,7 +457,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                        // pilka_.odwroc_X();
                        // pilka_.odwroc_Y();
                         if (kl.getWytrzymalosc() == 0) {
-                            temp = kl;
+                          //  temp = kl;
                             int i = generator.nextInt(10);
                             System.out.println("Wynik losowania to:"+i);
                             if(i==1){
@@ -482,89 +474,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             pilka_.odwroc_Y();
             ilosc_kolizji=0;//dla pewnosci napisalem...
         }
-        //poniez stary kod daniela cz1
-        /*
-        for(Klocek kl : klocki){
-            Rectangle rklocek = kl.getBounds();
 
-            if(rklocek.intersects(rpilka)) {
-                pasekwyniku_.dodajPunkty();
-                if (kl.getWytrzymalosc() != 0) {
-
-                 /*   pG = new Point((int) rpilka.getX()+pilka_.getSrednica()/2, 0);
-                    pD = new Point((int) rpilka.getX()+pilka_.getSrednica()/2 , (int) rpilka.getY());
-                    pL = new Point(0, (int) rpilka.getY()+pilka_.getSrednica()/2);
-                    pP = new Point((int) rpilka.getX(), (int) rpilka.getY()+pilka_.getSrednica()/2);
-
-                    Point[] pointTab = new Point[4];
-                    pointTab[0] = pG;
-                    pointTab[1] = pD;
-                    pointTab[2] = pL;
-                    pointTab[3] = pP;
-                    koniec komentarza spod spodu byl tu zostaw go! wykorzystal sie 2 razy
-                   */ //stary kod daniela
-        //cd starego kodu daniela: olac i tak sie wsztskie komenatze juz pomeiszlay -.-
-        /*
-                    kl.kolizja();
-                    pilka_.odwroc_Y();
-                    if (kl.getWytrzymalosc() == 0) {
-                        temp = kl;
-                        int i = generator.nextInt(10);
-                        System.out.println("Wynik losowania to:"+i);
-                        if(i==1){
-                            perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p",paletka_));
-                        }
-                        else if(i==2){
-                            perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z",paletka_));
-                        }
-                    }
-
-                //pilka_.setY_pos((kl.getPos_Y()+ kl.getSzer()));
-                System.out.println("Zderzenie z klockiem");
-                pilka_.odwroc_Y();
-                */
-                    //  for (Point p : pointTab) {
-
-                       /* if(p.getX()>=rklocek.getX()&&p.getX()<=rklocek.getMaxX()) {
-                            System.out.println("DUPA1");
-                            if(p.getY()>=rklocek.getY()&&p.getY()<=rklocek.getMaxY()){
-                                System.out.println("DUPA2");
-                                if (p.equals(pL) || p.equals(pP)) {
-                                    System.out.println("PL PUNKT LEWY");
-                                    pilka_.odwroc_X();
-                                }
-
-                                  if (p.equals(pG) || p.equals(pD)) {
-                                      System.out.println("PG PUNKT GORNY");
-                                      pilka_.odwroc_Y();
-                                 }
-                            if (p.equals(pD)) {
-                                System.out.println("PD PUNKT DOLNY");
-                                pilka_.odwroc_Y();
-                            }
-
-                            if (p.equals(pP)) {
-                                System.out.println("PP PUNKT PRAWY");
-                                pilka_.odwroc_X();
-                            }
-                            if (kl.getWytrzymalosc() == 0) {
-                                //temp = kl;
-                                klocki.remove(kl);
-                            } else {
-                                kl.kolizja();
-                            }
-                            //   }
-                        }
-                        }
-                    //   }
-                }
-            }
-        }
-        */ //koniec usunietego Danielowego kodu
-        //koniec moich zmian
-
-
-        klocki.remove(temp);
         if(!perks.isEmpty()) {
             int index=-1;
                 for(perk p : perks){
@@ -602,12 +512,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             pilka_ = new Pilka(getWidth()/2,getHeight()/2,getHeight()/45);
 
             if(pasekwyniku_.zwrocZycie()==0){
-                ///Dodac sprawdzenie czy rekord. Jeśli tak, to zapytac o nick i zapisac. Zapisac wtedy bestscores do pliku
-                wlaczPauze();
-                String nick = JOptionPane.showInputDialog(null,"Twoj wynik to "+ pasekwyniku_.getWynik(),"Koniec gry",JOptionPane.PLAIN_MESSAGE);
-                //    init = false;
-            /// Poniżej dodać wygraną z powodu zbitych klockow
-                // Dodac taki bonus za czas ==>  pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas()*5);
+                koniecGry();
             }
         }
 
@@ -615,6 +520,21 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             pilka_.setY_pos(1);
             pilka_.odwroc_Y();
         }
+
+    }
+
+
+    /**
+     *
+     */
+    private void koniecGry(){
+///Dodac sprawdzenie czy rekord. Jeśli tak, to zapytac o nick i zapisac. Zapisac wtedy bestscores do pliku
+
+        wlaczPauze();
+        String nick = JOptionPane.showInputDialog(null,"Twoj wynik to "+ pasekwyniku_.getWynik(),"Koniec gry",JOptionPane.PLAIN_MESSAGE);
+
+        /// Poniżej dodać wygraną z powodu zbitych klockow
+        // Dodac taki bonus za czas ==>  pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas()*5);
 
     }
 
@@ -642,6 +562,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     public void skaluj()
     {
         if(init) {
+            int X=0,Y=getHeight()/10;
             int maxRow=0,maxCol;
             int brickWidth=0,brickHeigth=0;
             maxRow = bricksPos.length;
@@ -651,9 +572,22 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
 
             paletka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
             pilka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara,paletka_.getSzer_());
-            for (Klocek k : klocki) {
-                k.skaluj(getWidth(), getHeight(), szer_stara, wys_stara,brickWidth,brickHeigth);
+
+            int j=0;
+            Klocek temp = new Klocek(0,0,0,0,0);
+            for (int[] row : bricksPos) {
+                for (int i=0; i<row.length; i++){
+                    if(row[i]!=0) {
+                        temp = klocki.get(j);
+                        temp.skaluj(X,Y,brickWidth,brickHeigth);
+                        j++;
+                    }
+                    X += brickWidth;
+                }
+                X=0;
+                Y+=brickHeigth;
             }
+
             repaint();
         }
     }

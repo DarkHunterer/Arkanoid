@@ -75,9 +75,7 @@ public class pasekWyniku extends JPanel implements ActionListener{
     }
 
     public int getCzas() {
-        if(czas>0)
-           return czas;
-        else return 0;
+            return czas;
     }
 
     public int getWynik() {
@@ -134,7 +132,7 @@ public class pasekWyniku extends JPanel implements ActionListener{
             labelCzas.setText("Czas: " + czas);
             labelWynik.setText("Wynik: "+wynik);
             labelZycie.setText("Zycie: "+ zycie);
-            if ((licznik % 1000) == 0) {
+            if ((licznik % 1000) == 0 && czas > 0) {
                 czas--;
             }
         }

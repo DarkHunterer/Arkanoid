@@ -98,12 +98,8 @@ public class Klocek {
 
     /**
      * Metoda która skaluje klocek wzglêdem rozmiarów okna
-     * @param szerokosc_ekranu Nowa szerokosc okna
-     * @param wysokosc_ekranu  Nowa wysokosc okna
-     * @param szer_stara Stara szerokosc okna
-     * @param wys_stara Stara wysokosc okna
      */
-    public void skaluj(int szerokosc_ekranu, int wysokosc_ekranu,int szer_stara, int wys_stara,int szer_klocka,int wys_klocka)
+    /*public void skaluj(int szerokosc_ekranu, int wysokosc_ekranu,int szer_stara, int wys_stara,int szer_klocka,int wys_klocka)
     {
         if(szer!=0) {
             double a = (double)pos_X/szer_stara;
@@ -120,6 +116,13 @@ public class Klocek {
 
         szer = szer_klocka;
         wys = wys_klocka;
+    }*/
+    public void skaluj(int pozycja_x, int pozycja_y,int szer_klocka,int wys_klocka)
+    {
+        pos_X = pozycja_x;
+        pos_Y = pozycja_y;
+        szer = szer_klocka;
+        wys = wys_klocka;
     }
 
     /**
@@ -130,13 +133,13 @@ public class Klocek {
         if(wytrzymalosc>0) {
             wytrzymalosc--;
         }
-        if(wytrzymalosc==0){
+       /*if(wytrzymalosc==0){
             try {
                 finalize();
             }catch (Throwable e){
                 System.out.println(e.toString());
             }
-        }
+        }*/
         switch (wytrzymalosc){
             case 1: kolor=Color.RED;
                 break;
