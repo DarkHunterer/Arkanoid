@@ -58,7 +58,13 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private Boolean pauza = false;
     private Boolean graTrwa = false;
     private Boolean init = false;
-    private long weightx;
+    private long weightx_pasek_wyniku;
+    private double weighty_pasek_wyniku;
+    private int gridx_pasek_wyniku;
+    private int gridy_pasek_wyniku;
+    private int gridx_panel_gry;
+    private int gridy_panel_gry;
+    private double weighty_panel_gry;
 
     /**
      * Konstruktor okna głównego
@@ -116,7 +122,14 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         string_menu=config.OknoGlowne_string_menu;
         string_menu_title=config.OknoGlowne_string_menu_title;
         string_help_message = config.OknoGlowne_string_help_message;
-        weightx=config.OknoGlowne_weightx;
+        weightx_pasek_wyniku=config.OknoGlowne_weightx_pasek_wyniku;
+        weighty_pasek_wyniku=config.OknoGlowne_weighty_pasek_wyniku;
+        gridx_pasek_wyniku=config.OknoGlowne_gridx_pasek_wyniku;
+        gridy_pasek_wyniku=config.OknoGlowne_gridy_pasek_wyniku;
+        gridx_panel_gry=config.OknoGlowne_gridx_panel_gry;
+        gridy_panel_gry=config.OknoGlowne_gridy_panel_gry;
+        weighty_panel_gry=config.OknoGlowne_weighty_panel_gry;
+
     }
 
 
@@ -145,14 +158,21 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
        // c.weightx=1;
-        c.weightx=weightx;
-        c.weighty=0.01;
-        c.gridx=0;
-        c.gridy=0;
+        c.weightx=weightx_pasek_wyniku;
+        //c.weighty=0.01;
+        c.weighty=weighty_pasek_wyniku;
+       // c.gridx=0;
+        c.gridx=(int) gridx_pasek_wyniku;
+       // c.gridy=0;
+        c.gridy=(int) gridy_pasek_wyniku;
+
         this.add(pasekWyniku_,c);
-        c.gridx=0;
-        c.gridy=1;
-        c.weighty=0.95;
+      //  c.gridx=0;
+        c.gridx=gridx_panel_gry;
+       // c.gridy=1;
+        c.gridy=gridy_panel_gry;
+       // c.weighty=0.95;
+        c.weighty=weighty_panel_gry;
         add(panelgry_, c);
     }
 
@@ -360,6 +380,10 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     }
 
     private class SettingsFrame extends JFrame implements ActionListener{
+     //   private String string_accept="Akceptuj";
+     //  private String string_ip="Wrowadz tu swoje ip";
+        private String string_accept=config.SettingFrame_string_accept;
+        private String string_ip=config.SettingFrame_string_ip;
         JButton acceptButton;
         JTextField textField;
         private Inet4Address addressIP;
@@ -379,6 +403,11 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             dodajElementy();
             pack();
         }
+        private void wczytaj_config(){
+            string_accept=config.SettingFrame_string_accept;
+            string_ip=config.SettingFrame_string_ip;
+        }
+
        private void dodajElementy(){
            this.setLayout(new GridLayout(4,4));
        //    GridBagConstraints c = new GridBagConstraints();
@@ -390,9 +419,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
            c.weighty=0.2;
            c.gridx=0;
            c.gridy=1;*/
-           acceptButton = new JButton("Akceptuj");
+           acceptButton = new JButton(string_accept);
            acceptButton.setSize(new Dimension(getWidth(),getHeight()));
-           textField = new JTextField("    Wprowadz tu swoje ip     ");
+           textField = new JTextField(string_ip);
            textField.setBackground(Color.white);
            textField.setCaretColor(Color.red);
            add(textField);
@@ -412,6 +441,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
     }
     private class BestScoreFrame extends JFrame{
+
+
         Map<String,Integer> highScore = new HashMap<String,Integer>();
         JButton acceptButton;
 

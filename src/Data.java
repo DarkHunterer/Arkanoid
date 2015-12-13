@@ -131,7 +131,41 @@ public class Data {
     /**
      * Stała do rozmairu paska wyniku
      */
-    long OknoGlowne_weightx;
+    long OknoGlowne_weightx_pasek_wyniku;
+    /**
+     *
+     */
+    double OknoGlowne_weighty_pasek_wyniku;
+    /**
+     *
+     */
+    int OknoGlowne_gridx_pasek_wyniku;
+    /**
+     *
+     */
+    int OknoGlowne_gridy_pasek_wyniku;
+
+    /**
+     *
+     */
+    double OknoGlowne_weighty_panel_gry;
+    /**
+     *
+     */
+    int OknoGlowne_gridx_panel_gry;
+    /**
+     *
+     */
+    int OknoGlowne_gridy_panel_gry;
+
+    /**
+     *
+     */
+    String SettingFrame_string_accept;
+    /**
+     *
+     */
+    String SettingFrame_string_ip;
     /**
      * Konstruktor klasy, wczytuje domyslna konfiguracje z pliku.
      */
@@ -193,10 +227,12 @@ public class Data {
 
             JSONObject jsonObjOknoGlowne = (JSONObject) jsonObjMain.get("OknoGlowne");
             JSONObject jsonObjPasekWyniku = (JSONObject) jsonObjMain.get("PasekWyniku");
+            JSONObject jsonObjSettingFrame = (JSONObject) jsonObjMain.get("SettingFrame");
 
             wczytaj_OknoGlowne(jsonObjOknoGlowne);
             wczytaj_PasekWyniku(jsonObjPasekWyniku);
             wczytaj_Mape(jsonObjMapa);
+            wczytaj_Setting_Frame(jsonObjSettingFrame);
         }
         catch (Exception ex){
                     System.out.println("Zlapano wyjatek: "+ ex.toString());
@@ -242,7 +278,17 @@ public class Data {
         temp = (long) jsonObjOknoGlowne.get("color_background");
         temp2 = (int) temp;
         OknoGlowne_kolor_background= new Color(temp2);
-        OknoGlowne_weightx = (long) jsonObjOknoGlowne.get("weightx");
+        OknoGlowne_weightx_pasek_wyniku = (long) jsonObjOknoGlowne.get("weightx_pasek_wyniku");
+        OknoGlowne_weighty_pasek_wyniku = (double) jsonObjOknoGlowne.get("weighty_pasek_wyniku");
+        temp=(long) jsonObjOknoGlowne.get("gridx_pasek_wyniku");
+        OknoGlowne_gridx_pasek_wyniku=(int) temp;
+        temp=(long) jsonObjOknoGlowne.get("gridy_pasek_wyniku");
+        OknoGlowne_gridy_pasek_wyniku=(int) temp;
+        temp = (long)jsonObjOknoGlowne.get("gridx_panel_gry");
+       OknoGlowne_gridx_panel_gry=(int) temp;
+        temp=(long) jsonObjOknoGlowne.get ("gridy_panel_gry");
+        OknoGlowne_gridy_panel_gry=(int) temp;
+        OknoGlowne_weighty_panel_gry=(double) jsonObjOknoGlowne.get("weighty_panel_gry");
     }
 
     /**
@@ -277,7 +323,13 @@ public class Data {
             }
         }
     }
-
+/**
+ * Metoda do wczytania Settinf Frame
+ */
+private void wczytaj_Setting_Frame(JSONObject jsonObjSettingFrame){
+ SettingFrame_string_ip = (String) jsonObjSettingFrame.get("string_ip");
+    SettingFrame_string_accept=(String) jsonObjSettingFrame.get("string_accept");
+}
     /**
      * Metoda odpowiadająca za zapis konfiguracji do pliku
      * @param objOknoGlowne Obiekt typu JSONObject

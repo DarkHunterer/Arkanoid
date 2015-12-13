@@ -29,7 +29,17 @@
     "color_pasekwyniku": -292561,
     "command_bestscore": "BESTSCORE",
     "string_authors": "O autorach",
-    "weightx": 1
+    "weightx_pasek_wyniku": 1,
+    "weighty_pasek_wyniku":0.01,
+    "gridx_pasek_wyniku":0,
+    "gridy_pasek_wyniku":0,
+    "gridx_panel_gry":0,
+    "gridy_panel_gry":1,
+    "weighty_panel_gry":0.95
 
+  },
+  "SettingFrame":{
+    "string_accept": "Akceptuj",
+    "string_ip": "Wprowadź tu swoje IP"
   }
 }
