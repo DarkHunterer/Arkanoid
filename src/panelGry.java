@@ -335,6 +335,8 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
 
                 zderzenia_rogi=0;
                 pilka_.odwroc_Y();//zalzoenie ze jak 1 rog pierwszensto ma odbicie gora dol
+                //zmiana zalozenia odwrocmy oba
+                pilka_.odwroc_X();
                 /*//sytuacja gdy jeden rog odbicie gora dol pierwszenstwo
                     for (Klocek kl : klocki) {
                         Rectangle rklocek = kl.getBounds();
