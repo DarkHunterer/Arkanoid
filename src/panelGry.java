@@ -562,6 +562,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     public void skaluj()
     {
         if(init) {
+            wlaczPauze();
             int X=0,Y=getHeight()/10;
             int maxRow=0,maxCol;
             int brickWidth=0,brickHeigth=0;
@@ -587,8 +588,8 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 X=0;
                 Y+=brickHeigth;
             }
-
             repaint();
+            wylaczPauze();
         }
     }
 
