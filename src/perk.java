@@ -1,11 +1,12 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by Daniel on 02.12.2015.
+ * Klasa perk
  */
 public class perk {
     private int pos_x;
@@ -19,36 +20,6 @@ public class perk {
     pasekWyniku pasekWyniku_;
     Image imgPerk;
     Random generator = new Random();
-
-   /* public perk(int spawn_x,int spawn_y,int szer,int wys,String code,paletka pale){
-        pos_x = spawn_x;
-        pos_y = spawn_y;
-        height = wys;
-        width = szer;
-        dy = 3;
-        kod = code;
-        paletka_ = pale;
-
-        switch (code){
-            case "z":{
-                col = Color.magenta;
-                try {
-                    imgPerk = ImageIO.read(new File("perk_zwezenie.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
-            }
-            break;
-            case "p":{
-                col = Color.black;
-                try {
-                    imgPerk = ImageIO.read(new File("perk_poszerzenie.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
-            }
-            break;
-            default:
-                break;
-        }
-        System.out.println("Perk spawn!");
-    }*/
 
     public perk(Klocek kl, paletka pale, pasekWyniku pasek){
         pos_x=kl.getPos_X();
@@ -249,5 +220,15 @@ public class perk {
     public Rectangle getBounds(){
         return new Rectangle(pos_x,pos_y,width,height);
     }
-
+    public void skaluj(int wys_,int szer_, int szer_stara, int wys_stara, int wysokosc, int szerokosc){
+        height=wys_;
+        width=szer_;
+        double a = (double)pos_x/szer_stara;
+        double b = (double)pos_y/wys_stara;
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(4);
+        //System.out.println("PosX="+x_pos+" PosY="+y_pos+" szerokosc:"+szerokosc+" szer_stara="+szer_stara+" wys stara="+ wys_stara+" a="+df.format(a)+" b="+df.format(b));
+        pos_x=(int)(szerokosc*a);
+        pos_y=(int)(wysokosc*b);
+    }
 }

@@ -26,6 +26,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     private int wys_stara;
     private Image imgTlo, imgPaddle,imgBall,imgPerk;
     private OknoGlowne oknoGlowneUchwyt;
+    private int pozostale_klocki=1;
     Thread thread;
     Random generator = new Random();
    // public int punkty;
@@ -251,7 +252,12 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                         }
                     }
                     sprawdzKolizje();
-
+                    if(pasekwyniku_.getCzas()<=0){
+                        System.out.println("koniec gry czas");
+                        koniecGry();
+                    }
+                    pozostale_klocki=0;
+                 //   pozostale_klocki=0;
                     long update = System.nanoTime() - now;
                     double milis = (double) update / 1000000.0;
 
@@ -272,7 +278,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     }
 
     /**
-     * Metoda sprawdzaj�ca wyst�pienie kolizji
+     * Metoda sprawdzaj�ca wyst�pienie kolizji, obsluguje bonusy i pilnuje konca gry
      */
     public void sprawdzKolizje(){
         Rectangle rpaletka = paletka_.getBounds();
@@ -298,8 +304,11 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         int ilosc_kolizji=0;
         for (Klocek kl :klocki){
             Rectangle rklocek = kl.getBounds();
-            if (rklocek.intersects(rpilka)){
-                if(kl.getWytrzymalosc()!=0) {
+
+                if(kl.getWytrzymalosc()!=0){
+                    pozostale_klocki=1;
+                    if (rklocek.intersects(rpilka))
+                {
                     klockiTab[ilosc_kolizji]=kl;
                     ilosc_kolizji++;
                 }
@@ -451,14 +460,24 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             pilka_ = new Pilka(getWidth()/2,getHeight()/2,getHeight()/45);
 
             if(pasekwyniku_.zwrocZycie()==0){
+                System.out.println("koniec gry zycie");
                 koniecGry();
             }
+
         }
         else if(pilka_.getY_pos()<=0){
             pilka_.setY_pos(1);
             pilka_.odwroc_Y();
         }
-
+      //  if(pasekwyniku_.getCzas()<=0){
+      //      System.out.println("koniec gry czas");
+     //       koniecGry();
+    //    }
+        if(pozostale_klocki==0)
+        {
+            System.out.println("koniec gry klocki");
+            koniecGry();
+        }
     }
 
 
@@ -529,7 +548,9 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             brickHeigth = (int)(getHeight()/maxRow/(2.5));
             paletka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
             pilka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
-
+            for(perk perk_ : perks){
+                perk_.skaluj(brickHeigth, brickWidth, szer_stara, wys_stara, getHeight(), getWidth());
+            }
             int j=0;
             Klocek temp = new Klocek(0,0,0,0,0);
             for (int[] row : bricksPos) {
@@ -553,9 +574,9 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
      * metoda do wywolania perkow
      */
     private void add_perk(Klocek kl){
-        int j = generator.nextInt(10);
+        int j = generator.nextInt(9);
         System.out.println("Wynik losowania to:" + j);
-        if (j == 1 || j==2) {
+        if (j == 1 || j==5) {
             perks.add(new perk(kl, paletka_, pasekwyniku_));
     }
 }
