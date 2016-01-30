@@ -278,129 +278,107 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     public void sprawdzKolizje(){
         Rectangle rpaletka = paletka_.getBounds();
         Rectangle rpilka = pilka_.getBounds();
+//kolizje napisane od nowa poczatek
+        //wziecie wspolrzendych pilki
 
-        //poczate moich zmian
-        // 2 razy elce po calej tablicy klockow, na przyszlosc to ograniczyc zapamietujac otzrebe klocki z kolizja
         Point pPG,pPD,pLD,pLG;
-      //  Klocek temp = new Klocek(0,0,0,0,0);
         pLG = new Point((int) rpilka.getX(), (int) rpilka.getY());
         pLD = new Point((int) rpilka.getX(), (int) rpilka.getMaxY());
         pPG = new Point((int) rpilka.getMaxX(), (int) rpilka.getY());
         pPD = new Point((int) rpilka.getMaxX(), (int) rpilka.getMaxY());
-
+//tablica dla [pilki
         Point[] pointTab = new Point[4];
         pointTab[0] = pLG;
         pointTab[1] = pLD;
         pointTab[2] = pPG;
         pointTab[3] = pPD;
-        int flaga=0;
-        //kiedys perki zabrac z kolizji i wyonywac je po sprawdzneiu wsyztskeigo a nie w kazdym z 3 przypadkow
+        //tablica dla klopckow
+        Klocek[] klockiTab = new Klocek[3];
+
+// przejsice po klockach, zapamietaj w tablice klocki ze zderzen
         int ilosc_kolizji=0;
         for (Klocek kl :klocki){
-
             Rectangle rklocek = kl.getBounds();
             if (rklocek.intersects(rpilka)){
                 if(kl.getWytrzymalosc()!=0) {
+                    klockiTab[ilosc_kolizji]=kl;
                     ilosc_kolizji++;
-
                 }
             }
         }
-
-
+        //kolizja z 1 klockiem
         if (ilosc_kolizji==1){
             int zderzenia_rogi=0;
-        for (Klocek kl : klocki) {
-            if (kl.getWytrzymalosc() != 0){//zabezpieczenie do zliczenia tylko zyjacych
-                Rectangle rklocek = kl.getBounds();
-
-            //sytuacja 1 klocek do ogarniecia
-            //rozpatruje rogami na pilce zalozenie: pierwszenstwo ma odbicie po Y na razie nie uwzgledniamy rogow, moze kiedys
-            //porzebna mi tablica punktow na pilce
-            //przejdz po tablicy i sr ile punktow wezslo 1 czy 2
-            //kolizja i bonus po sprawdzeniyu wsyztskeigo najpierw odwrocic pilke
-            for (Point p : pointTab) {
-                if (rklocek.contains(p)) {
-                    zderzenia_rogi++;
-                }
-            }
-        }
-        }
+                    Rectangle rklocek = klockiTab[0].getBounds();
+                    //sytuacja 1 klocek do ogarniecia
+                    //rozpatruje rogami na pilce zalozenie: pierwszenstwo ma odbicie po Y na razie nie uwzgledniamy rogow, moze kiedys
+                    //porzebna mi tablica punktow na pilce
+                    //przejdz po tablicy i sr ile punktow wezslo 1 czy 2
+                    //kolizja i bonus po sprawdzeniyu wsyztskeigo najpierw odwrocic pilke
+                    for (Point p : pointTab) {
+                        if (rklocek.contains(p)) {
+                            zderzenia_rogi++;
+                        }
+                    }
             if(zderzenia_rogi==1)
             {
-
-                zderzenia_rogi=0;
-                pilka_.odwroc_Y();//zalzoenie ze jak 1 rog pierwszensto ma odbicie gora dol
-                //zmiana zalozenia odwrocmy oba
-                pilka_.odwroc_X();
-                /*//sytuacja gdy jeden rog odbicie gora dol pierwszenstwo
-                    for (Klocek kl : klocki) {
-                        Rectangle rklocek = kl.getBounds();
-                        if (rklocek.contains(pLG) || rklocek.contains(pPG))
+                if (rklocek.contains(pPD))
+                {
+                    pilka_.lewo_gora();
+                }
+                if (rklocek.contains(pLD)){
+                    pilka_.prawo_gora();
+                }
+                if(rklocek.contains(pPG))
+                {
+                    pilka_.lewo_dol();
+                }
+                if(rklocek.contains(pLG))
+                {
+                    pilka_.prawo_dol();
+                }
+            }//koniec 1 rogowej kolizji
+            //kolizja 2 rogi
+            if(zderzenia_rogi==2)
+            {
+                        if ((rklocek.contains(pLG) && rklocek.contains(pPG)) || (rklocek.contains(pLD) && rklocek.contains(pPD)))
                         {
                             pilka_.odwroc_Y();
                         }
-                    }
-                */
-            }//koniec 1 rogowej kolizji
-            if(zderzenia_rogi==2)
-            {
-
-                zderzenia_rogi=0;//kiedys pozbyc sie tu petli po klockach
-                for (Klocek kl : klocki)
-                {
-                    if (kl.getWytrzymalosc()!=0){
-                    Rectangle rklocek = kl.getBounds();
-                    if ((rklocek.contains(pLG) && rklocek.contains(pPG)) || (rklocek.contains(pLD) && rklocek.contains(pPD)))
-                    {
-                        pilka_.odwroc_Y();
-                       // w tej wersji nie mozna tu kl.kolizja();
-                    }
-                    if ((rklocek.contains(pLG) && rklocek.contains(pLD)) || (rklocek.contains(pPG) && rklocek.contains(pPD)))
-                    {
-                        pilka_.odwroc_X();
-                       // kl.kolizja();
-                    }
-                }
-                }
-                //sytuacja ze uderzylo na pewno w bok lub na pewno w podstawy
-
+                        if ((rklocek.contains(pLG) && rklocek.contains(pLD)) || (rklocek.contains(pPG) && rklocek.contains(pPD)))
+                        {
+                            pilka_.odwroc_X();
+                        }
             }//koniec 2 rogow
-            //dodac bonusy i kolizje na klocku
-            for (Klocek kl : klocki) {
-                Rectangle rklocek = kl.getBounds();
-                if (rklocek.intersects(rpilka)){
-                    if(kl.getWytrzymalosc()!=0)
+            //kolizja na klocki i pasek wyniku
+                    if(klockiTab[0].getWytrzymalosc()!=0)
                     {
-                        kl.kolizja();
+                        klockiTab[0].kolizja();
                         pasekwyniku_.dodajPunkty();
                     }
-                    if (kl.getWytrzymalosc()==0)
+            //bonus edytowac po mzianie perkow
+                    if (klockiTab[0].getWytrzymalosc()==0)
                     {
-                        //wklej tu bonus
-                       // temp = kl;
                         int i = generator.nextInt(10);
                         System.out.println("Wynik losowania to:"+i);
                         if(i==1){
-                            perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p",paletka_));
+                            perks.add(new perk(klockiTab[0].getPos_X(), klockiTab[0].getPos_Y(), klockiTab[0].getSzer(), klockiTab[0].getWys(), "p",paletka_));
                         }
                         else if(i==2){
-                            perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z",paletka_));
+                            perks.add(new perk(klockiTab[0].getPos_X(), klockiTab[0].getPos_Y(), klockiTab[0].getSzer(), klockiTab[0].getWys(), "z",paletka_));
                         }
                     }
-                }
-            }
+        }//koniec przypadku kolizji z 1 klockiem
+//kolizje z 2 klockami:
 
-
-    }//koniec przypadku kolizji z 1 klockiem
         if(ilosc_kolizji==2)
         {
             int zmLG=0;
             int zmLD=0;
             int zmPD=0;
             int zmPG=0;
-            for (Klocek kl : klocki) {
-                if (kl.getWytrzymalosc() != 0) {
+            for (int i=0; i<2; i++) {
+                Klocek kl=klockiTab[i];
                     Rectangle rklocek = kl.getBounds();
                     if (rklocek.contains(pLG)) {
                         zmLG = 1;
@@ -414,22 +392,19 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                     if (rklocek.contains(pPD)) {
                         zmPD = 1;
                     }
-                    if (rklocek.intersects(rpilka)) {
                         kl.kolizja();
                         pasekwyniku_.dodajPunkty();
                         if (kl.getWytrzymalosc() == 0) {
-                            //wklej tu bonus
-                            // temp = kl;
-                            int i = generator.nextInt(10);
-                            System.out.println("Wynik losowania to:" + i);
-                            if (i == 1) {
+                            int j = generator.nextInt(10);
+                            System.out.println("Wynik losowania to:" + j);
+                            if (j == 1) {
                                 perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p", paletka_));
-                            } else if (i == 2) {
+                            } else if (j == 2) {
                                 perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z", paletka_));
                             }
                         }
-                    }
-                }
+
+
             }
 
             if((zmPG==1 && zmLG==1)||(zmPD==1 && zmLD==1))
@@ -440,27 +415,21 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             {
                 pilka_.odwroc_X();
             }
-            //sytuacja 2 klocki zderzenie
-            //latwo, sprawdzic ktore 2 rogi pilki uderzyly i to jednoznacznie okresla odbicie
-        }
+
+        }//koniec kolizji 2 klockow
         if (ilosc_kolizji==3)
         {
             //sytuacja 3 klocki zderzenie
             //kazdemu zabierz zycie
             //odiji obie wspolrzedne pilki zawsze, bo L ksztaltne
-            for(Klocek kl: klocki)
+            for(Klocek kl: klockiTab)
             {
             Rectangle rklocek = kl.getBounds();
-                if(rklocek.intersects(rpilka))
-                {
-                    if(kl.getWytrzymalosc()!=0) {
+
                         pasekwyniku_.dodajPunkty();
                         kl.kolizja();
-
-                       // pilka_.odwroc_X();
-                       // pilka_.odwroc_Y();
+                //bonus
                         if (kl.getWytrzymalosc() == 0) {
-                          //  temp = kl;
                             int i = generator.nextInt(10);
                             System.out.println("Wynik losowania to:"+i);
                             if(i==1){
@@ -470,12 +439,9 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                                 perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z",paletka_));
                             }
                         }
-                    }
-                }
             }
             pilka_.odwroc_X();
             pilka_.odwroc_Y();
-            ilosc_kolizji=0;//dla pewnosci napisalem...
         }
 
         if(!perks.isEmpty()) {

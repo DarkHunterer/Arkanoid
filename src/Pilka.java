@@ -195,6 +195,49 @@ public class Pilka {
     }
 
     /**
+     * Kieruje piłkę w lewo i górę
+     */
+    public void lewo_gora(){
+    if (dx>0){
+        dx=-dx;
+    }
+        if(dy>0){
+            dy=-dy;
+        }
+}
+    /**
+     * Kieruje piłkę w prawo i górę
+     */
+    public void prawo_gora(){
+        if (dx<0){
+            dx=-dx;
+        }
+        if(dy>0){
+            dy=-dy;
+        }
+    }
+    /**
+     * Kieruje piłkę w lewo i dół
+     */
+    public void lewo_dol(){
+        if (dx>0){
+            dx=-dx;
+        }
+        if(dy<0){
+            dy=-dy;
+        }
+    }    /**
+     * Kieruje piłkę w prawo i dół
+     */
+    public void prawo_dol(){
+        if (dx<0){
+            dx=-dx;
+        }
+        if(dy<0){
+            dy=-dy;
+        }
+    }
+    /**
      * Skaluje pi�ke wzgl�dem okna
      * @param szerokosc Nowa szerokosc okna
      * @param wysokosc  Nowa wysokosc okna
