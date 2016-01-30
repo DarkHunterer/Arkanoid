@@ -243,9 +243,8 @@ public class Pilka {
      * @param wysokosc  Nowa wysokosc okna
      * @param szer_stara Stara szerokosc okna
      * @param wys_stara Stara wysokosc okna
-     * @param szer_paletki Szerokosc paletki
      */
-    public void skaluj(int szerokosc, int wysokosc,int szer_stara, int wys_stara,int szer_paletki){
+    public void skaluj(int szerokosc, int wysokosc,int szer_stara, int wys_stara){
         if(srednica !=0) {
             double a = (double)x_pos/szer_stara;
             double b = (double)y_pos/wys_stara;
