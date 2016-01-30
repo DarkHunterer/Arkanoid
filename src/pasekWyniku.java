@@ -64,6 +64,9 @@ public class pasekWyniku extends JPanel implements ActionListener{
     public int zwrocZycie(){
         return zycie;
     }
+    public void dodajCzas(){
+        czas=czas+5;
+    }
 
     /**
      * Metoda odpowiadajaca za inicjacje paska
@@ -83,7 +86,7 @@ public class pasekWyniku extends JPanel implements ActionListener{
     }
 
     /**
-     * Metoda odpowiadajaca za dodanie labeli wyniku, ¿ycia i czasu do panelu paska wyniku
+     * Metoda odpowiadajaca za dodanie labeli wyniku, ï¿½ycia i czasu do panelu paska wyniku
      */
     private void ustawGUI(){
         add(labelWynik);
@@ -122,7 +125,7 @@ public class pasekWyniku extends JPanel implements ActionListener{
         zaktualizujZycie(zycie_);
     }
     /**
-     * Metoda obs³uguj¹ca zdarzenia. Zmniejsza czas pozosta³y do koñca
+     * Metoda obsï¿½ugujï¿½ca zdarzenia. Zmniejsza czas pozostaï¿½y do koï¿½ca
      * @param e
      */
     @Override

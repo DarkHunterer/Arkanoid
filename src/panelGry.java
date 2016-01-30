@@ -306,67 +306,51 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             }
         }
         //kolizja z 1 klockiem
-        if (ilosc_kolizji==1){
-            int zderzenia_rogi=0;
-                    Rectangle rklocek = klockiTab[0].getBounds();
-                    //sytuacja 1 klocek do ogarniecia
-                    //rozpatruje rogami na pilce zalozenie: pierwszenstwo ma odbicie po Y na razie nie uwzgledniamy rogow, moze kiedys
-                    //porzebna mi tablica punktow na pilce
-                    //przejdz po tablicy i sr ile punktow wezslo 1 czy 2
-                    //kolizja i bonus po sprawdzeniyu wsyztskeigo najpierw odwrocic pilke
-                    for (Point p : pointTab) {
-                        if (rklocek.contains(p)) {
-                            zderzenia_rogi++;
-                        }
-                    }
-            if(zderzenia_rogi==1)
-            {
-                if (rklocek.contains(pPD))
-                {
+        if (ilosc_kolizji==1) {
+            int zderzenia_rogi = 0;
+            Rectangle rklocek = klockiTab[0].getBounds();
+            //sytuacja 1 klocek do ogarniecia
+            //rozpatruje rogami na pilce zalozenie: pierwszenstwo ma odbicie po Y na razie nie uwzgledniamy rogow, moze kiedys
+            //porzebna mi tablica punktow na pilce
+            //przejdz po tablicy i sr ile punktow wezslo 1 czy 2
+            //kolizja i bonus po sprawdzeniyu wsyztskeigo najpierw odwrocic pilke
+            for (Point p : pointTab) {
+                if (rklocek.contains(p)) {
+                    zderzenia_rogi++;
+                }
+            }
+            if (zderzenia_rogi == 1) {
+                if (rklocek.contains(pPD)) {
                     pilka_.lewo_gora();
                 }
-                if (rklocek.contains(pLD)){
+                if (rklocek.contains(pLD)) {
                     pilka_.prawo_gora();
                 }
-                if(rklocek.contains(pPG))
-                {
+                if (rklocek.contains(pPG)) {
                     pilka_.lewo_dol();
                 }
-                if(rklocek.contains(pLG))
-                {
+                if (rklocek.contains(pLG)) {
                     pilka_.prawo_dol();
                 }
             }//koniec 1 rogowej kolizji
             //kolizja 2 rogi
-            if(zderzenia_rogi==2)
-            {
-                        if ((rklocek.contains(pLG) && rklocek.contains(pPG)) || (rklocek.contains(pLD) && rklocek.contains(pPD)))
-                        {
-                            pilka_.odwroc_Y();
-                        }
-                        if ((rklocek.contains(pLG) && rklocek.contains(pLD)) || (rklocek.contains(pPG) && rklocek.contains(pPD)))
-                        {
-                            pilka_.odwroc_X();
-                        }
+            if (zderzenia_rogi == 2) {
+                if ((rklocek.contains(pLG) && rklocek.contains(pPG)) || (rklocek.contains(pLD) && rklocek.contains(pPD))) {
+                    pilka_.odwroc_Y();
+                }
+                if ((rklocek.contains(pLG) && rklocek.contains(pLD)) || (rklocek.contains(pPG) && rklocek.contains(pPD))) {
+                    pilka_.odwroc_X();
+                }
             }//koniec 2 rogow
             //kolizja na klocki i pasek wyniku
-                    if(klockiTab[0].getWytrzymalosc()!=0)
-                    {
-                        klockiTab[0].kolizja();
-                        pasekwyniku_.dodajPunkty();
-                    }
+            if (klockiTab[0].getWytrzymalosc() != 0) {
+                klockiTab[0].kolizja();
+                pasekwyniku_.dodajPunkty();
+            }
             //bonus edytowac po mzianie perkow
-                    if (klockiTab[0].getWytrzymalosc()==0)
-                    {
-                        int i = generator.nextInt(10);
-                        System.out.println("Wynik losowania to:"+i);
-                        if(i==1){
-                            perks.add(new perk(klockiTab[0].getPos_X(), klockiTab[0].getPos_Y(), klockiTab[0].getSzer(), klockiTab[0].getWys(), "p",paletka_));
-                        }
-                        else if(i==2){
-                            perks.add(new perk(klockiTab[0].getPos_X(), klockiTab[0].getPos_Y(), klockiTab[0].getSzer(), klockiTab[0].getWys(), "z",paletka_));
-                        }
-                    }
+            if (klockiTab[0].getWytrzymalosc() == 0) {
+                add_perk(klockiTab[0]);
+            }
         }//koniec przypadku kolizji z 1 klockiem
 //kolizje z 2 klockami:
 
@@ -394,13 +378,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                         kl.kolizja();
                         pasekwyniku_.dodajPunkty();
                         if (kl.getWytrzymalosc() == 0) {
-                            int j = generator.nextInt(10);
-                            System.out.println("Wynik losowania to:" + j);
-                            if (j == 1) {
-                                perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p", paletka_));
-                            } else if (j == 2) {
-                                perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z", paletka_));
-                            }
+                          add_perk(kl);
                         }
 
 
@@ -429,14 +407,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                         kl.kolizja();
                 //bonus
                         if (kl.getWytrzymalosc() == 0) {
-                            int i = generator.nextInt(10);
-                            System.out.println("Wynik losowania to:"+i);
-                            if(i==1){
-                                perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "p",paletka_));
-                            }
-                            else if(i==2){
-                                perks.add(new perk(kl.getPos_X(), kl.getPos_Y(), kl.getSzer(), kl.getWys(), "z",paletka_));
-                            }
+                           add_perk(kl);
                         }
             }
             pilka_.odwroc_X();
@@ -578,5 +549,15 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         }
     }
 
+    /**
+     * metoda do wywolania perkow
+     */
+    private void add_perk(Klocek kl){
+        int j = generator.nextInt(10);
+        System.out.println("Wynik losowania to:" + j);
+        if (j == 1 || j==2) {
+            perks.add(new perk(kl, paletka_, pasekwyniku_));
+    }
+}
 
 }
