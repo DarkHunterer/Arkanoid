@@ -24,7 +24,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     private ArrayList<perk> perks;
     private int szer_stara;
     private int wys_stara;
-    private Image imgTlo, imgPaddle,imgBall,imgPerk;
+    private Image imgTlo;
     private OknoGlowne oknoGlowneUchwyt;
     private int pozostale_klocki=1;
     Thread thread;
@@ -46,9 +46,9 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
 
         bricksPos = config.bricksPos;
         try {
-            imgTlo = ImageIO.read(new File("tlo.jpg"));
-            imgPaddle = ImageIO.read(new File("paddle.png"));
-            imgBall = ImageIO.read(new File("ball.png"));
+            imgTlo = ImageIO.read(new File("grafika/tlo.jpg"));
+           // imgPaddle = ImageIO.read(new File("grafika/paddle.png"));
+           // imgBall = ImageIO.read(new File("ball.png"));
         }catch (Exception e){
             System.out.println(e.toString());
         }
@@ -113,7 +113,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
        // g.setColor(paletka_.getKolor());
       //  g.drawRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
       //  g.fillRect(paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_());
-        g.drawImage(imgPaddle,paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_(),null);
+        g.drawImage(paletka_.getImage(),paletka_.getX(),paletka_.getY(),paletka_.getSzer_(),paletka_.getWys_(),null);
     }
 
     /**
@@ -127,7 +127,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         g.setColor(Color.white);
         g.drawOval(pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getSrednica(),pilka_.getSrednica());
     */
-        g.drawImage(imgBall,pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getSrednica(),pilka_.getSrednica(),null);
+        g.drawImage(pilka_.getImage(),pilka_.getX_pos(),pilka_.getY_pos(),pilka_.getSrednica(),pilka_.getSrednica(),null);
     }
 
     /**
@@ -138,7 +138,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         for(Klocek k :klocki) {
            // g.setColor(k.getKolor());
             if(k.getWytrzymalosc()!=0) {
-              g.drawImage(k.imgKlocek,k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys(), null);
+              g.drawImage(k.getImage(),k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys(), null);
                 //  g.drawRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
                // g.fillRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
               //  g.setColor(Color.black);
@@ -157,7 +157,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 g.drawRect(p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight());
                 g.fillRect(p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight());
             */
-                g.drawImage(p.imgPerk,p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight(),null);
+                g.drawImage(p.getImage(),p.getPos_x(),p.getPos_y(),p.getWidth(),p.getHeight(),null);
             }
         }
     }
@@ -194,6 +194,10 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     @Override
     public void keyReleased(KeyEvent e) {
         paletka_.keyReleased(e);
+        //if (pilka_.getDy()==0){
+          pilka_.keyReleased(e);
+        //if (pilka_.getDy()==0){
+      //  pilka_.keyReleased(e);}
     }
 
     /**
@@ -218,7 +222,8 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
      */
     @Override
     public void keyTyped(KeyEvent e) {
-
+        //if (pilka_.getDy()==0){
+        //  pilka_.keyReleased(e);}
     }
     /**
      *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
@@ -459,7 +464,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             //
             pasekwyniku_.zmniejszZycie();
             pilka_ = new Pilka(getWidth()/2,getHeight()/2,getHeight()/45);
-
+            paletka_.paletka_pozycja_start(getWidth(), getHeight());
             if(pasekwyniku_.zwrocZycie()==0){
                 System.out.println("koniec gry zycie");
                 koniecGry();

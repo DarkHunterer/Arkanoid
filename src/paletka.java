@@ -1,12 +1,14 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.text.DecimalFormat;
 
 /**
  * Created by Daniel on 02.11.2015.
- * Klasa odpowiadaj¹ca za paletkê
+ * Klasa odpowiadajï¿½ca za paletkï¿½
  */
 public class paletka implements KeyListener {
 
@@ -15,42 +17,59 @@ public class paletka implements KeyListener {
     private int szer_;
     private int wys_;
     private int predkosc;
-    private Color kolor;
-
+  //  private Color kolor;
+  private Image imgPaletka;
     private int dx;
     private int dy;
 
     /**
-     * @param x_start Pozycja pocz¹tkowa X
-     * @param y_start Pozycja pocz¹tkowa Y
-     * @param szerokosc Szerokoœæ paletki
-     * @param wysokosc Wysokoœæ paletki
+     * @param x_start   Pozycja poczï¿½tkowa X
+     * @param y_start   Pozycja poczï¿½tkowa Y
+     * @param szerokosc Szerokoï¿½ï¿½ paletki
+     * @param wysokosc  Wysokoï¿½ï¿½ paletki
      */
-    paletka(int x_start,int y_start,int szerokosc,int wysokosc){
+    paletka(int x_start, int y_start, int szerokosc, int wysokosc) {
         System.out.println("Dodano paletke");
-        x_pos = x_start;
+        x_pos = x_start-(szerokosc/2);
         y_pos = y_start;
-        szer_=szerokosc;
+        szer_ = szerokosc;
         wys_ = wysokosc;
-        predkosc =200;
-        kolor=Color.blue;
+        predkosc = 200;
+        try {
+            imgPaletka = ImageIO.read(new File("grafika/paddle.png"));
+        }catch (Exception e){ System.out.println(e.toString());}
+        // kolor=Color.blue;
     }
-
+/**
+ * pobiera obraze
+ */
+    public Image getImage(){
+            return imgPaletka;
+            }
     /**
-     * Zwraca kolor paletki
-     * @return
+     * ustawia paletke po pilce straconej
      */
-    public Color getKolor() {
-        return kolor;
-    }
+    public void paletka_pozycja_start(int width, int height){
 
-    /**
-     * Ustawia kolor paletki
-     * @param kolor
-     */
-    public void setKolor(Color kolor) {
-        this.kolor = kolor;
-    }
+
+    x_pos=(width/2)-(szer_/2);
+        y_pos=height-height/10;
+}
+   // /**
+  //   * Zwraca kolor paletki
+ //    * @return
+ //    */
+ //   public Color getKolor() {
+ //       return kolor;
+ //   }
+
+ //   /**
+ //    * Ustawia kolor paletki
+ //    * @param kolor
+ //    */
+ //   public void setKolor(Color kolor) {
+ //       this.kolor = kolor;
+  //  }
 
     /**
      * Ustawia szerokosc paletki
@@ -75,7 +94,7 @@ public class paletka implements KeyListener {
     }
 
     /**
-     * Metoda odpowiadaj¹ca za poruszanie siê paletki
+     * Metoda odpowiadajï¿½ca za poruszanie siï¿½ paletki
      * @param maxX
      */
     public void porusz(int maxX){
@@ -87,7 +106,7 @@ public class paletka implements KeyListener {
     }
 
     /**
-     * Metoda zwracaj¹ca szerokoœæ paletki
+     * Metoda zwracajï¿½ca szerokoï¿½ï¿½ paletki
      * @return
      */
     public int getSzer_() {
@@ -95,7 +114,7 @@ public class paletka implements KeyListener {
     }
 
     /**
-     * Metoda zwracaj¹ca wysokoœæ paletki
+     * Metoda zwracajï¿½ca wysokoï¿½ï¿½ paletki
      * @return
      */
     public int getWys_() {
@@ -103,7 +122,7 @@ public class paletka implements KeyListener {
     }
 
     /**
-     * Metoda zwracaj¹ca pozycjê X
+     * Metoda zwracajï¿½ca pozycjï¿½ X
      * @return
      */
     public int getX()
@@ -112,7 +131,7 @@ public class paletka implements KeyListener {
     }
 
     /**
-     * Metoda zwracaj¹ca pozycjê Y
+     * Metoda zwracajï¿½ca pozycjï¿½ Y
      * @return
      */
     public int getY()
@@ -121,7 +140,7 @@ public class paletka implements KeyListener {
     }
 
     /**
-     * Metoda odpowiadaj¹ca za skalowanie paletki wzglêdem rozmiaru okna
+     * Metoda odpowiadajï¿½ca za skalowanie paletki wzglï¿½dem rozmiaru okna
      * @param szerokosc Nowa szerokosc okna
      * @param wysokosc  Nowa wysokosc okna
      * @param szer_stara Stara szerokosc okna
@@ -180,7 +199,7 @@ public class paletka implements KeyListener {
         }
     }
     /**
-     * Zwraca obiekt typu Rectangle który jest u¿ywany do wykrywania kolizji
+     * Zwraca obiekt typu Rectangle ktï¿½ry jest uï¿½ywany do wykrywania kolizji
      * @return
      */
     public Rectangle getBounds(){

@@ -14,7 +14,7 @@ public class Klocek {
     private int wys;
     private int wytrzymalosc;
     //private Color kolor=Color.RED;
-    Image imgKlocek;
+    private Image imgKlocek;
     Klocek(int x, int y, int szerokosc, int wysokosc,int zycie){
         pos_X = x;
         pos_Y = y;
@@ -31,31 +31,31 @@ public class Klocek {
             case 1: //kolor=Color.RED;
             {
                 try {
-                    imgKlocek = ImageIO.read(new File("Kafel5.png"));
+                    imgKlocek = ImageIO.read(new File("grafika/Kafel5.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
                 break;
             case 2:            {
                 try {
-                    imgKlocek = ImageIO.read(new File("Kafel4.png"));
+                    imgKlocek = ImageIO.read(new File("grafika/Kafel4.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             } //kolor=Color.black;
                 break;
             case 3:            {
                 try {
-                    imgKlocek = ImageIO.read(new File("Kafel3.png"));
+                    imgKlocek = ImageIO.read(new File("grafika/Kafel3.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }//kolor=Color.blue;
                 break;
             case 4:            {
                 try {
-                    imgKlocek = ImageIO.read(new File("Kafel2.png"));
+                    imgKlocek = ImageIO.read(new File("grafika/Kafel2.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }//kolor=Color.orange;
                 break;
             case 5:            {
                 try {
-                    imgKlocek = ImageIO.read(new File("Kafel1.png"));
+                    imgKlocek = ImageIO.read(new File("grafika/Kafel1.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }//kolor=Color.green;
                 break;
@@ -148,7 +148,12 @@ public class Klocek {
         szer = szer_klocka;
         wys = wys_klocka;
     }
-
+/**
+ * pobiuera obrzek
+ */
+    public Image getImage(){
+        return imgKlocek;
+    }
     /**
      * Obsluga kolizji z pilka
      */
@@ -168,33 +173,33 @@ public class Klocek {
             case 1: //kolor=Color.RED;
             {
                 try {
-                    imgKlocek = ImageIO.read(new File("Kafel5.png"));
+                    imgKlocek = ImageIO.read(new File("grafika/Kafel5.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
                 break;
             case 2:
             {
                 try {
-                    imgKlocek = ImageIO.read(new File("Kafel4.png"));
+                    imgKlocek = ImageIO.read(new File("grafika/Kafel4.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }//kolor=Color.black;
                 break;
             case 3:          {
                 try {
-                    imgKlocek = ImageIO.read(new File("Kafel3.png"));
+                    imgKlocek = ImageIO.read(new File("grafika/Kafel3.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }//kolor=Color.blue;
                 break;
             case 4:          {
                 try {
-                    imgKlocek = ImageIO.read(new File("Kafel2.png"));
+                    imgKlocek = ImageIO.read(new File("grafika/Kafel2.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
                 //kolor=Color.orange;
                 break;
             case 5:          {
                 try {
-                    imgKlocek = ImageIO.read(new File("Kafel1.png"));
+                    imgKlocek = ImageIO.read(new File("grafika/Kafel1.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
                 //kolor=Color.green;

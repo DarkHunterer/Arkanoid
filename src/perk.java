@@ -16,9 +16,9 @@ public class perk {
     private int kod;
    // Color col = Color.yellow;
     private int dy;
-    paletka paletka_;
-    pasekWyniku pasekWyniku_;
-    Image imgPerk;
+   private paletka paletka_;
+   private pasekWyniku pasekWyniku_;
+   private Image imgPerk;
     Random generator = new Random();
 
     public perk(Klocek kl, paletka pale, pasekWyniku pasek){
@@ -33,74 +33,74 @@ public class perk {
         switch (kod){
             case 0:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_zwezenie.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_zwezenie.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case 1:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_poszerzenie.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_poszerzenie.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case 2:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_punkty_20.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_punkty_20.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case 3:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_punkty_40.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_punkty_40.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case 4:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_punkty_80.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_punkty_80.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case 5:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_punkty_160.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_punkty_160.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
 
             }
             break;
             case 6:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_punkty_-20.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_punkty_-20.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case 7:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_punkty_-40.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_punkty_-40.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case 8:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_punkty_-80.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_punkty_-80.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case 9:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_punkty_-160.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_punkty_-160.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case 10:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_czas.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_czas.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
             case 11:{
                 try {
-                    imgPerk = ImageIO.read(new File("perk_zycie.png"));
+                    imgPerk = ImageIO.read(new File("grafika/perk_zycie.png"));
                 }catch (Exception e){ System.out.println(e.toString());}
             }
             break;
@@ -230,5 +230,8 @@ public class perk {
         //System.out.println("PosX="+x_pos+" PosY="+y_pos+" szerokosc:"+szerokosc+" szer_stara="+szer_stara+" wys stara="+ wys_stara+" a="+df.format(a)+" b="+df.format(b));
         pos_x=(int)(szerokosc*a);
         pos_y=(int)(wysokosc*b);
+    }
+    public Image getImage(){
+        return imgPerk;
     }
 }

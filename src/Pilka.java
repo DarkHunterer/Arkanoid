@@ -1,12 +1,16 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.File;
 import java.text.DecimalFormat;
+import java.awt.event.KeyListener;
 import java.util.Map;
 
 /**
  *
  * Klasa odpowiadaj�ca za pi�ke
  */
-public class Pilka {
+public class Pilka implements KeyListener{
     private int x_pos;
     private int y_pos;
     private int srednica;
@@ -15,7 +19,8 @@ public class Pilka {
     private int dx;
     private int dy;
     private int velVect;
-
+    private Image imgBall;
+private int start;
     /**
      * Konsturktor pi�ki
      * @param x_start Pozycja startowa X'owa
@@ -28,11 +33,41 @@ public class Pilka {
         y_pos = y_start;
         srednica =szerokosc;
         predkosc=0.5;
-        dx = 120;
+       // dx = 120;
         dy = 120;
         velVect = (int)Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
         dx=0; //aby pilka po pojawieniu leciala pionowo w dol
+        start=0;
+        try {
+            imgBall = ImageIO.read(new File("grafika/ball.png"));
+        }catch (Exception e){ System.out.println(e.toString());}
     }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+    /**
+     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * @param e Obiekt typu KeyEvent
+     */
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key==KeyEvent.VK_SPACE) {
+
+            System.out.println(" Spacja puszczona pilka");
+             start=1;
+            //dx=-predkosc;
+        }
+    }
+
+
+
 
     /**
      * Metoda wyznaczaj�ca sk�adowe X i Y pr�dko�ci wzgl�dem k�ta padania
@@ -65,7 +100,12 @@ public class Pilka {
     public int getKat() {
         return kat;
     }
-
+/**
+ * pobiera obrazel
+ */
+    public Image getImage(){
+        return imgBall;
+    }
     /**
      * Setter pola kat
      * @param kat
@@ -120,15 +160,16 @@ public class Pilka {
      * @param maxX Maksymalny X jaki pi�ka mo�e przyj��
      * @param maxY Maksymalny Y jaki pi�ka mo�e przyj��
      */
-    public void porusz(int maxX,int maxY){
-        x_pos += dx/28;
-        y_pos += dy/28;
-        if(x_pos<1)
-            x_pos=1;
-        else if(x_pos+ srednica >maxX)
-            x_pos=maxX- srednica;
+    public void porusz(int maxX,int maxY) {
+        if (start == 1) {
+            x_pos += dx / 28;
+            y_pos += dy / 28;
+            if (x_pos < 1)
+                x_pos = 1;
+            else if (x_pos + srednica > maxX)
+                x_pos = maxX - srednica;
+        }
     }
-
     /**
      * Ustawia pozycje Y
      * @param y_pos
