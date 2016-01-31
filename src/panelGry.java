@@ -426,7 +426,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             //odiji obie wspolrzedne pilki zawsze, bo L ksztaltne
             for(Klocek kl: klockiTab)
             {
-            Rectangle rklocek = kl.getBounds();
+            //Rectangle rklocek = kl.getBounds();
 
                         pasekwyniku_.dodajPunkty();
                         kl.kolizja();

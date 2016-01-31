@@ -79,30 +79,30 @@ public class paletka implements KeyListener {
         this.szer_ = szer_;
     }
 
-    /**
-     * Ustawia pozycje paletki
-     * @param x_start
-     * @param y_start
-     * @param szerokosc
-     * @param wysokosc
-     */
-    public void ustaw_pozycje(int x_start,int y_start,int szerokosc,int wysokosc){
+  //  /**
+   //  * Ustawia pozycje paletki
+   //  * @param x_start
+   //  * @param y_start
+   //  * @param szerokosc
+   //  * @param wysokosc
+   //  */
+   /* public void ustaw_pozycje(int x_start,int y_start,int szerokosc,int wysokosc){
         x_pos = x_start;
         y_pos = y_start;
         szer_= szerokosc;
         wys_ = wysokosc;
     }
-
+*/
     /**
      * Metoda odpowiadaj�ca za poruszanie si� paletki
      * @param maxX
      */
     public void porusz(int maxX){
         x_pos += dx/30;
-        if(x_pos<1)
-            x_pos=1;
-        if(x_pos+szer_>maxX)
-            x_pos=maxX-szer_;
+        if(x_pos<-15)
+            x_pos=-15;
+        if(x_pos+szer_>maxX+15)
+            x_pos=maxX-szer_+15;
     }
 
     /**
