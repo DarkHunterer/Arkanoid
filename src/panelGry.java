@@ -64,8 +64,9 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             pilka_ = new Pilka(width/2,heigth/2,heigth/45);
             dodajKlocki(width,heigth);
             perks = new ArrayList<>();
-            pasekwyniku_.wylacz_pauze();
+           // pasekwyniku_.wylacz_pauze();
             wylaczPauze();
+            //ukryta_pauza_wlacz();
             //  pauza=false;
 
             init = true;
@@ -74,6 +75,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 thread = new Thread (this, "Watek panelu gry");
             }
             thread.start();
+           // ukryta_pauza_wlacz();
     }
 
     /**
@@ -215,6 +217,12 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             pasekwyniku_.wylacz_pauze();
             pauza = false;
         }
+    }
+    public void ukryta_pauza_wlacz(){
+        pasekwyniku_.ukryta_pauza_wlacz();
+    }
+    public void ukryta_pauza_wylacz(){
+        pasekwyniku_.ukryta_pauza_wylacz();
     }
     /**
      *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
@@ -465,6 +473,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             pasekwyniku_.zmniejszZycie();
             pilka_ = new Pilka(getWidth()/2,getHeight()/2,getHeight()/45);
             paletka_.paletka_pozycja_start(getWidth(), getHeight());
+            ukryta_pauza_wlacz();
             if(pasekwyniku_.zwrocZycie()==0){
                 System.out.println("koniec gry zycie");
                 koniecGry();

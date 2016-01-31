@@ -305,6 +305,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
                 System.out.println("Pauza wylaczona");
             }
         }
+        if (e.getKeyCode()==KeyEvent.VK_SPACE) {
+            panelgry_.ukryta_pauza_wylacz();
+        }
     }
 
     /**

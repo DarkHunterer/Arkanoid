@@ -15,6 +15,7 @@ public class pasekWyniku extends JPanel implements ActionListener{
     private int czas ;
     private int licznik;
     private Boolean init=false;
+    private Boolean init2=false;
     private Color kolor_;
 
     private JLabel labelZycie;
@@ -135,10 +136,11 @@ public class pasekWyniku extends JPanel implements ActionListener{
             labelCzas.setText("Czas: " + czas);
             labelWynik.setText("Wynik: "+wynik);
             labelZycie.setText("Zycie: "+ zycie);
+            if(init2){
             if ((licznik % 1000) == 0 && czas > 0) {
                 czas--;
             }
-        }
+        }}
     }
     public void wlacz_pauze(){
         init = false;
@@ -147,5 +149,11 @@ public class pasekWyniku extends JPanel implements ActionListener{
     public void wylacz_pauze(){
         labelPauza.setVisible(false);
         init=true;
+    }
+    public void ukryta_pauza_wlacz() {
+        init2=false;
+    }
+    public void ukryta_pauza_wylacz(){
+        init2=true;
     }
 }
