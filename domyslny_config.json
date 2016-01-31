@@ -1,5 +1,10 @@
 {
-  "Pilka": {},
+  "Pilka": {
+    "dy": 180,
+    "dx": 0,
+    "start": 0,
+    "string_imgBall": "grafika/ball.png"
+  },
   "PasekWyniku": {
     "czas": 100,
     "zycie": 5

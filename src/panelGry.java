@@ -63,7 +63,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             int heigth= getHeight();
             System.out.println("Szerokosc "+width +" wysokosc " +heigth);
             paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
-            pilka_ = new Pilka(width/2,heigth/2,heigth/45);
+            pilka_ = new Pilka(width/2,heigth/2,heigth/45, config_);
             dodajKlocki(width,heigth);
             perks = new ArrayList<>();
            // pasekwyniku_.wylacz_pauze();
@@ -261,7 +261,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 if (init) {
                     long now = System.nanoTime();
                     paletka_.porusz(getWidth());
-                    pilka_.porusz(getWidth(), getHeight());
+                    pilka_.porusz(getWidth());
                     if(!perks.isEmpty()){
                         for(perk p : perks){
                             p.porusz();
@@ -332,6 +332,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         }
         //kolizja z 1 klockiem
         if (ilosc_kolizji==1) {
+            System.out.println("Zderzenie z 1 klockiem");
             int zderzenia_rogi = 0;
             Rectangle rklocek = klockiTab[0].getBounds();
             //sytuacja 1 klocek do ogarniecia
@@ -381,6 +382,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
 
         if(ilosc_kolizji==2)
         {
+            System.out.println("Zderzenie z 2 klockami");
             int zmLG=0;
             int zmLD=0;
             int zmPD=0;
@@ -421,6 +423,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         }//koniec kolizji 2 klockow
         if (ilosc_kolizji==3)
         {
+            System.out.println("Zderzenie z 3 klockami");
             //sytuacja 3 klocki zderzenie
             //kazdemu zabierz zycie
             //odiji obie wspolrzedne pilki zawsze, bo L ksztaltne
@@ -473,7 +476,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
              //Pilka uderzyla w podloge
             //
             pasekwyniku_.zmniejszZycie();
-            pilka_ = new Pilka(getWidth()/2,getHeight()/2,getHeight()/45);
+            pilka_ = new Pilka(getWidth()/2,getHeight()/2,getHeight()/45, config_);
             paletka_.paletka_pozycja_start(getWidth(), getHeight());
             ukryta_pauza_wlacz();
             if(pasekwyniku_.zwrocZycie()==0){
