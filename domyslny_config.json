@@ -5,6 +5,10 @@
     "start": 0,
     "string_imgBall": "grafika/ball.png"
   },
+  "Paletka"{
+  "predkosc": 200,
+  "string_imgPale": "grafika/paddle.png"
+},
   "PasekWyniku": {
     "czas": 100,
     "zycie": 5

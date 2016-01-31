@@ -1,8 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -30,8 +28,6 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     private int pozostale_klocki=1;
     Thread thread;
     Random generator = new Random();
-   // public int punkty;
-   // public int szanse;
     private pasekWyniku pasekwyniku_;
     /**
      * Konstruktor klasy panelGry
@@ -62,7 +58,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             int width = getWidth();
             int heigth= getHeight();
             System.out.println("Szerokosc "+width +" wysokosc " +heigth);
-            paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25);
+            paletka_ = new paletka(width/2,heigth-heigth/10,width/5,heigth/25, config_);
             pilka_ = new Pilka(width/2,heigth/2,heigth/45, config_);
             dodajKlocki(width,heigth);
             perks = new ArrayList<>();
@@ -568,7 +564,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             maxCol = bricksPos[0].length;
             brickWidth = getWidth()/maxCol;
             brickHeigth = (int)(getHeight()/maxRow/(2.5));
-            paletka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
+            paletka_.skaluj(getWidth(), getHeight(), szer_stara);
             pilka_.skaluj(getWidth(), getHeight(), szer_stara, wys_stara);
             for(perk perk_ : perks){
                 perk_.skaluj(brickHeigth, brickWidth, szer_stara, wys_stara, getHeight(), getWidth());

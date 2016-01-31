@@ -196,6 +196,8 @@ public class Data {
     int pilka_start;
     String pilka_string_imgBall;
 
+    int paletka_predkosc;
+    String paletka_string_imgPale;
     /**
      * Konstruktor klasy, wczytuje domyslna konfiguracje z pliku.
      */
@@ -223,6 +225,7 @@ public class Data {
             JSONObject jsonObjPerk = (JSONObject) jsonObjMain.get("Perk");
             JSONObject jsonObjKlocek = (JSONObject) jsonObjMain.get("Klocek");
             JSONObject jsonObjPilka = (JSONObject) jsonObjMain.get("Pilka");
+            JSONObject jsonObjPaletka = (JSONObject) jsonObjMain.get("Paletka");
 
             wczytaj_OknoGlowne(jsonObjOknoGlowne);
             wczytaj_PasekWyniku(jsonObjPasekWyniku);
@@ -231,6 +234,7 @@ public class Data {
             wczytaj_Perki(jsonObjPerk);
             wczytaj_Klocki(jsonObjKlocek);
             wczytaj_Pilka(jsonObjPilka);
+            wczytaj_Paletka(jsonObjPaletka);
 
         } catch (Exception ex) {
             System.out.println("Zlapano wyjatek: " + ex.toString());
@@ -380,6 +384,11 @@ public class Data {
         pilka_string_imgBall = (String) jsonObjPilka.get("string_imgBall");
      //   System.out.println("hello1 ");
       //  System.out.println(pilka_string_imgBall +"hello");
+    }
+    private void wczytaj_Paletka(JSONObject jsonObjPaletka){
+        long temp = (long) jsonObjPaletka.get("predkosc");
+        paletka_predkosc=(int) temp;
+        paletka_string_imgPale= (String) jsonObjPaletka.get("string_imgPale");
     }
 
 }

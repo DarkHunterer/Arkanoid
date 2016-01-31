@@ -9,15 +9,45 @@ import java.awt.event.KeyListener;
  * Klasa odpowiadająca za piłkę. Przechowuje wszystkie parametry piłkii. Pilnuje stałej wypadkowej prędkości piłki. Odpowiada za przesunięcia piłki i zmiany kierunku prędkości. Skaluje piłkę. Obsługuje rozpoczęcie lotu piłki przez użytkownika po jej ustawieniu.
  */
 public class Pilka implements KeyListener {
+    /**
+     * Zmienna przechowująca pozycję x-ową piłki
+     */
     private int x_pos;
+    /**
+     * Zmienna przechowująca pozycję y-ową piłki
+     */
     private int y_pos;
+    /**
+     * Zmienna przechowująca średnicę piłki
+     */
     private int srednica;
+    /**
+     * Zmienna przechowująca kąt odbicia piłki
+     */
     private int kat;
+    /**
+     * Zmienna przechowująca o ile porusza się piłka względem osi X w jednej iteracji
+     */
     private int dx;
+    /**
+     * Zmienna przechowująca o ile porusza sie piłka względem osi Y w jednej iteracji
+     */
     private int dy;
+    /**
+     * Zmienna przechowująca wypadkową prędkośc piłki
+     */
     private int velVect;
+    /**
+     * Zmienna przechowująca ścieżkę do obrazka reprezentującego paletkę na ekranie
+     */
     private String string_imgBall;
+    /**
+     * Zmienna przechowująca obrazek reprezentujący paletkę na ekranie
+     */
     private Image imgBall;
+    /**
+     * Zmienna wykorzystywana do wystartowania piłki z pozycji startowej przez użytkownika
+     */
     private int start;
 
     /**
