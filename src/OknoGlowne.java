@@ -4,10 +4,9 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.Inet4Address;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +48,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private String string_help_message;
 
     //
+    private String hostname;
+    private int port=4455;
+    Socket socketClient;
     private SettingsFrame settFrame;
     private BestScoreFrame scoreFrame;
     private pasekWyniku pasekWyniku_;
@@ -400,15 +402,28 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     public void componentHidden(ComponentEvent e) {
 
     }
+    public void readResponse() throws IOException{
+        String userInput;
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
 
+        System.out.println("Response from server:");
+        while ((userInput = stdIn.readLine()) != null) {
+            System.out.println(userInput);
+        }
+    }
+    public void connect() throws UnknownHostException, IOException {
+        System.out.println("Attempting to connect to "+hostname+":"+port);
+        socketClient = new Socket(hostname,port);
+        System.out.println("Connection Established");
+    }
     private class SettingsFrame extends JFrame implements ActionListener{
-     //   private String string_accept="Akceptuj";
-     //  private String string_ip="Wrowadz tu swoje ip";
+
         private String string_accept=config.SettingFrame_string_accept;
         private String string_ip=config.SettingFrame_string_ip;
         JButton acceptButton;
         JTextField textField;
-        private Inet4Address addressIP;
+       // private Inet4Address addressIP;
+
         public SettingsFrame(int width,int heigth,Frame parentFrame){
 
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -432,15 +447,6 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
        private void dodajElementy(){
            this.setLayout(new GridLayout(4,4));
-       //    GridBagConstraints c = new GridBagConstraints();
-        //   c.fill = GridBagConstraints.BOTH;
-      /*     c.weightx=0.2;
-           c.gridx=0;
-           c.gridy=0;
-           c.weighty=0.8;
-           c.weighty=0.2;
-           c.gridx=0;
-           c.gridy=1;*/
            acceptButton = new JButton(string_accept);
            acceptButton.setSize(new Dimension(getWidth(),getHeight()));
            textField = new JTextField(string_ip);
@@ -453,14 +459,22 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         @Override
         public void actionPerformed(ActionEvent e) {
           //  if(e.equals(acceptButton)){
-                try {
-                    addressIP = (Inet4Address) Inet4Address.getByName(textField.getText());
-                    JOptionPane.showMessageDialog(getParent(), addressIP);
-                }catch (UnknownHostException ex){
-                    JOptionPane.showMessageDialog(getParent(), ex.getMessage());
+                //try {
+                    //(Inet4Address) Inet4Address.getByName(textField.getText());
+                    hostname = textField.getText();
+            try{
+                connect();
+            }catch (UnknownHostException ex) {
+            System.err.println("Host unknown. Cannot establish connection");
+        } catch (IOException ex) {
+            System.err.println("Cannot establish connection. Server may not be up."+ex.getMessage());
+        }
+                   // JOptionPane.showMessageDialog(getParent(), hostname);
+                //}catch (UnknownHostException ex){
+                 //   JOptionPane.showMessageDialog(getParent(), ex.getMessage());
            //     }
             }
-        }
+       // }
     }
     public class BestScoreFrame extends JFrame{
 
