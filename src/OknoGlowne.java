@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.net.Inet4Address;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -406,7 +405,29 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     public void componentHidden(ComponentEvent e) {
 
     }
-    public void readResponse() throws IOException{
+    public void readFileResponse() throws IOException{
+        String filename;
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+        filename = stdIn.readLine();
+
+        byte[] contents = new byte[10000];
+        //Initialize the FileOutputStream to the output file's full path.
+        FileOutputStream fos = new FileOutputStream(filename);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        InputStream is = socketClient.getInputStream();
+
+        //No of bytes read in one read() call
+        int bytesRead = 0;
+
+        while((bytesRead=is.read(contents))!=-1)
+            bos.write(contents, 0, bytesRead);
+
+        bos.flush();
+        bos.close();
+        socketClient.close();
+        System.out.println("File saved successfully!");
+    }
+    public void readStringResponse() throws IOException{
         String userInput;
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
 
@@ -414,19 +435,31 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         while ((userInput = stdIn.readLine()) != null) {
             System.out.println(userInput);
         }
+        socketClient.shutdownInput();
+        stdIn.close();
+        socketClient.close();
     }
-    public void connect() throws UnknownHostException, IOException {
+    public void send_command(String command){
+    try {
         System.out.println("Attempting to connect to "+hostname+":"+port);
         socketClient = new Socket(hostname,port);
         System.out.println("Connection Established");
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socketClient.getOutputStream()));
+        writer.write(command);
+        writer.flush();
+        socketClient.shutdownOutput();
+
+    }catch (Exception ex){
+        System.out.println(ex.toString());
     }
+    }
+
     private class SettingsFrame extends JFrame implements ActionListener{
 
         private String string_accept=config.SettingFrame_string_accept;
         private String string_ip=config.SettingFrame_string_ip;
         JButton acceptButton;
         JTextField textField;
-       // private Inet4Address addressIP;
 
         public SettingsFrame(int width,int heigth,Frame parentFrame){
 
@@ -467,11 +500,12 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
                     //(Inet4Address) Inet4Address.getByName(textField.getText());
                     hostname = textField.getText();
             try{
-                connect();
+                send_command("Gimme config");
+                readFileResponse();
             }catch (UnknownHostException ex) {
             System.err.println("Host unknown. Cannot establish connection");
         } catch (IOException ex) {
-            System.err.println("Cannot establish connection. Server may not be up."+ex.getMessage());
+            System.err.println("Cannot establish connection. Server may not be up. "+ex.toString());
         }
                    // JOptionPane.showMessageDialog(getParent(), hostname);
                 //}catch (UnknownHostException ex){
