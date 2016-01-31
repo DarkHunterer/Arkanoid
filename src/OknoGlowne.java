@@ -103,7 +103,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     public static void main(String [] args){
         OknoGlowne okno = new OknoGlowne();
         okno.setVisible(true);
-        System.out.println(Color.darkGray.getRGB()+" "+Color.PINK.getRGB()+" "+Color.BLUE.getRGB());
+      //  System.out.println(Color.darkGray.getRGB()+" "+Color.PINK.getRGB()+" "+Color.BLUE.getRGB());
         //okno.panelgry_ = null;
       //  Frame f = new Frame();
       //  f.setPreferredSize(new Dimension(500,500));

@@ -505,6 +505,8 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
 
         Boolean czyRekord =false;
         wlaczPauze();
+        pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas()*20);
+        pasekwyniku_.dodajPunkty(pasekwyniku_.zwrocZycie()*100);
         int wynik = pasekwyniku_.getWynik();
         Map.Entry<String,Long> tempEntry = new AbstractMap.SimpleEntry<String, Long>("Nick", 0l);
            for(Map.Entry<String,Long> tempMap : oknoGlowneUchwyt.highScore.entrySet()){

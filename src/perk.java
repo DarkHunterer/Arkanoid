@@ -14,12 +14,11 @@ public class perk {
     private int height;
     private int width;
     private int kod;
-   // Color col = Color.yellow;
     private int dy;
-   private paletka paletka_;
-   private pasekWyniku pasekWyniku_;
-   private Image imgPerk;
-    Random generator = new Random();
+     private paletka paletka_;
+    private pasekWyniku pasekWyniku_;
+    private Image imgPerk;
+    private Random generator = new Random();
 
     public perk(Klocek kl, paletka pale, pasekWyniku pasek){
         pos_x=kl.getPos_X();
@@ -108,69 +107,56 @@ public class perk {
             default:
                 break;
         }
-        //dodac obrazki do kazdego case
     }
 
     public void akcja(){
         switch (kod){
             case 0:{
-         //       col = Color.magenta;
                 paletka_.setSzer_(paletka_.getSzer_()*3/4);
             }
             break;
             case 1:{
-        //        col = Color.black;
                 paletka_.setSzer_(paletka_.getSzer_()*4/3);
             }
             break;
             case 2:{
-                //        col = Color.black;
                 pasekWyniku_.dodajPunkty(20);
             }
             break;
             case 3:{
-                //        col = Color.black;
                 pasekWyniku_.dodajPunkty(40);
             }
             break;
             case 4:{
-                //        col = Color.black;
                 pasekWyniku_.dodajPunkty(80);
             }
             break;
             case 5:{
-                //        col = Color.black;
                 pasekWyniku_.dodajPunkty(160);
 
             }
             break;
             case 6:{
-                //        col = Color.black;
                 pasekWyniku_.dodajPunkty(-20);
             }
             break;
             case 7:{
-                //        col = Color.black;
                 pasekWyniku_.dodajPunkty(-40);
             }
             break;
             case 8:{
-                //        col = Color.black;
                 pasekWyniku_.dodajPunkty(-80);
             }
             break;
             case 9:{
-                //        col = Color.black;
                 pasekWyniku_.dodajPunkty(-160);
             }
             break;
             case 10:{
-                //        col = Color.black;
                 pasekWyniku_.dodajCzas();
             }
             break;
             case 11:{
-                //        col = Color.black;
                 pasekWyniku_.dodajZycie();
             }
             break;
@@ -185,33 +171,21 @@ public class perk {
         return pos_x;
     }
 
-    public void setPos_x(int pos_x) {
-        this.pos_x = pos_x;
-    }
 
     public int getPos_y() {
         return pos_y;
     }
 
-    public void setPos_y(int pos_y) {
-        this.pos_y = pos_y;
-    }
 
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
 
     public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
 
     public void porusz(){
 
@@ -227,7 +201,6 @@ public class perk {
         double b = (double)pos_y/wys_stara;
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(4);
-        //System.out.println("PosX="+x_pos+" PosY="+y_pos+" szerokosc:"+szerokosc+" szer_stara="+szer_stara+" wys stara="+ wys_stara+" a="+df.format(a)+" b="+df.format(b));
         pos_x=(int)(szerokosc*a);
         pos_y=(int)(wysokosc*b);
     }
