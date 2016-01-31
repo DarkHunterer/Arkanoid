@@ -136,12 +136,13 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
      */
     private void rysuj_klocki(Graphics g){
         for(Klocek k :klocki) {
-            g.setColor(k.getKolor());
+           // g.setColor(k.getKolor());
             if(k.getWytrzymalosc()!=0) {
-                g.drawRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
-                g.fillRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
-                g.setColor(Color.black);
-                g.drawRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
+              g.drawImage(k.imgKlocek,k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys(), null);
+                //  g.drawRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
+               // g.fillRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
+              //  g.setColor(Color.black);
+              //  g.drawRect(k.getPos_X(), k.getPos_Y(), k.getSzer(), k.getWys());
             }
         }
     }

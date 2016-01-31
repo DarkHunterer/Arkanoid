@@ -1,9 +1,11 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
 import java.text.DecimalFormat;
 
 /**
  *
- * Klasa odpowiadaj¹ca za klocek (przeszkoda do zbicia pi³k¹)
+ * Klasa odpowiadajï¿½ca za klocek (przeszkoda do zbicia piï¿½kï¿½)
  */
 public class Klocek {
     private int pos_X;
@@ -11,7 +13,8 @@ public class Klocek {
     private int szer;
     private int wys;
     private int wytrzymalosc;
-    private Color kolor=Color.RED;
+    //private Color kolor=Color.RED;
+    Image imgKlocek;
     Klocek(int x, int y, int szerokosc, int wysokosc,int zycie){
         pos_X = x;
         pos_Y = y;
@@ -25,28 +28,49 @@ public class Klocek {
                 System.out.println(e.toString());
             }
                 break;
-            case 1: kolor=Color.RED;
+            case 1: //kolor=Color.RED;
+            {
+                try {
+                    imgKlocek = ImageIO.read(new File("Kafel5.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
+            }
                 break;
-            case 2: kolor=Color.black;
+            case 2:            {
+                try {
+                    imgKlocek = ImageIO.read(new File("Kafel4.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
+            } //kolor=Color.black;
                 break;
-            case 3:kolor=Color.blue;
+            case 3:            {
+                try {
+                    imgKlocek = ImageIO.read(new File("Kafel3.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
+            }//kolor=Color.blue;
                 break;
-            case 4:kolor=Color.orange;
+            case 4:            {
+                try {
+                    imgKlocek = ImageIO.read(new File("Kafel2.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
+            }//kolor=Color.orange;
                 break;
-            case 5:kolor=Color.green;
+            case 5:            {
+                try {
+                    imgKlocek = ImageIO.read(new File("Kafel1.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
+            }//kolor=Color.green;
                 break;
-            default:kolor=Color.magenta;
+            default: break;//kolor=Color.magenta;
         }
 
     }
 
-    /**
-     * Klasa zwracajaca kolor
-     * @return
-     */
-    public Color getKolor() {
-        return kolor;
-    }
+//    /**
+ //    * Klasa zwracajaca kolor
+ //    * @return
+  //   */
+  //  public Color getKolor() {
+  //      return kolor;
+ //   }
 
     /**
      * Ustawia pozycje X
@@ -81,7 +105,7 @@ public class Klocek {
     }
 
     /**
-     * Zwraca szerokoœæ klocka
+     * Zwraca szerokoï¿½ï¿½ klocka
      * @return
      */
     public int getSzer() {
@@ -89,7 +113,7 @@ public class Klocek {
     }
 
     /**
-     * Zwraca wysokoœæ klocka
+     * Zwraca wysokoï¿½ï¿½ klocka
      * @return
      */
     public int getWys() {
@@ -97,7 +121,7 @@ public class Klocek {
     }
 
     /**
-     * Metoda która skaluje klocek wzglêdem rozmiarów okna
+     * Metoda ktï¿½ra skaluje klocek wzglï¿½dem rozmiarï¿½w okna
      */
     /*public void skaluj(int szerokosc_ekranu, int wysokosc_ekranu,int szer_stara, int wys_stara,int szer_klocka,int wys_klocka)
     {
@@ -141,22 +165,46 @@ public class Klocek {
             }
         }*/
         switch (wytrzymalosc){
-            case 1: kolor=Color.RED;
+            case 1: //kolor=Color.RED;
+            {
+                try {
+                    imgKlocek = ImageIO.read(new File("Kafel5.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
+            }
                 break;
-            case 2: kolor=Color.black;
+            case 2:
+            {
+                try {
+                    imgKlocek = ImageIO.read(new File("Kafel4.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
+            }//kolor=Color.black;
                 break;
-            case 3:kolor=Color.blue;
+            case 3:          {
+                try {
+                    imgKlocek = ImageIO.read(new File("Kafel3.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
+            }//kolor=Color.blue;
                 break;
-            case 4:kolor=Color.orange;
+            case 4:          {
+                try {
+                    imgKlocek = ImageIO.read(new File("Kafel2.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
+            }
+                //kolor=Color.orange;
                 break;
-            case 5:kolor=Color.green;
+            case 5:          {
+                try {
+                    imgKlocek = ImageIO.read(new File("Kafel1.png"));
+                }catch (Exception e){ System.out.println(e.toString());}
+            }
+                //kolor=Color.green;
                 break;
-            default:kolor=Color.magenta;
+            default:break;//kolor=Color.magenta;
         }
     }
 
     /**
-     * Zwraca wytrzyma³oœæ klocka
+     * Zwraca wytrzymaï¿½oï¿½ï¿½ klocka
      * @return
      */
     public int getWytrzymalosc() {
@@ -164,7 +212,7 @@ public class Klocek {
     }
 
     /**
-     * Zwraca obiekt typu Rectangle który jest u¿ywany do wykrywania kolizji
+     * Zwraca obiekt typu Rectangle ktï¿½ry jest uï¿½ywany do wykrywania kolizji
      * @return
      */
     public Rectangle getBounds(){
