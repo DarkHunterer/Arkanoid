@@ -99,7 +99,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             for (int[] row : bricksPos) {
                 for (int i=0; i<row.length; i++){
                     if(row[i]!=0) {
-                        klocki.add(new Klocek(X, Y, brickWidth, brickHeigth,row[i]));
+                        klocki.add(new Klocek(X, Y, brickWidth, brickHeigth,row[i], config_));
                     }
                     X += brickWidth;
                     // tutaj dodawac ilosc klockow
@@ -571,7 +571,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                 perk_.skaluj(brickHeigth, brickWidth, szer_stara, wys_stara, getHeight(), getWidth());
             }
             int j=0;
-            Klocek temp = new Klocek(0,0,0,0,0);
+            Klocek temp = new Klocek(0,0,0,0,0, config_);
             for (int[] row : bricksPos) {
                 for (int i=0; i<row.length; i++){
                     if(row[i]!=0) {
@@ -595,9 +595,9 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     private void add_perk(Klocek kl, Data config){
         int j = generator.nextInt(9);
         System.out.println("Wynik losowania to:" + j);
-       // if (j == 1 || j==5) {
+        if (j == 1 || j==5) {
             perks.add(new perk(kl, paletka_, pasekwyniku_,  config));
-  //  }
+    }
 }
 
 }

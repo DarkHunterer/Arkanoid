@@ -186,6 +186,13 @@ public class Data {
     String Perk_string_bonus_10;
     String Perk_string_bonus_11;
 
+    String Klocek_zycie_5;
+    String Klocek_zycie_4;
+    String Klocek_zycie_3;
+    String Klocek_zycie_2;
+    String Klocek_zycie_1;
+
+
     /**
      * Konstruktor klasy, wczytuje domyslna konfiguracje z pliku.
      */
@@ -251,12 +258,14 @@ public class Data {
             JSONObject jsonObjPasekWyniku = (JSONObject) jsonObjMain.get("PasekWyniku");
             JSONObject jsonObjSettingFrame = (JSONObject) jsonObjMain.get("SettingFrame");
             JSONObject jsonObjPerk = (JSONObject) jsonObjMain.get("Perk");
+            JSONObject jsonObjKlocek = (JSONObject) jsonObjMain.get("Klocek");
 
             wczytaj_OknoGlowne(jsonObjOknoGlowne);
             wczytaj_PasekWyniku(jsonObjPasekWyniku);
             wczytaj_Mape(jsonObjMapa);
             wczytaj_Setting_Frame(jsonObjSettingFrame);
             wczytaj_Perki(jsonObjPerk);
+            wczytaj_Klocki(jsonObjKlocek);
         }
         catch (Exception ex){
                     System.out.println("Zlapano wyjatek: "+ ex.toString());
@@ -365,6 +374,17 @@ public class Data {
         Perk_string_bonus_9 = (String) jsonObjPerk.get("string_bonus_9");
         Perk_string_bonus_10 = (String) jsonObjPerk.get("string_bonus_10");
         Perk_string_bonus_11 = (String) jsonObjPerk.get("string_bonus_11");
+
+    }
+    /**
+     * metoda cyztaj klocek
+     */
+    private void wczytaj_Klocki(JSONObject jsonObjectKlocek){
+        Klocek_zycie_1=(String) jsonObjectKlocek.get("string_zycie_1");
+        Klocek_zycie_2=(String) jsonObjectKlocek.get("string_zycie_2");
+        Klocek_zycie_3=(String) jsonObjectKlocek.get("string_zycie_3");
+        Klocek_zycie_4=(String) jsonObjectKlocek.get("string_zycie_4");
+        Klocek_zycie_5=(String) jsonObjectKlocek.get("string_zycie_5");
 
     }
     /**
