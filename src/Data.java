@@ -171,17 +171,34 @@ public class Data {
     String SettingFrame_string_ip;
 
     /**
+     *
+     */
+    String Perk_string_bonus_0;
+    String Perk_string_bonus_1;
+    String Perk_string_bonus_2;
+    String Perk_string_bonus_3;
+    String Perk_string_bonus_4;
+    String Perk_string_bonus_5;
+    String Perk_string_bonus_6;
+    String Perk_string_bonus_7;
+    String Perk_string_bonus_8;
+    String Perk_string_bonus_9;
+    String Perk_string_bonus_10;
+    String Perk_string_bonus_11;
+
+    /**
      * Konstruktor klasy, wczytuje domyslna konfiguracje z pliku.
      */
     Data()
     {
         wczytaj_config("domyslny_config.json");
-        zapisz_config();
+        //zapisz_config();
     }
 
-    /**
-     * Metoda odpowiadająca za zapisanie konfiguracji do pliku
-     */
+   // /**
+  //   * Metoda odpowiadająca za zapisanie konfiguracji do pliku
+  //   */
+    /*
     public void zapisz_config(){
         try {
             FileWriter writer = new FileWriter("testjson.json");
@@ -193,6 +210,7 @@ public class Data {
             JSONObject objPasekWyniku = new JSONObject();
             JSONObject objPilka = new JSONObject();
             JSONObject objMapa = new JSONObject();
+            //JSONObject objPerk = new JSONObject();
 
             zapisz_OknoGlowne(objOknoGlowne);
             zapisz_PasekWyniku(objPasekWyniku);
@@ -215,7 +233,7 @@ public class Data {
             System.out.println(e.toString());
         }
     }
-
+*/
     /**
      * Metoda odpowiadajaca za wczytanie konfiguracji z pliku
      * @param sciezka Sciezka do wybranego pliku konfiguracji
@@ -232,11 +250,13 @@ public class Data {
             JSONObject jsonObjOknoGlowne = (JSONObject) jsonObjMain.get("OknoGlowne");
             JSONObject jsonObjPasekWyniku = (JSONObject) jsonObjMain.get("PasekWyniku");
             JSONObject jsonObjSettingFrame = (JSONObject) jsonObjMain.get("SettingFrame");
+            JSONObject jsonObjPerk = (JSONObject) jsonObjMain.get("Perk");
 
             wczytaj_OknoGlowne(jsonObjOknoGlowne);
             wczytaj_PasekWyniku(jsonObjPasekWyniku);
             wczytaj_Mape(jsonObjMapa);
             wczytaj_Setting_Frame(jsonObjSettingFrame);
+            wczytaj_Perki(jsonObjPerk);
         }
         catch (Exception ex){
                     System.out.println("Zlapano wyjatek: "+ ex.toString());
@@ -329,7 +349,25 @@ public class Data {
             }
         }
     }
-/**
+    /**
+     * metoda czytaj perk
+     */
+    private void wczytaj_Perki(JSONObject jsonObjPerk){
+        Perk_string_bonus_0 = (String) jsonObjPerk.get("string_bonus_0");
+        Perk_string_bonus_1 = (String) jsonObjPerk.get("string_bonus_1");
+        Perk_string_bonus_2 = (String) jsonObjPerk.get("string_bonus_2");
+        Perk_string_bonus_3 = (String) jsonObjPerk.get("string_bonus_3");
+        Perk_string_bonus_4 = (String) jsonObjPerk.get("string_bonus_4");
+        Perk_string_bonus_5 = (String) jsonObjPerk.get("string_bonus_5");
+        Perk_string_bonus_6 = (String) jsonObjPerk.get("string_bonus_6");
+        Perk_string_bonus_7 = (String) jsonObjPerk.get("string_bonus_7");
+        Perk_string_bonus_8 = (String) jsonObjPerk.get("string_bonus_8");
+        Perk_string_bonus_9 = (String) jsonObjPerk.get("string_bonus_9");
+        Perk_string_bonus_10 = (String) jsonObjPerk.get("string_bonus_10");
+        Perk_string_bonus_11 = (String) jsonObjPerk.get("string_bonus_11");
+
+    }
+    /**
  * Metoda do wczytania Settinf Frame
  */
 private void wczytaj_Setting_Frame(JSONObject jsonObjSettingFrame){

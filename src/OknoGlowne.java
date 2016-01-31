@@ -150,6 +150,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         weighty_panel_gry=config.OknoGlowne_weighty_panel_gry;
         string_authors_data=config.OknoGlowne_string_authors_data;
 
+
     }
 
 

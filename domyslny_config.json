@@ -39,6 +39,20 @@
     "string_authors_data":"Autorzy gry:\n-Daniel Rękawek\n-Konrad Jędrzejczak"
 
   },
+  "Perk":{
+    "string_bonus_0": "grafika/perk_zwezenie.png",
+    "string_bonus_1": "grafika/perk_poszerzenie.png",
+    "string_bonus_2": "grafika/perk_punkty_20.png",
+    "string_bonus_3": "grafika/perk_punkty_40.png",
+    "string_bonus_4": "grafika/perk_punkty_80.png",
+    "string_bonus_5": "grafika/perk_punkty_160.png",
+    "string_bonus_6": "grafika/perk_punkty_-20.png",
+    "string_bonus_7": "grafika/perk_punkty_-40.png",
+    "string_bonus_8": "grafika/perk_punkty_-80.png",
+    "string_bonus_9": "grafika/perk_punkty_-160.png",
+    "string_bonus_10": "grafika/perk_czas.png",
+    "string_bonus_11": "grafika/perk_zycie.png"
+  },
   "SettingFrame":{
     "string_accept": "Akceptuj",
     "string_ip": "Wprowadź tu swoje IP"

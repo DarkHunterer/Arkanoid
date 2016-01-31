@@ -15,6 +15,7 @@ import java.util.*;
 
 public class panelGry extends JPanel implements KeyListener,Runnable {
 
+    private Data config_;
     private int[][] bricksPos;
     private paletka paletka_;
     private Pilka pilka_;
@@ -52,6 +53,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
         }catch (Exception e){
             System.out.println(e.toString());
         }
+        config_=config;
     }
     /**
      * Metoda tworz�ca obiekty paletki,pilki oraz tworzy klocki oraz uruchamia logik� gry.
@@ -372,7 +374,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
             }
             //bonus edytowac po mzianie perkow
             if (klockiTab[0].getWytrzymalosc() == 0) {
-                add_perk(klockiTab[0]);
+                add_perk(klockiTab[0], config_);
             }
         }//koniec przypadku kolizji z 1 klockiem
 //kolizje z 2 klockami:
@@ -401,7 +403,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                         kl.kolizja();
                         pasekwyniku_.dodajPunkty();
                         if (kl.getWytrzymalosc() == 0) {
-                          add_perk(kl);
+                          add_perk(kl, config_);
                         }
 
 
@@ -430,7 +432,7 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
                         kl.kolizja();
                 //bonus
                         if (kl.getWytrzymalosc() == 0) {
-                           add_perk(kl);
+                           add_perk(kl, config_);
                         }
             }
             pilka_.odwroc_X();
@@ -590,12 +592,12 @@ public class panelGry extends JPanel implements KeyListener,Runnable {
     /**
      * metoda do wywolania perkow
      */
-    private void add_perk(Klocek kl){
+    private void add_perk(Klocek kl, Data config){
         int j = generator.nextInt(9);
         System.out.println("Wynik losowania to:" + j);
-        if (j == 1 || j==5) {
-            perks.add(new perk(kl, paletka_, pasekwyniku_));
-    }
+       // if (j == 1 || j==5) {
+            perks.add(new perk(kl, paletka_, pasekwyniku_,  config));
+  //  }
 }
 
 }
