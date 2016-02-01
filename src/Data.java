@@ -355,7 +355,12 @@ public class Data {
     private void wczytaj_Mape(JSONObject jsonObjMapa) {
 
         JSONArray tabex = (JSONArray) jsonObjMapa.get("MAPA");
+        JSONArray tabczas = (JSONArray) jsonObjMapa.get("CZAS");
         JSONArray tabin = new JSONArray();
+        long temp;
+         temp = (long) (tabczas.get(0));
+        PasekWyniku_const_czas = (int) temp;
+
         Boolean init = false;
 
         for (int i = 0; i < tabex.size(); i++) {

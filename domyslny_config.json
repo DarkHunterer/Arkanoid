@@ -41,7 +41,7 @@
     "width": 500,
     "string_menuPomoc_title": "Pomoc",
     "string_rules": "Zasady gry",
-    "string_help_message": "Zasady gry:\nNalezy zbic klocki piÅ‚kÄ…. Inne zasady dojdÄ… w przyszÅ‚oÅ›ci.\n",
+    "string_help_message": "Zasady gry:\nNalezy zbic klocki pi³k¹. Inne zasady dojd¹ w przysz³oœci.\n",
     "string_menu": "Menu",
     "color_pasekwyniku": -292561,
     "command_bestscore": "BESTSCORE",
@@ -53,7 +53,7 @@
     "gridx_panel_gry":0,
     "gridy_panel_gry":1,
     "weighty_panel_gry":0.95,
-    "string_authors_data":"Autorzy gry:\n-Daniel RÄ™kawek\n-Konrad JÄ™drzejczak",
+    "string_authors_data":"Autorzy gry:\n-Daniel Rêkawek\n-Konrad Jêdrzejczak",
     "pauza": false,
     "graTrwa": false,
     "port": 4455
@@ -83,7 +83,7 @@
   },
   "SettingFrame":{
     "string_accept": "Akceptuj",
-    "string_ip": "WprowadÅº tu swoje IP"
+    "string_ip": "WprowadŸ tu swoje IP"
   },
   "PanelGry":{
     "init": false,
