@@ -43,11 +43,11 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
     /**
      *Zmienna wykorzystywana do uruchomienia w odpowiednim momencie metod run, paint i skaluj
      */
-    private Boolean init = false;
+    private Boolean init;
     /**
      *Zmienna wykorzystywana do włączenia i wyłączenia pauzy
      */
-    private Boolean pauza = false;
+    private Boolean pauza;
     /**
      *Lista przechowująca wszystkie klocki
      */
@@ -76,7 +76,7 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
     /**
      *Zmienna wykorzystywana do wykrycia końca gry przez zbicie wszystkich klocków
      */
-    private boolean pozostale_klocki = true;
+    private boolean pozostale_klocki;
     /**
      *Główny wątek gry
      */
