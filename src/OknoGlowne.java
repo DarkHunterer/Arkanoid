@@ -16,12 +16,24 @@ import java.util.Map;
 
 public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener{
     //Wszystko to idzie do konfigu
+    /**
+     * Zmienna przechowująca obiekt Data z konfiguracją
+     */
     private  Data config;
+    /**
+     * Zmienna odpowiadająca za kolor paska wyniku
+     */
     private Color kolor_pasekWyniku;
+    /**
+     * Zmienna odpowiadająca za kolor Panelu Gry
+     */
     private Color kolor_panelGry;
+    /**
+     * Zmienna odpowiadająca za kolor tła
+     */
     private Color kolor_background;
     /**
-     * Zmienna odpowiadająca za szerokośc ekranu
+     * Zmienna odpowiadająca za szerokość ekranu
      */
     private int width;
     /**
@@ -76,43 +88,123 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      */
     private String string_end;
     /**
-     *
+     *Zmienna odpowiadająca za napis Najlepsze Wyniki
      */
     private String string_bestScore;
+    /**
+     * Zmienna odpowiadająca za napis Ustawienia
+     */
     private String string_config;
+    /**
+     * Zmienna odpowiadająca za napis Zasady Gry
+     */
     private String string_rules;
+    /**
+     * Zmienna odpowiadająca za napis O autorach
+     */
     private String string_authors;
+    /**
+     * Zmienna odpowiadająca za napis Menu
+     */
     private String string_menu;
+    /**
+     * Zmienna odpowiadająća za napis Pasek Menu
+     */
     private String string_menu_title;
+    /**
+     * Zmienna odpowiadająca za napis Pomoc
+     */
     private String string_help_message;
 
     //
+    /**
+     * Przechowuje IP serwera
+     */
     private String hostname;
+    /**
+     * Numer portu wykorzystywanego do komunikacji
+     */
     private int port=4455;
+    /**
+     * Gniazdo klienta
+     */
     Socket socketClient;
+    /**
+     * Pole przehcowujące Frame ustawień
+     */
     private SettingsFrame settFrame;
+    /**
+     * Pole przechowujące Frame Najlepszych wyników
+     */
     private BestScoreFrame scoreFrame;
+    /**
+     * Pole przechowujące pasek wyniku
+     */
     private pasekWyniku pasekWyniku_;
+    /**
+     * Pole przehcowujące panel gry
+     */
     private panelGry panelgry_;
     /**
-     * Zmienna odpowiadająća za opóźnienie zegara
+     * Zmienna odpowiadająca za opóźnienie zegara
      */
     private int DELAY;
+    /**
+     * Pole przechowujące obiekt klasy Timer
+     */
     private Timer timerGlowny;
+    /**
+     * Zmienna wykorzystywana do zastosowania pauzy
+     */
     private Boolean pauza = false;
+    /**
+     * Zmienna informująca czy trwa gra
+     */
     private Boolean graTrwa = false;
-    private Boolean init = false;
+    ///**
+    // *
+    // */
+   // private Boolean init = false;
+    /**
+     * Zmienna wykorzystywana do umiejscowienia paska wyniku
+     */
     private long weightx_pasek_wyniku;
+    /**
+     * Zmienna wykorzystywana do umiejscowienia paska wyniku
+     */
     private double weighty_pasek_wyniku;
+    /**
+     * Zmienna wykorzystywana do umiejscowienia paska wyniku
+     */
     private int gridx_pasek_wyniku;
+    /**
+     * Zmienna wykorzystywana do umiejscowienia paska wyniku
+     */
     private int gridy_pasek_wyniku;
+    /**
+     * Zmienna wykorzystywana do umiejscowienia panelu gry
+     */
     private int gridx_panel_gry;
+    /**
+     * Zmienna wykorzystywana do umiejscowienia panelu gry
+     */
     private int gridy_panel_gry;
+    /**
+     * Zmienna wykorzystywana do umiejscowienia panelu gry
+     */
     private double weighty_panel_gry;
+    /**
+     * Przechowuje dane o autorach
+     */
     private String string_authors_data;
-
+    /**
+     * HashMap wykorzystywana do przehcowywania Najlepszych wyników
+     */
     Map<String,Long> highScore = new HashMap<String,Long>();
-
+/**
+ *
+ */
+   // private boolean graTrwa;
     /**
      * Konstruktor okna głównego
      */
@@ -191,7 +283,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         gridy_panel_gry=config.OknoGlowne_gridy_panel_gry;
         weighty_panel_gry=config.OknoGlowne_weighty_panel_gry;
         string_authors_data=config.OknoGlowne_string_authors_data;
-
+        pauza=config.OknoGlowne_pauza;
+        graTrwa=config.OknoGlowne_graTrwa;
+        port=config.OknoGlowne_port;
 
     }
 

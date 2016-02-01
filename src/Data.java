@@ -174,6 +174,12 @@ public class Data {
     /**
      *
      */
+    int OknoGlowne_port;
+    boolean OknoGlowne_pauza;
+    boolean OknoGlowne_graTrwa;
+    /**
+     *
+     */
     String SettingFrame_string_accept;
     /**
      *
@@ -313,6 +319,10 @@ public class Data {
         OknoGlowne_gridy_panel_gry = (int) temp;
         OknoGlowne_weighty_panel_gry = (double) jsonObjOknoGlowne.get("weighty_panel_gry");
         OknoGlowne_string_authors_data = (String) jsonObjOknoGlowne.get("string_authors_data");
+        OknoGlowne_pauza=(boolean) jsonObjOknoGlowne.get("pauza");
+        OknoGlowne_graTrwa=(boolean) jsonObjOknoGlowne.get("graTrwa");
+        temp = (long) jsonObjOknoGlowne.get("port");
+        OknoGlowne_port=(int) temp;
     }
 
     /**

@@ -53,7 +53,10 @@
     "gridx_panel_gry":0,
     "gridy_panel_gry":1,
     "weighty_panel_gry":0.95,
-    "string_authors_data":"Autorzy gry:\n-Daniel Rękawek\n-Konrad Jędrzejczak"
+    "string_authors_data":"Autorzy gry:\n-Daniel Rękawek\n-Konrad Jędrzejczak",
+    "pauza": false,
+    "graTrwa": false,
+    "port": 4455
 
   },
   "Perk":{
