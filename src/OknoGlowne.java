@@ -210,6 +210,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      */
     public OknoGlowne(){
       //  super();
+        sciagnij_config();
         wczytaj_config();
         dodajElementy();
         dodajMenu();
@@ -639,6 +640,37 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         System.out.println(ex.toString());
     }
     }
+    /*
+     * Metoda mająca na celu sciągnięcie konfiguracji gry.
+     * W tym celu łączymy się z serwerem, jeżeli połączenie nie powiedzie się, gra się wyłącza.
+     */
+    public void sciagnij_config(){
+        hostname = (String)JOptionPane.showInputDialog(
+                this,
+                "Aby uruchomić grę, należy nawiązać połączeznie z serwerem\n" +
+                        "W przeciwnym wypadku gra nie uruchomi się",
+                "Podaj IP serwera",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                null
+        );
+        System.out.println("IP TO: "+hostname);
+        try {
+            socketClient = new Socket(hostname, port);
+            if(socketClient.isConnected()) {
+                System.out.println("Udalo sie nawiazac polaczenie z serwerem");
+            }
+            }catch (Exception ex){
+            System.out.println(ex.toString());
+            System.out.println("Nie udalo sie nawiazac polaczenie z serwerem");
+            JOptionPane.showMessageDialog(null, "Nie udalo sie nawiazac polaczenia", "Serwer error: " + "Polaczenie z serwerem", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(2);
+        }
+        odbierzConfig();
+        odbierzMapy();
+        odbierzHighscore();
+        }
 
     private class SettingsFrame extends JFrame implements ActionListener{
 
@@ -687,6 +719,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
                     hostname = textField.getText();
                 odbierzConfig();
                 odbierzMapy();
+            odbierzHighscore();
           //  odbierzHighscore();
                    // JOptionPane.showMessageDialog(getParent(), hostname);
                 //}catch (UnknownHostException ex){
@@ -717,13 +750,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
         private void dodajElementy(){
           //  this.setLayout(new BorderLayout());
-
             String[] columnNames = {"Nick","Wynik"};
             Object[][] data = new Object[highScore.size()][2];
-
-
             int i=0;
-
             for(Map.Entry<String,Long> entr : highScore.entrySet()){
                 data[i][0] = entr.getKey();
                 data[i][1] = entr.getValue();
