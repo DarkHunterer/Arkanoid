@@ -507,7 +507,7 @@ private String string_tlo;
             paletka_.paletka_pozycja_start(getWidth(), getHeight());
             ukryta_pauza_wlacz();
             if (pasekwyniku_.zwrocZycie() == 0) {
-                if (aktualna_mapa<=ilosc_map){
+                if (aktualna_mapa<ilosc_map){
                     nastepnaMapa();
                 }else {
                     System.out.println("koniec gry zycie");
@@ -520,7 +520,7 @@ private String string_tlo;
             pilka_.odwroc_Y();
         }
         if (pozostale_klocki == false) {
-            if (aktualna_mapa<=ilosc_map){
+            if (aktualna_mapa<ilosc_map){
                 nastepnaMapa();
             }else {
                 System.out.println("koniec gry klocki");
@@ -534,6 +534,7 @@ private String string_tlo;
      * W przypadku ukonczenia mapy, należy przejść do nastepnej nie konczac gry
      */
     private void nastepnaMapa(){
+        ukryta_pauza_wlacz();
         aktualna_mapa++;
         System.out.println("AKTUALNA MAPA: "+aktualna_mapa);
         config_.aktualizuj_mape(aktualna_mapa);
@@ -557,12 +558,11 @@ private String string_tlo;
      * Obsługuje sprawdzanie i zapisywanie rekordowych wyników
      */
     private void koniecGry() {
-        if(pasekwyniku_.getCzas()<=0){
-            if (aktualna_mapa<=ilosc_map) {
+        if (pasekwyniku_.getCzas() <= 0) {
+            if (aktualna_mapa <= ilosc_map) {
                 nastepnaMapa();
             }
-        }
-        else {
+        } else {
             Boolean czyRekord = false;
             wlaczPauze();
             pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas() * 20);
@@ -589,7 +589,6 @@ private String string_tlo;
             }
         }
     }
-
     /**
      * Metoda obliczajaca kat odbicia pilki od paletki
      * @param X_ball pozycja x-owa piłki
