@@ -558,8 +558,15 @@ private String string_tlo;
     private void koniecGry() {
             Boolean czyRekord = false;
             wlaczPauze();
+        boolean bonus_points=false;
+        String nick="";
+        if(pasekwyniku_.getCzas()!=0 && pasekwyniku_.zwrocZycie()!=0)
+        {
             pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas() * 20);
             pasekwyniku_.dodajPunkty(pasekwyniku_.zwrocZycie() * 100);
+            bonus_points=true;
+
+        }
             int wynik = pasekwyniku_.getWynik();
             Map.Entry<String, Long> tempEntry = new AbstractMap.SimpleEntry<String, Long>("Nick", 0l);
             for (Map.Entry<String, Long> tempMap : oknoGlowneUchwyt.highScore.entrySet()) {
@@ -571,7 +578,14 @@ private String string_tlo;
                 }
             }
             if (czyRekord) {
-                String nick = JOptionPane.showInputDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                if (bonus_points=false)
+                {
+                nick = JOptionPane.showInputDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                }
+                if (bonus_points=true)
+                {
+                    nick = JOptionPane.showInputDialog(null,"Bonus za pozostale zycia " + pasekwyniku_.zwrocZycie()*100 + "/nBonus za pozostały czas "+pasekwyniku_.getCzas()*20 +"/nTwoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                }
                 oknoGlowneUchwyt.highScore.remove(tempEntry.getKey());
                 oknoGlowneUchwyt.highScore.put(nick, (long) wynik);
                 OknoGlowne.BestScoreFrame bestscore;
