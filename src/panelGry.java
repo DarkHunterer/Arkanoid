@@ -507,12 +507,9 @@ private String string_tlo;
             paletka_.paletka_pozycja_start(getWidth(), getHeight());
             ukryta_pauza_wlacz();
             if (pasekwyniku_.zwrocZycie() == 0) {
-                if (aktualna_mapa<ilosc_map){
-                    nastepnaMapa();
-                }else {
+
                     System.out.println("koniec gry zycie");
-                    koniecGry();
-                }
+                    nastepnaMapa();
                 }
 
         } else if (pilka_.getY_pos() <= 0) {
@@ -533,23 +530,27 @@ private String string_tlo;
      * Metoda zmieniajaca plansze
      * W przypadku ukonczenia mapy, należy przejść do nastepnej nie konczac gry
      */
-    private void nastepnaMapa(){
-        ukryta_pauza_wlacz();
+    private void nastepnaMapa() {
         aktualna_mapa++;
-        System.out.println("AKTUALNA MAPA: "+aktualna_mapa);
-        config_.aktualizuj_mape(aktualna_mapa);
-        pasekwyniku_.uaktualnij_mape();
-        System.out.println("AKTUALNA MAPA: "+aktualna_mapa);
-        int width = getWidth();
-        int heigth = getHeight();
-        bricksPos = config_.bricksPos;
-        System.out.println("Szerokosc " + width + " wysokosc " + heigth);
-        paletka_ = new paletka(width / 2, heigth - heigth / 10, width / 5, heigth / 25, config_);
-        pilka_ = new Pilka(width / 2, heigth / 2, heigth / 45, config_);
-        klocki = null;
-        dodajKlocki(width, heigth);
-        perks = new ArrayList<>();
-        init = true;
+        if (aktualna_mapa < ilosc_map) {
+            ukryta_pauza_wlacz();
+            System.out.println("AKTUALNA MAPA: " + aktualna_mapa);
+            config_.aktualizuj_mape(aktualna_mapa);
+            pasekwyniku_.uaktualnij_mape();
+            System.out.println("AKTUALNA MAPA: " + aktualna_mapa);
+            int width = getWidth();
+            int heigth = getHeight();
+            bricksPos = config_.bricksPos;
+            System.out.println("Szerokosc " + width + " wysokosc " + heigth);
+            paletka_ = new paletka(width / 2, heigth - heigth / 10, width / 5, heigth / 25, config_);
+            pilka_ = new Pilka(width / 2, heigth / 2, heigth / 45, config_);
+            klocki = null;
+            dodajKlocki(width, heigth);
+            perks = new ArrayList<>();
+            init = true;
+        }
+        else
+            koniecGry();
     }
     /**
      * Metoda końca gry
@@ -558,11 +559,6 @@ private String string_tlo;
      * Obsługuje sprawdzanie i zapisywanie rekordowych wyników
      */
     private void koniecGry() {
-        if (pasekwyniku_.getCzas() <= 0) {
-            if (aktualna_mapa <= ilosc_map) {
-                nastepnaMapa();
-            }
-        } else {
             Boolean czyRekord = false;
             wlaczPauze();
             pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas() * 20);
@@ -587,7 +583,6 @@ private String string_tlo;
             } else {
                 JOptionPane.showMessageDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
             }
-        }
     }
     /**
      * Metoda obliczajaca kat odbicia pilki od paletki
