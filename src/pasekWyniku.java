@@ -72,6 +72,10 @@ public class pasekWyniku extends JPanel implements ActionListener {
     private String string_pauza;
 
     /**
+     * Pole przechowujace obiekt typu Data bedacy konfiguracja gry
+     */
+    private Data conf;
+    /**
      * Konstruktor paska wyniku
      * Wczytuje dane z konfiguracji
      *
@@ -101,6 +105,7 @@ public class pasekWyniku extends JPanel implements ActionListener {
         labelCzas = new JLabel();
         labelPauza = new JLabel(string_pauza);
         labelPauza.setVisible(false);
+        conf = config;
         this.setOpaque(true);
     }
 
@@ -255,4 +260,8 @@ public class pasekWyniku extends JPanel implements ActionListener {
     public void ukryta_pauza_wylacz() {
         init2 = true;
     }
+public void uaktualnij_mape(){
+    czas = conf.PasekWyniku_const_czas;
+    zycie = conf.PasekWyniku_const_zycie;
+}
 }

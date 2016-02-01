@@ -104,6 +104,7 @@ private String string_tlo;
         this.setBackground(config.OknoGlowne_kolor_panelGry);
         oknoGlowneUchwyt = OknoGlowneUchwyt_;
         ilosc_map = config.ilosc_map;
+        System.out.println("Ilosc map to: "+ilosc_map);
         aktualna_mapa=1;
         pasekwyniku_ = oknoGlowneUchwyt.getPasekWyniku_();
         bricksPos = config.bricksPos;
@@ -329,8 +330,8 @@ private String string_tlo;
                     sprawdzKolizje();
                     if (pasekwyniku_.getCzas() <= 0) {
                         System.out.println("koniec gry czas");
-                        koniecGry();
-                    }
+                            koniecGry();
+                        }
                     pozostale_klocki = false;
                     long update = System.nanoTime() - now;
                     double milis = (double) update / 1000000.0;
@@ -506,17 +507,25 @@ private String string_tlo;
             paletka_.paletka_pozycja_start(getWidth(), getHeight());
             ukryta_pauza_wlacz();
             if (pasekwyniku_.zwrocZycie() == 0) {
-                System.out.println("koniec gry zycie");
-                koniecGry();
-            }
+                if (aktualna_mapa<=ilosc_map){
+                    nastepnaMapa();
+                }else {
+                    System.out.println("koniec gry zycie");
+                    koniecGry();
+                }
+                }
 
         } else if (pilka_.getY_pos() <= 0) {
             pilka_.setY_pos(1);
             pilka_.odwroc_Y();
         }
         if (pozostale_klocki == false) {
-            System.out.println("koniec gry klocki");
-            koniecGry();
+            if (aktualna_mapa<=ilosc_map){
+                nastepnaMapa();
+            }else {
+                System.out.println("koniec gry klocki");
+                koniecGry();
+            }
         }
     }
 
@@ -525,7 +534,21 @@ private String string_tlo;
      * W przypadku ukonczenia mapy, należy przejść do nastepnej nie konczac gry
      */
     private void nastepnaMapa(){
-
+        aktualna_mapa++;
+        System.out.println("AKTUALNA MAPA: "+aktualna_mapa);
+        config_.aktualizuj_mape(aktualna_mapa);
+        pasekwyniku_.uaktualnij_mape();
+        System.out.println("AKTUALNA MAPA: "+aktualna_mapa);
+        int width = getWidth();
+        int heigth = getHeight();
+        bricksPos = config_.bricksPos;
+        System.out.println("Szerokosc " + width + " wysokosc " + heigth);
+        paletka_ = new paletka(width / 2, heigth - heigth / 10, width / 5, heigth / 25, config_);
+        pilka_ = new Pilka(width / 2, heigth / 2, heigth / 45, config_);
+        klocki = null;
+        dodajKlocki(width, heigth);
+        perks = new ArrayList<>();
+        init = true;
     }
     /**
      * Metoda końca gry
@@ -534,31 +557,37 @@ private String string_tlo;
      * Obsługuje sprawdzanie i zapisywanie rekordowych wyników
      */
     private void koniecGry() {
-        Boolean czyRekord = false;
-        wlaczPauze();
-        pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas() * 20);
-        pasekwyniku_.dodajPunkty(pasekwyniku_.zwrocZycie() * 100);
-        int wynik = pasekwyniku_.getWynik();
-        Map.Entry<String, Long> tempEntry = new AbstractMap.SimpleEntry<String, Long>("Nick", 0l);
-        for (Map.Entry<String, Long> tempMap : oknoGlowneUchwyt.highScore.entrySet()) {
-            if ((long) wynik > tempMap.getValue()) {
-                czyRekord = true;
-                tempEntry = tempMap;
-                System.out.println("Dziala");
-                break;
+        if(pasekwyniku_.getCzas()<=0){
+            if (aktualna_mapa<=ilosc_map) {
+                nastepnaMapa();
             }
         }
-        if (czyRekord) {
-            String nick = JOptionPane.showInputDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
-            oknoGlowneUchwyt.highScore.remove(tempEntry.getKey());
-            oknoGlowneUchwyt.highScore.put(nick, (long) wynik);
-            OknoGlowne.BestScoreFrame bestscore;
-            bestscore = oknoGlowneUchwyt.getScoreFrame();
-            bestscore.zapiszDoPliku();
-        } else {
-            JOptionPane.showMessageDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+        else {
+            Boolean czyRekord = false;
+            wlaczPauze();
+            pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas() * 20);
+            pasekwyniku_.dodajPunkty(pasekwyniku_.zwrocZycie() * 100);
+            int wynik = pasekwyniku_.getWynik();
+            Map.Entry<String, Long> tempEntry = new AbstractMap.SimpleEntry<String, Long>("Nick", 0l);
+            for (Map.Entry<String, Long> tempMap : oknoGlowneUchwyt.highScore.entrySet()) {
+                if ((long) wynik > tempMap.getValue()) {
+                    czyRekord = true;
+                    tempEntry = tempMap;
+                    System.out.println("Dziala");
+                    break;
+                }
+            }
+            if (czyRekord) {
+                String nick = JOptionPane.showInputDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                oknoGlowneUchwyt.highScore.remove(tempEntry.getKey());
+                oknoGlowneUchwyt.highScore.put(nick, (long) wynik);
+                OknoGlowne.BestScoreFrame bestscore;
+                bestscore = oknoGlowneUchwyt.getScoreFrame();
+                bestscore.zapiszDoPliku();
+            } else {
+                JOptionPane.showMessageDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+            }
         }
-
     }
 
     /**
@@ -569,8 +598,8 @@ private String string_tlo;
         int middlePaddle = (paletka_.getX() + paletka_.getSzer_() / 2);
         int beginPaddle = paletka_.getX();
         int X_collision = X_ball + pilka_.getSrednica() / 2 - beginPaddle;
-        System.out.println("Srodek paletki to " + middlePaddle + " X_collision to " + X_collision);
-        System.out.print("Szerokosc paletki to " + paletka_.getSzer_() + "\n");
+       // System.out.println("Srodek paletki to " + middlePaddle + " X_collision to " + X_collision);
+       // System.out.print("Szerokosc paletki to " + paletka_.getSzer_() + "\n");
 
         int kat = 80 * (X_collision - paletka_.getSzer_() / 2) / (paletka_.getSzer_() / 2);
         if (kat <= -80)

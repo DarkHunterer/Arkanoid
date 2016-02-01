@@ -386,7 +386,35 @@ public class Data {
      * @param numer Numer mapy do rozegrania
      */
     public void aktualizuj_mape(int numer){
+        try {
+            org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
+            String sciezka = "mapy/mapa";
+            sciezka= sciezka+Integer.toString(numer)+".json";
+            Object objMapa = parser.parse(new FileReader(sciezka));
+            JSONObject jsonObjMapa = (JSONObject) objMapa;
 
+        JSONArray tabex = (JSONArray) jsonObjMapa.get("MAPA");
+        JSONArray tabczas = (JSONArray) jsonObjMapa.get("CZAS");
+        JSONArray tabin = new JSONArray();
+        long temp;
+        temp = (long) (tabczas.get(0));
+        PasekWyniku_const_czas = (int) temp;
+
+        Boolean init = false;
+
+        for (int i = 0; i < tabex.size(); i++) {
+            tabin = (JSONArray) tabex.get(i);
+            for (int j = 0; j < tabin.size(); j++) {
+                if (!init) {
+                    bricksPos = new int[tabex.size()][tabin.size()];
+                    init = true;
+                }
+                bricksPos[i][j] = (int) ((long) (tabin.get(j)));
+            }
+        }
+        } catch (Exception ex) {
+            System.out.println("Zlapano wyjatek: " + ex.toString());
+        }
     }
     /**
      * metoda czytaj perk

@@ -122,7 +122,7 @@ public class Pilka implements KeyListener {
         if (tangens < 0)
             dx = -skl_X;
         dy = skl_Y;
-        System.out.println("Tangens wynosi " + tangens + ".Skl_X wynosi " + skl_X + ".Skl_Y wynosi " + skl_Y);
+      //  System.out.println("Tangens wynosi " + tangens + ".Skl_X wynosi " + skl_X + ".Skl_Y wynosi " + skl_Y);
     }
 
     /**
