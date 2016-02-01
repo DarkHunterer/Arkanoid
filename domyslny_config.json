@@ -41,7 +41,7 @@
     "width": 500,
     "string_menuPomoc_title": "Pomoc",
     "string_rules": "Zasady gry",
-    "string_help_message": "Zasady gry:\nDoÅ‚Ä…czone w papierowej instrukcji\n",
+    "string_help_message": "Zasady gry:\nDo³¹czone w papierowej instrukcji\n",
     "string_menu": "Menu",
     "color_pasekwyniku": -292561,
     "command_bestscore": "BESTSCORE",
@@ -53,7 +53,7 @@
     "gridx_panel_gry":0,
     "gridy_panel_gry":1,
     "weighty_panel_gry":0.95,
-    "string_authors_data":"Autorzy gry:\n-Daniel RÄ™kawek\n-Konrad JÄ™drzejczak",
+    "string_authors_data":"Autorzy gry:\n-Daniel Rêkawek\n-Konrad Jêdrzejczak",
     "pauza": false,
     "graTrwa": false,
     "port": 4455
@@ -83,7 +83,7 @@
   },
   "SettingFrame":{
     "string_accept": "Akceptuj",
-    "string_ip": "Wprowadï¿½ tu swoje IP"
+    "string_ip": "Wprowad  tu swoje IP"
   },
   "PanelGry":{
     "init": false,
