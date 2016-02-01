@@ -120,15 +120,36 @@ public class Data {
     public int PasekWyniku_const_czas;
     ///
     /**
-     *
+     * Wartośc początkowa paska wyniku
      */
     public int PasekWyniku_wynik;
+    /**
+     * Wartośc licnzika używanego do obliczeń czasu
+     */
     public int PasekWyniku_licznik;
+    /**
+     * Wartośc inicjalizująca dla Pauzy
+     */
     public boolean PasekWyniku_init;
+    /**
+     * Wartość inicjalizująca dla ukrytej pauzy
+     */
     public boolean PasekWyniku_init2;
+    /**
+     * Napis Życie do paska wyniku
+     */
     public String PasekWyniku_string_zycie;
+    /**
+     * Napis Wynik do paska wyniku
+     */
     public String PasekWyniku_string_wynik;
+    /**
+     * Napis Czas do paska wyniku
+     */
     public String PasekWyniku_string_czas;
+    /**
+     * Napis pauza do paska wyniku
+     */
     public String PasekWyniku_string_pauza;
     /**
      * Zmienna odpowiadajaca za ilość map ktore otrzymalismy od serwera
@@ -140,86 +161,166 @@ public class Data {
     int bricksPos[][];
     ///
     /**
-     * Stała do rozmairu paska wyniku
+     * Stała do rysowania paska wyniku
      */
     long OknoGlowne_weightx_pasek_wyniku;
     /**
-     *
+     *Stała do rysowania paska wyniku
      */
     double OknoGlowne_weighty_pasek_wyniku;
     /**
-     *
+     *Stała do rysowania paska wyniku
      */
     int OknoGlowne_gridx_pasek_wyniku;
     /**
-     *
+     *Stała do rysowania paska wyniku
      */
     int OknoGlowne_gridy_pasek_wyniku;
 
     /**
-     *
+     *Stała do rysowania panelu gry
      */
     double OknoGlowne_weighty_panel_gry;
     /**
-     *
+     *Stałą do rysowania panelu gry
      */
     int OknoGlowne_gridx_panel_gry;
     /**
-     *
+     *Stała do rysowania panelu gry
      */
     int OknoGlowne_gridy_panel_gry;
     /**
-     *
+     *Napis zawierający autorów
      */
     String OknoGlowne_string_authors_data;
     /**
-     *
+     *Zmienna przechowująca port
      */
     int OknoGlowne_port;
+    /**
+     * Wartość deycudjąca o właczeniu pauzy
+     */
     boolean OknoGlowne_pauza;
+    /**
+     * Wartość przechowująca informację czy trwa gra
+     */
     boolean OknoGlowne_graTrwa;
     /**
-     *
+     *napis Akceptuj w ustawieniach
      */
     String SettingFrame_string_accept;
     /**
-     *
+     *napis Wprowadz IP w ustawieniach
      */
     String SettingFrame_string_ip;
 
     /**
-     *
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 0
      */
     String Perk_string_bonus_0;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 1
+     */
     String Perk_string_bonus_1;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 2
+     */
     String Perk_string_bonus_2;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 3
+     */
     String Perk_string_bonus_3;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 4
+     */
     String Perk_string_bonus_4;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 5
+     */
     String Perk_string_bonus_5;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 6
+     */
     String Perk_string_bonus_6;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 7
+     */
     String Perk_string_bonus_7;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 8
+     */
     String Perk_string_bonus_8;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 9
+     */
     String Perk_string_bonus_9;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 10
+     */
     String Perk_string_bonus_10;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego bonus o kodzie 11
+     */
     String Perk_string_bonus_11;
-
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego klocek o wytrzymałości 5
+     */
     String Klocek_zycie_5;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego klocek o wytrzymałości 4
+     */
     String Klocek_zycie_4;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego klocek o wytrzymałości 3
+     */
     String Klocek_zycie_3;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego klocek o wytrzymałości 2
+     */
     String Klocek_zycie_2;
+    /**
+     *pole przechowujące ścieżkę do obrazka reprezentującego klocek o wytrzymałości 1
+     */
     String Klocek_zycie_1;
-
+    /**
+     * Zmienna przechowujaca x-owe przesuniecie pilki w danej iteracji
+     */
     int Pilka_dx;
+    /**
+     * Zmienna przechowujaca y-owe przesuniecie pilki w danej iteracji
+     */
     int Pilka_dy;
+    /**
+     * Zmienna wstrzymująca piłkę dopóki użytkownik jej nie wystartuje
+     */
     int pilka_start;
+    /**
+     * Pole przechowujące ścieżkę do pliku z obrazkiem reprezentującym pilke
+     */
     String pilka_string_imgBall;
-
+    /**
+     * Zmienna decydująca o prędkosci poruszania sie paletki
+     */
     int paletka_predkosc;
+    /**
+     * Pole przechowujące ścieżkę do pliku z obrazkiem reprezentującym paletkę
+     */
     String paletka_string_imgPale;
-
+    /**
+     *Zmienna wykorzystywana do uruchomienia w odpowiednim momencie metod run, paint i skaluj w Panelu Gry
+     */
     boolean panel_gry_init;
+    /**
+     * Zmienna wykorzystywana do włączenia i wyłączenia pauzy
+     */
     boolean panel_gry_pauza;
+    /**
+     * Zmienna wykorzystywana do wykrycia końca gry przez zbicie wszystkich klocków
+     */
     boolean panel_gry_pozostale_klocki;
+    /**
+     * Pole przehowujące ścieżkę do obrazka reprezentującego tło
+     */
     String panel_gry_string_imgPanel;
 
     /**
