@@ -47,7 +47,7 @@ public class perk {
     /**
      * Pole przechowujące paletkę z którą bonus będzie się zderzać
      */
-     private paletka paletka_;
+    private paletka paletka_;
     /**
      * Pole przechowująće pasek wyniku do którego bonus przesyłą informacje o dodatkowych punktach, zyciach, czasie
      */
@@ -111,19 +111,20 @@ public class perk {
 
     /**
      * Metoda wykorzystywana do tworzenia obiektu klocka
-     * @param kl klocek z któego wypada bonus
-     * @param pale paletka z którą bonus ma się zderzyć aby się wykonać
+     *
+     * @param kl    klocek z któego wypada bonus
+     * @param pale  paletka z którą bonus ma się zderzyć aby się wykonać
      * @param pasek pasek wyniku do któego zapisywane są wyniki działania bonusu
      */
-    public perk(Klocek kl, paletka pale, pasekWyniku pasek,Data config){
-        pos_x=kl.getPos_X();
-        pos_y=kl.getPos_Y();
-        height=kl.getWys();
-        width=kl.getSzer();
-        dy=3;
-        paletka_= pale;
-        pasekWyniku_= pasek;
-        kod =  generator.nextInt(12);
+    public perk(Klocek kl, paletka pale, pasekWyniku pasek, Data config) {
+        pos_x = kl.getPos_X();
+        pos_y = kl.getPos_Y();
+        height = kl.getWys();
+        width = kl.getSzer();
+        dy = 3;
+        paletka_ = pale;
+        pasekWyniku_ = pasek;
+        kod = generator.nextInt(12);
         bonus_0 = config.Perk_string_bonus_0;
         bonus_1 = config.Perk_string_bonus_1;
         bonus_2 = config.Perk_string_bonus_2;
@@ -136,78 +137,102 @@ public class perk {
         bonus_9 = config.Perk_string_bonus_9;
         bonus_10 = config.Perk_string_bonus_10;
         bonus_11 = config.Perk_string_bonus_11;
-        switch (kod){
-            case 0:{
+        switch (kod) {
+            case 0: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_0));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
-            case 1:{
+            case 1: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_1));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
-            case 2:{
+            case 2: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_2));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
-            case 3:{
+            case 3: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_3));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
-            case 4:{
+            case 4: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_4));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
-            case 5:{
+            case 5: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_5));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
 
             }
             break;
-            case 6:{
+            case 6: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_6));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
-            case 7:{
+            case 7: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_7));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
-            case 8:{
+            case 8: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_8));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
-            case 9:{
+            case 9: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_9));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
-            case 10:{
+            case 10: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_10));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
-            case 11:{
+            case 11: {
                 try {
                     imgPerk = ImageIO.read(new File(bonus_11));
-                }catch (Exception e){ System.out.println(e.toString());}
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
             break;
 
@@ -219,54 +244,54 @@ public class perk {
     /**
      * Metoda odpowiadająca za wykonanie się bonusu. Dodanie punktów, życia, czasu, odjęcie czasu
      */
-    public void akcja(){
-        switch (kod){
-            case 0:{
-                paletka_.setSzer_(paletka_.getSzer_()*3/4);
+    public void akcja() {
+        switch (kod) {
+            case 0: {
+                paletka_.setSzer_(paletka_.getSzer_() * 3 / 4);
             }
             break;
-            case 1:{
-                paletka_.setSzer_(paletka_.getSzer_()*4/3);
+            case 1: {
+                paletka_.setSzer_(paletka_.getSzer_() * 4 / 3);
             }
             break;
-            case 2:{
+            case 2: {
                 pasekWyniku_.dodajPunkty(20);
             }
             break;
-            case 3:{
+            case 3: {
                 pasekWyniku_.dodajPunkty(40);
             }
             break;
-            case 4:{
+            case 4: {
                 pasekWyniku_.dodajPunkty(80);
             }
             break;
-            case 5:{
+            case 5: {
                 pasekWyniku_.dodajPunkty(160);
 
             }
             break;
-            case 6:{
+            case 6: {
                 pasekWyniku_.dodajPunkty(-20);
             }
             break;
-            case 7:{
+            case 7: {
                 pasekWyniku_.dodajPunkty(-40);
             }
             break;
-            case 8:{
+            case 8: {
                 pasekWyniku_.dodajPunkty(-80);
             }
             break;
-            case 9:{
+            case 9: {
                 pasekWyniku_.dodajPunkty(-160);
             }
             break;
-            case 10:{
+            case 10: {
                 pasekWyniku_.dodajCzas();
             }
             break;
-            case 11:{
+            case 11: {
                 pasekWyniku_.dodajZycie();
             }
             break;
@@ -279,6 +304,7 @@ public class perk {
 
     /**
      * Metoda do pobrania pozycji x-owej bonusu
+     *
      * @return Pozycja x-owa bonusu
      */
     public int getPos_x() {
@@ -287,6 +313,7 @@ public class perk {
 
     /**
      * Metoda do pobrania pozycji y-owej bonusu
+     *
      * @return Pozycja y-owa bonusu
      */
     public int getPos_y() {
@@ -295,6 +322,7 @@ public class perk {
 
     /**
      * Metoda zwracająca wysokość bonusu niezbędną do narysowania
+     *
      * @return wysokośc bonusu
      */
     public int getHeight() {
@@ -303,6 +331,7 @@ public class perk {
 
     /**
      * Metoda do pobrania szerokości bonusu
+     *
      * @return Szerokość bonusu
      */
     public int getWidth() {
@@ -312,44 +341,47 @@ public class perk {
     /**
      * Metoda służąca do przesunięcia pozycji bonusu na ekranie
      */
-    public void porusz(){
+    public void porusz() {
 
-            pos_y+=dy;
+        pos_y += dy;
     }
 
     /**
      * Metoda zwracająca obiekt Rectangle stworzony na podstawie rozmiarów i pozycji bonusu
+     *
      * @return obiekt Rectangle stworzony z danych z bonusu
      */
-    public Rectangle getBounds(){
-        return new Rectangle(pos_x,pos_y,width,height);
+    public Rectangle getBounds() {
+        return new Rectangle(pos_x, pos_y, width, height);
     }
 
     /**
      * Metoda służąca do skalowania bonusu
-     * @param wys_ Nowa wysokość bonusu, stworzona na podstawie nowego wymiaru klocków
-     * @param szer_ Nowa szerokośc bonusu stworzona na podstawie nowego wymairu klocków
+     *
+     * @param wys_       Nowa wysokość bonusu, stworzona na podstawie nowego wymiaru klocków
+     * @param szer_      Nowa szerokośc bonusu stworzona na podstawie nowego wymairu klocków
      * @param szer_stara Stara szerokość okna gry
-     * @param wys_stara Stara wysokośc okna gry
-     * @param wysokosc Nowa wysokość okna gry
-     * @param szerokosc Nowa szerokość okna gry
+     * @param wys_stara  Stara wysokośc okna gry
+     * @param wysokosc   Nowa wysokość okna gry
+     * @param szerokosc  Nowa szerokość okna gry
      */
-    public void skaluj(int wys_,int szer_, int szer_stara, int wys_stara, int wysokosc, int szerokosc){
-        height=wys_;
-        width=szer_;
-        double a = (double)pos_x/szer_stara;
-        double b = (double)pos_y/wys_stara;
+    public void skaluj(int wys_, int szer_, int szer_stara, int wys_stara, int wysokosc, int szerokosc) {
+        height = wys_;
+        width = szer_;
+        double a = (double) pos_x / szer_stara;
+        double b = (double) pos_y / wys_stara;
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(4);
-        pos_x=(int)(szerokosc*a);
-        pos_y=(int)(wysokosc*b);
+        pos_x = (int) (szerokosc * a);
+        pos_y = (int) (wysokosc * b);
     }
 
     /**
      * Metoda pobierająca obrazek reprezentujący bonus na ekranie gry
+     *
      * @return Obrazek reprezentujący bonus
      */
-    public Image getImage(){
+    public Image getImage() {
         return imgPerk;
     }
 }

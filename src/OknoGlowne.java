@@ -405,25 +405,64 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     public void componentHidden(ComponentEvent e) {
 
     }
+    public void odbierzMapy(){
+        try {
+            send_command("Gimme maps nigga!");
+            int number_of_files;
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+            number_of_files=Integer.parseInt(stdIn.readLine());
+            String filename[] = new String[number_of_files];
+
+            for(int i=0; i<number_of_files;i++)
+                filename[i] = stdIn.readLine();
+            System.out.println("Mapy: " +filename.toString());
+            for (int i=0;i<number_of_files;i++){
+                send_command("Daj "+filename[i]);
+                readFileResponse();
+            }
+
+        }catch (UnknownHostException ex) {
+        System.err.println("Host unknown. Cannot establish connection");
+    } catch (IOException ex) {
+        System.err.println("Cannot establish connection. Server may not be up. "+ex.toString());
+    }
+    }
+    public void odbierzConfig(){
+        try {
+          send_command("Gimme config nigga!");
+            readFileResponse();
+        }catch (UnknownHostException ex) {
+            System.err.println("Host unknown. Cannot establish connection");
+        } catch (IOException ex) {
+            System.err.println("Cannot establish connection. Server may not be up. "+ex.toString());
+        }
+    }
     public void readFileResponse() throws IOException{
         String filename;
+       // int number_of_files;
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+       // number_of_files=Integer.parseInt(stdIn.readLine());
+        //filename = new String[number_of_files];
+       // for (int i=0;i<number_of_files;i++) {
+           // filename[i] = stdIn.readLine();
         filename = stdIn.readLine();
-
-        byte[] contents = new byte[10000];
-        //Initialize the FileOutputStream to the output file's full path.
-        FileOutputStream fos = new FileOutputStream(filename);
-        BufferedOutputStream bos = new BufferedOutputStream(fos);
-        InputStream is = socketClient.getInputStream();
-
-        //No of bytes read in one read() call
-        int bytesRead = 0;
-
-        while((bytesRead=is.read(contents))!=-1)
-            bos.write(contents, 0, bytesRead);
-
-        bos.flush();
-        bos.close();
+            byte[] contents = new byte[10000];
+            //Initialize the FileOutputStream to the output file's full path.
+           // FileOutputStream fos = new FileOutputStream(filename[i]);
+            FileOutputStream fos = new FileOutputStream(filename);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            InputStream is = socketClient.getInputStream();
+            //No of bytes read in one read() call
+            int bytesRead = 0;
+            while ((bytesRead = is.read(contents)) != -1) {
+                bos.write(contents, 0, bytesRead);
+                if(contents.equals('}'))
+                    break;
+            }
+            bos.flush();
+            bos.close();
+            System.out.println("Odebralem plik " + filename);
+        //}
         socketClient.close();
         System.out.println("File saved successfully!");
     }
@@ -499,14 +538,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
                 //try {
                     //(Inet4Address) Inet4Address.getByName(textField.getText());
                     hostname = textField.getText();
-            try{
-                send_command("Gimme config");
-                readFileResponse();
-            }catch (UnknownHostException ex) {
-            System.err.println("Host unknown. Cannot establish connection");
-        } catch (IOException ex) {
-            System.err.println("Cannot establish connection. Server may not be up. "+ex.toString());
-        }
+                odbierzConfig();
+                odbierzMapy();
                    // JOptionPane.showMessageDialog(getParent(), hostname);
                 //}catch (UnknownHostException ex){
                  //   JOptionPane.showMessageDialog(getParent(), ex.getMessage());

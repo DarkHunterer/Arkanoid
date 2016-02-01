@@ -1,226 +1,261 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
-import java.text.DecimalFormat;
 
 /**
- *
- * Klasa odpowiadaj�ca za klocek (przeszkoda do zbicia pi�k�)
+ * Klasa odpowiadająca za klocek. Przechowuje parametry każdego klocka, obsługuje zmianę parametrów po kolizji. Dostarcza dane do rysowania.
  */
 public class Klocek {
+    /**
+     * Zmienna typu int przechowująca pozycję x-ową klocka
+     */
     private int pos_X;
+    /**
+     * Zmienna typu int przechowująca pozycję y-ową klocka
+     */
     private int pos_Y;
+    /**
+     * Zmienna typu int przechowująca szerokość klocka
+     */
     private int szer;
+    /**
+     * Zmienna typu int przechowująca wysokość klocka
+     */
     private int wys;
+    /**
+     * Zmienna typu int przechowująca pozostałe życie klocka
+     */
     private int wytrzymalosc;
-    //private Color kolor=Color.RED;
+    /**
+     * Pole przechowujące obrazek reprezentujący klocek o danej wytrzymałości
+     */
     private Image imgKlocek;
-    Klocek(int x, int y, int szerokosc, int wysokosc,int zycie){
+    /**
+     * Pole przechowujące ścieżkę do obrazka reprezentującego klocek o wytrzymałości 5
+     */
+    private String kafel_zycie_5;
+    /**
+     * Pole przechowujące ścieżkę do obrazka reprezentującego klocek o wytrzymałości 4
+     */
+    private String kafel_zycie_4;
+    /**
+     * Pole przechowujące ścieżkę do obrazka reprezentującego klocek o wytrzymałości 3
+     */
+    private String kafel_zycie_3;
+    /**
+     * Pole przechowujące ścieżkę do obrazka reprezentującego klocek o wytrzymałości 2
+     */
+    private String kafel_zycie_2;
+    /**
+     * Pole przechowujące ścieżkę do obrazka reprezentującego klocek o wytrzymałości 1
+     */
+    private String kafel_zycie_1;
+
+    /**
+     * Konstruktor obiektu klocek
+     *
+     * @param x         pozycja x-owa klocka
+     * @param y         pozycja y-owa klocka
+     * @param szerokosc Szerokosc klocka
+     * @param wysokosc  Wysokośc klocka
+     * @param zycie     Wytrzymalosc klocka
+     * @param config    plik konfiguracyjny
+     */
+    Klocek(int x, int y, int szerokosc, int wysokosc, int zycie, Data config) {
         pos_X = x;
         pos_Y = y;
         szer = szerokosc;
         wys = wysokosc;
-        wytrzymalosc=zycie;
-        switch (zycie){
-            case 0: try{
-                this.finalize();
-            }catch (Throwable e){
-                System.out.println(e.toString());
+        wytrzymalosc = zycie;
+        kafel_zycie_1 = config.Klocek_zycie_1;
+        kafel_zycie_2 = config.Klocek_zycie_2;
+        kafel_zycie_3 = config.Klocek_zycie_3;
+        kafel_zycie_4 = config.Klocek_zycie_4;
+        kafel_zycie_5 = config.Klocek_zycie_5;
+        switch (zycie) {
+            case 0:
+                try {
+                    this.finalize();
+                } catch (Throwable e) {
+                    System.out.println(e.toString());
+                }
+                break;
+            case 1: {
+                try {
+                    imgKlocek = ImageIO.read(new File(kafel_zycie_1));
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
-                break;
-            case 1: //kolor=Color.RED;
-            {
+            break;
+            case 2: {
                 try {
-                    imgKlocek = ImageIO.read(new File("grafika/Kafel5.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
+                    imgKlocek = ImageIO.read(new File(kafel_zycie_2));
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
-                break;
-            case 2:            {
+            break;
+            case 3: {
                 try {
-                    imgKlocek = ImageIO.read(new File("grafika/Kafel4.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
-            } //kolor=Color.black;
-                break;
-            case 3:            {
+                    imgKlocek = ImageIO.read(new File(kafel_zycie_3));
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+            break;
+            case 4: {
                 try {
-                    imgKlocek = ImageIO.read(new File("grafika/Kafel3.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
-            }//kolor=Color.blue;
-                break;
-            case 4:            {
+                    imgKlocek = ImageIO.read(new File(kafel_zycie_4));
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+            break;
+            case 5: {
                 try {
-                    imgKlocek = ImageIO.read(new File("grafika/Kafel2.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
-            }//kolor=Color.orange;
+                    imgKlocek = ImageIO.read(new File(kafel_zycie_5));
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+            break;
+            default:
                 break;
-            case 5:            {
-                try {
-                    imgKlocek = ImageIO.read(new File("grafika/Kafel1.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
-            }//kolor=Color.green;
-                break;
-            default: break;//kolor=Color.magenta;
         }
 
     }
 
-//    /**
- //    * Klasa zwracajaca kolor
- //    * @return
-  //   */
-  //  public Color getKolor() {
-  //      return kolor;
- //   }
-
     /**
-     * Ustawia pozycje X
-     * @param pos_X
-     */
-    public void setPos_X(int pos_X) {
-        this.pos_X = pos_X;
-    }
-
-    /**
-     * Ustawia pozycje Y
-     * @param pos_Y
-     */
-    public void setPos_Y(int pos_Y) {
-        this.pos_Y = pos_Y;
-    }
-
-    /**
-     * Zwraca pozycje X
-     * @return
+     * Metoda zwracająca pozycję x-ową klocka
+     *
+     * @return X-owa pozycja klocka
      */
     public int getPos_X() {
         return pos_X;
     }
 
     /**
-     * Zwraca pozycje Y
-     * @return
+     * Metoda zwracająca pozycję y-ową klocka
+     *
+     * @return Y-owa pozycja klocka
      */
     public int getPos_Y() {
         return pos_Y;
     }
 
     /**
-     * Zwraca szeroko�� klocka
-     * @return
+     * Metoda zwracająca szerokość klocka
+     *
+     * @return Szerokość klocka
      */
     public int getSzer() {
         return szer;
     }
 
     /**
-     * Zwraca wysoko�� klocka
-     * @return
+     * Metoda zwracająca wysokośc klocka
+     *
+     * @return Wysokośc klocka
      */
     public int getWys() {
         return wys;
     }
 
     /**
-     * Metoda kt�ra skaluje klocek wzgl�dem rozmiar�w okna
+     * Metoda zmieniająca parametry klocka po skalowaniu
+     *
+     * @param pozycja_x   Nowa pozycja x-owa klocka
+     * @param pozycja_y   Nowa pozycja Y-owa klocka
+     * @param szer_klocka Nowa szerokość klocka
+     * @param wys_klocka  Nowa wysokość klocka
      */
-    /*public void skaluj(int szerokosc_ekranu, int wysokosc_ekranu,int szer_stara, int wys_stara,int szer_klocka,int wys_klocka)
-    {
-        if(szer!=0) {
-            double a = (double)pos_X/szer_stara;
-            double b = (double)pos_Y/wys_stara;
-            DecimalFormat df = new DecimalFormat();
-            df.setMaximumFractionDigits(4);
-             System.out.println("PosX="+pos_X+" szerokosc:"+szerokosc_ekranu+" szer_stara="+szer_stara+" b="+df.format(a));
-             System.out.println("PosY="+pos_Y+" wysokosc:"+wysokosc_ekranu+" wys_stara="+wys_stara+" b="+df.format(b));
-            pos_X=(int)(szerokosc_ekranu*a);
-            pos_Y =(int)(wysokosc_ekranu*b);
-            //   System.out.println("Wynik dzialania to:"+(int)(szerokosc*a)+" a pos_X to:"+x_pos);
-        }
-        System.out.println("y_pos klocka to"+pos_Y+"wysokosc ekranu to "+wysokosc_ekranu);
-
-        szer = szer_klocka;
-        wys = wys_klocka;
-    }*/
-    public void skaluj(int pozycja_x, int pozycja_y,int szer_klocka,int wys_klocka)
-    {
+    public void skaluj(int pozycja_x, int pozycja_y, int szer_klocka, int wys_klocka) {
         pos_X = pozycja_x;
         pos_Y = pozycja_y;
         szer = szer_klocka;
         wys = wys_klocka;
     }
-/**
- * pobiuera obrzek
- */
-    public Image getImage(){
+
+    /**
+     * Metoda pobierająca obrazek niezbędny do narysowania klocka na ekranie
+     *
+     * @return Obiekt Image reprezentujący klocek na ekranie
+     */
+    public Image getImage() {
         return imgKlocek;
     }
+
     /**
-     * Obsluga kolizji z pilka
+     * Metoda obslugująca zmianę parametrów klocka po kolizji z pilka
      */
-    public void kolizja(){
-        System.out.println("Nastapila kolizja z klockiem. Wytrzymalosc="+wytrzymalosc);
-        if(wytrzymalosc>0) {
+    public void kolizja() {
+        System.out.println("Nastapila kolizja z klockiem. Wytrzymalosc=" + wytrzymalosc);
+        if (wytrzymalosc > 0) {
             wytrzymalosc--;
         }
-       /*if(wytrzymalosc==0){
-            try {
-                finalize();
-            }catch (Throwable e){
-                System.out.println(e.toString());
+
+        switch (wytrzymalosc) {
+            case 1: {
+                try {
+                    imgKlocek = ImageIO.read(new File(kafel_zycie_1));
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
-        }*/
-        switch (wytrzymalosc){
-            case 1: //kolor=Color.RED;
-            {
+            break;
+            case 2: {
                 try {
-                    imgKlocek = ImageIO.read(new File("grafika/Kafel5.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
+                    imgKlocek = ImageIO.read(new File(kafel_zycie_2));
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
-                break;
-            case 2:
-            {
+            break;
+            case 3: {
                 try {
-                    imgKlocek = ImageIO.read(new File("grafika/Kafel4.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
-            }//kolor=Color.black;
-                break;
-            case 3:          {
-                try {
-                    imgKlocek = ImageIO.read(new File("grafika/Kafel3.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
-            }//kolor=Color.blue;
-                break;
-            case 4:          {
-                try {
-                    imgKlocek = ImageIO.read(new File("grafika/Kafel2.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
+                    imgKlocek = ImageIO.read(new File(kafel_zycie_3));
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
-                //kolor=Color.orange;
-                break;
-            case 5:          {
+            break;
+            case 4: {
                 try {
-                    imgKlocek = ImageIO.read(new File("grafika/Kafel1.png"));
-                }catch (Exception e){ System.out.println(e.toString());}
+                    imgKlocek = ImageIO.read(new File(kafel_zycie_4));
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
             }
-                //kolor=Color.green;
+            break;
+            case 5: {
+                try {
+                    imgKlocek = ImageIO.read(new File(kafel_zycie_5));
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+            break;
+            default:
                 break;
-            default:break;//kolor=Color.magenta;
         }
     }
 
     /**
-     * Zwraca wytrzyma�o�� klocka
-     * @return
+     * Metoda do odczytania wytrzymałości klocka
+     *
+     * @return Wytrzymnałość klocka
      */
     public int getWytrzymalosc() {
         return wytrzymalosc;
     }
 
     /**
-     * Zwraca obiekt typu Rectangle kt�ry jest u�ywany do wykrywania kolizji
-     * @return
+     * Metoda zwracająca obiekt typu Rectangle wykorzystywany do obsługi kolizji klocka z piłką
+     *
+     * @return Obiekt typu Rectangle stworzony na podstawie klocka
      */
-    public Rectangle getBounds(){
-        return new Rectangle(pos_X,pos_Y,szer,wys);
+    public Rectangle getBounds() {
+        return new Rectangle(pos_X, pos_Y, szer, wys);
     }
 }

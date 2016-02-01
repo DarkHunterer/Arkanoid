@@ -1,5 +1,4 @@
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -7,202 +6,205 @@ import java.io.File;
 import java.text.DecimalFormat;
 
 /**
- * Created by Daniel on 02.11.2015.
- * Klasa odpowiadaj�ca za paletk�
+ * Klasa odpowiadająca za paletkę.
+ * Przechowuje parametry paletki. Odpowiada za skalowanie paletki i jej poruszanie.
  */
 public class paletka implements KeyListener {
 
+    /**
+     * Zmienna przechowująca x-ową pozycję paletki
+     */
     private int x_pos;
+    /**
+     * Zmienna przechowująca y-ową pozycję paletki
+     */
     private int y_pos;
+    /**
+     * Zmienna przechowująca szerokośc paletki
+     */
     private int szer_;
+    /**
+     * Zmienna przechowująca wysokość paletki
+     */
     private int wys_;
+    /**
+     * Zmienna przechowująca prędkośc paletki
+     */
     private int predkosc;
-  //  private Color kolor;
-  private Image imgPaletka;
+    /**
+     * Zmienna przechowująca obrazek reprezentujący paletkę na ekranie
+     */
+    private Image imgPaletka;
+    /**
+     * Zmienna przechowująca odległość o jaką przesuwa się paletka w jednej iteracji
+     */
     private int dx;
-    private int dy;
 
     /**
-     * @param x_start   Pozycja pocz�tkowa X
-     * @param y_start   Pozycja pocz�tkowa Y
-     * @param szerokosc Szeroko�� paletki
-     * @param wysokosc  Wysoko�� paletki
+     * Konstruktor paletki
+     *
+     * @param x_start   pozycja x-owa startowa paletki
+     * @param y_start   pozycja y-owa startowa paletki
+     * @param szerokosc szerokośc paletki
+     * @param wysokosc  wysokość paletki
+     * @param config    Plik konfiguracyjny
      */
-    paletka(int x_start, int y_start, int szerokosc, int wysokosc) {
+    paletka(int x_start, int y_start, int szerokosc, int wysokosc, Data config) {
         System.out.println("Dodano paletke");
-        x_pos = x_start-(szerokosc/2);
+        x_pos = x_start - (szerokosc / 2);
         y_pos = y_start;
         szer_ = szerokosc;
         wys_ = wysokosc;
-        predkosc = 200;
+        predkosc = config.paletka_predkosc;
         try {
-            imgPaletka = ImageIO.read(new File("grafika/paddle.png"));
-        }catch (Exception e){ System.out.println(e.toString());}
-        // kolor=Color.blue;
+            imgPaletka = ImageIO.read(new File(config.paletka_string_imgPale));
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
-/**
- * pobiera obraze
- */
-    public Image getImage(){
-            return imgPaletka;
-            }
+
     /**
-     * ustawia paletke po pilce straconej
+     * Metoda pobierająca obrazek reprezentujący paletkę
+     *
+     * @return Obiekt Image reprezentujący paletkę
      */
-    public void paletka_pozycja_start(int width, int height){
-
-
-    x_pos=(width/2)-(szer_/2);
-        y_pos=height-height/10;
-}
-   // /**
-  //   * Zwraca kolor paletki
- //    * @return
- //    */
- //   public Color getKolor() {
- //       return kolor;
- //   }
-
- //   /**
- //    * Ustawia kolor paletki
- //    * @param kolor
- //    */
- //   public void setKolor(Color kolor) {
- //       this.kolor = kolor;
-  //  }
+    public Image getImage() {
+        return imgPaletka;
+    }
 
     /**
-     * Ustawia szerokosc paletki
-     * @param szer_
+     * Metoda ustawiająca paletkę na wybranej pozycji
+     */
+    public void paletka_pozycja_start(int width, int height) {
+
+        x_pos = (width / 2) - (szer_ / 2);
+        y_pos = height - height / 10;
+    }
+
+    /**
+     * Metoda ustawiająca szerokość paletki
+     *
+     * @param szer_ Szerokośc paletki
      */
     public void setSzer_(int szer_) {
         this.szer_ = szer_;
     }
 
-  //  /**
-   //  * Ustawia pozycje paletki
-   //  * @param x_start
-   //  * @param y_start
-   //  * @param szerokosc
-   //  * @param wysokosc
-   //  */
-   /* public void ustaw_pozycje(int x_start,int y_start,int szerokosc,int wysokosc){
-        x_pos = x_start;
-        y_pos = y_start;
-        szer_= szerokosc;
-        wys_ = wysokosc;
-    }
-*/
     /**
-     * Metoda odpowiadaj�ca za poruszanie si� paletki
-     * @param maxX
+     * Metoda odpowiadająca za poruszanie się paletki po ekranie w wyznaczonym obszarze
+     *
+     * @param maxX Ograniczenie poruszania paletki do krawędzi ekranu
      */
-    public void porusz(int maxX){
-        x_pos += dx/30;
-        if(x_pos<-15)
-            x_pos=-15;
-        if(x_pos+szer_>maxX+15)
-            x_pos=maxX-szer_+15;
+    public void porusz(int maxX) {
+        x_pos += dx / 30;
+        if (x_pos < -15)
+            x_pos = -15;
+        if (x_pos + szer_ > maxX + 15)
+            x_pos = maxX - szer_ + 15;
     }
 
     /**
-     * Metoda zwracaj�ca szeroko�� paletki
-     * @return
+     * Metoda zwracająca szerokość paletki
+     *
+     * @return Szerokośc paletki
      */
     public int getSzer_() {
         return szer_;
     }
 
     /**
-     * Metoda zwracaj�ca wysoko�� paletki
-     * @return
+     * Metoda zwracajająca wysokośc paletki
+     *
+     * @return Wysokośc paletki
      */
     public int getWys_() {
         return wys_;
     }
 
     /**
-     * Metoda zwracaj�ca pozycj� X
-     * @return
+     * Metoda zwracajająca x-ową pozycje paletki
+     *
+     * @return x-owa pozycja paletki
      */
-    public int getX()
-    {
+    public int getX() {
         return x_pos;
     }
 
     /**
-     * Metoda zwracaj�ca pozycj� Y
-     * @return
+     * Metoda zwracająća y-owa pozycję paletki
+     *
+     * @return y-owa pozycja paletki
      */
-    public int getY()
-    {
+    public int getY() {
         return y_pos;
     }
 
     /**
-     * Metoda odpowiadaj�ca za skalowanie paletki wzgl�dem rozmiaru okna
-     * @param szerokosc Nowa szerokosc okna
-     * @param wysokosc  Nowa wysokosc okna
+     * Metoda odpowiadająca za skalowanie paletki względem rozmiaru okna
+     *
+     * @param szerokosc  Nowa szerokosc okna
+     * @param wysokosc   Nowa wysokosc okna
      * @param szer_stara Stara szerokosc okna
-     * @param wys_stara Stara wysokosc okna
      */
-    public void skaluj(int szerokosc,int wysokosc,int szer_stara, int wys_stara){
-        if(szer_!=0) {
-            double a = (double)x_pos/szer_stara;
+    public void skaluj(int szerokosc, int wysokosc, int szer_stara) {
+        if (szer_ != 0) {
+            double a = (double) x_pos / szer_stara;
             DecimalFormat df = new DecimalFormat();
             df.setMaximumFractionDigits(4);
-           // System.out.println("PosX="+x_pos+" szerokosc:"+szerokosc+" szer_stara="+szer_stara+" b="+df.format(a));
-            x_pos=(int)(szerokosc*a);
-         //   System.out.println("Wynik dzialania to:"+(int)(szerokosc*a)+" a pos_X to:"+x_pos);
+            x_pos = (int) (szerokosc * a);
         }
-        System.out.println("y_pos paletki to"+y_pos+"wysokosc ekranu to "+wysokosc);
-        y_pos = wysokosc-wysokosc/10;
-        szer_ = szerokosc/5;
-        wys_ = wysokosc/25;
+        System.out.println("y_pos paletki to" + y_pos + "wysokosc ekranu to " + wysokosc);
+        y_pos = wysokosc - wysokosc / 10;
+        szer_ = szerokosc / 5;
+        wys_ = wysokosc / 25;
     }
+
     /**
-     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     *
      * @param e Obiekt typu KeyEvent
      */
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
+
     /**
-     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * Metoda odpowiadajaca za przechwycenie wciskania klawiszy sterujących paletką
+     *
      * @param e Obiekt typu KeyEvent
      */
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-    if (key==KeyEvent.VK_LEFT) {
-            //System.out.println(" Strzalka w lewo wcisnieta");
-            dx=-predkosc;
+        if (key == KeyEvent.VK_LEFT) {
+            dx = -predkosc;
+        } else if (key == KeyEvent.VK_RIGHT) {
+            dx = predkosc;
+        }
     }
-    else if(key==KeyEvent.VK_RIGHT) {
-      //  System.out.println(" Strzalka w prawo wcisnieta");
-        dx=predkosc;
-    }
-    }
+
     /**
-     *  Metoda odpowiadajaca za przechwycenie puszczenia klawisza
+     * Metoda odpowiadajaca za przechwycenie puszczenia klawiszy sterujących paletką
+     *
      * @param e Obiekt typu KeyEvent
      */
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key==KeyEvent.VK_LEFT||key==KeyEvent.VK_RIGHT) {
+        if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT) {
             if (x_pos > 0) {
-               // System.out.println(" Strzalka w lewo lub prawo puszczona");
-                dx=0;
+                dx = 0;
             }
         }
     }
+
     /**
-     * Zwraca obiekt typu Rectangle kt�ry jest u�ywany do wykrywania kolizji
-     * @return
+     * Metoda zwracająca obiekt Rectangle wykorzystywany do wykrywania kolizji z paletką
+     *
+     * @return Obiekt typu Rectangle
      */
-    public Rectangle getBounds(){
-        return new Rectangle(x_pos,y_pos,szer_,wys_);
+    public Rectangle getBounds() {
+        return new Rectangle(x_pos, y_pos, szer_, wys_);
     }
 }
