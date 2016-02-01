@@ -1,10 +1,7 @@
 import jdk.nashorn.internal.parser.JSONParser;
 
 import java.awt.*;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.Iterator;
 
 import org.json.simple.JSONArray;
@@ -134,6 +131,10 @@ public class Data {
     public String PasekWyniku_string_czas;
     public String PasekWyniku_string_pauza;
     /**
+     * Zmienna odpowiadajaca za ilość map ktore otrzymalismy od serwera
+     */
+    public int ilosc_map;
+    /**
      * Dwuwymiarowa tablica pozycji klocków. 0 - brak klocka 1-6 zdrowie klocka
      */
     int bricksPos[][];
@@ -260,6 +261,10 @@ public class Data {
             wczytaj_Pilka(jsonObjPilka);
             wczytaj_Paletka(jsonObjPaletka);
             wczytaj_PanelGry(jsonObjPanelGry);
+
+            File folder = new File("mapy/");
+            File[] listOfFiles = folder.listFiles();
+            ilosc_map = listOfFiles.length;
 
         } catch (Exception ex) {
             System.out.println("Zlapano wyjatek: " + ex.toString());
