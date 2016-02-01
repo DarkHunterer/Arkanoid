@@ -517,12 +517,9 @@ private String string_tlo;
             pilka_.odwroc_Y();
         }
         if (pozostale_klocki == false) {
-            if (aktualna_mapa<ilosc_map){
-                nastepnaMapa();
-            }else {
                 System.out.println("koniec gry klocki");
-                koniecGry();
-            }
+            nastepnaMapa();
+
         }
     }
 
