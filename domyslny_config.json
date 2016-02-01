@@ -41,7 +41,7 @@
     "width": 500,
     "string_menuPomoc_title": "Pomoc",
     "string_rules": "Zasady gry",
-    "string_help_message": "Zasady gry: dołączone w papierowej instrukcji użytkownika",
+    "string_help_message": "Zasady gry:\nDołączone w papierowej instrukcji\n",
     "string_menu": "Menu",
     "color_pasekwyniku": -292561,
     "command_bestscore": "BESTSCORE",
