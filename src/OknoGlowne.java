@@ -124,7 +124,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     /**
      * Numer portu wykorzystywanego do komunikacji
      */
-    private int port=4455;
+    private int port;
     /**
      * Gniazdo klienta
      */
@@ -156,11 +156,11 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     /**
      * Zmienna wykorzystywana do zastosowania pauzy
      */
-    private Boolean pauza = false;
+    private Boolean pauza;
     /**
      * Zmienna informująca czy trwa gra
      */
-    private Boolean graTrwa = false;
+    private Boolean graTrwa;
     ///**
     // *
     // */
