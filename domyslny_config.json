@@ -1,8 +1,25 @@
 {
-  "Pilka": {},
+  "Pilka": {
+    "dy": 180,
+    "dx": 0,
+    "start": 0,
+    "string_imgBall": "grafika/ball.png"
+  },
+  "Paletka":{
+  "predkosc": 200,
+  "string_imgPale": "grafika/paddle.png"
+},
   "PasekWyniku": {
     "czas": 100,
-    "zycie": 5
+    "zycie": 5,
+    "wynik": 0,
+    "licznik": 0,
+    "init": false,
+    "init2": false,
+    "string_zycie": "Zycie: ",
+    "string_wynik": "Wynik: ",
+    "string_czas": "Czas: ",
+    "string_pauza": "PAUZA"
   },
   "OknoGlowne": {
     "command_exit": "EXIT",
@@ -53,8 +70,22 @@
     "string_bonus_10": "grafika/perk_czas.png",
     "string_bonus_11": "grafika/perk_zycie.png"
   },
+  "Klocek":{
+    "string_zycie_5": "grafika/Kafel1.png",
+    "string_zycie_4": "grafika/Kafel2.png",
+    "string_zycie_3": "grafika/Kafel3.png",
+    "string_zycie_2": "grafika/Kafel4.png",
+    "string_zycie_1": "grafika/Kafel5.png"
+
+  },
   "SettingFrame":{
     "string_accept": "Akceptuj",
     "string_ip": "Wprowadź tu swoje IP"
+  },
+  "PanelGry":{
+    "init": false,
+    "pauza": false,
+    "pozostale_klocki": true,
+    "string_tlo": "grafika/tlo.jpg"
   }
 }
