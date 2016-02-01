@@ -124,15 +124,16 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     /**
      * Numer portu wykorzystywanego do komunikacji
      */
-    private int port;
+    private int port=4455;
     /**
      * Gniazdo klienta
      */
     Socket socketClient;
-    /**
-     * Pole przehcowujące Frame ustawień
-     */
-    private SettingsFrame settFrame;
+   // /**
+   //  * Pole przehcowujące Frame ustawień
+   //  */
+   // private SettingsFrame settFrame;
+
     /**
      * Pole przechowujące Frame Najlepszych wyników
      */
@@ -498,7 +499,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             else {
                 JOptionPane.showMessageDialog(getParent(),"Blad otwarcia pliku");
             }*/
-          settFrame = new SettingsFrame(getWidth()/2,getHeight()/2,this);
+          //settFrame = new SettingsFrame(getWidth()/2,getHeight()/2,this);
         }
      }
 
@@ -672,62 +673,6 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         odbierzHighscore();
         }
 
-    private class SettingsFrame extends JFrame implements ActionListener{
-
-        private String string_accept=config.SettingFrame_string_accept;
-        private String string_ip=config.SettingFrame_string_ip;
-        JButton acceptButton;
-        JTextField textField;
-
-        public SettingsFrame(int width,int heigth,Frame parentFrame){
-
-            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            setPreferredSize(new Dimension(width,heigth));
-            parentFrame.setEnabled(false);
-            addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    parentFrame.setEnabled(true);
-                    super.windowClosing(e);
-                }
-            });
-            setVisible(true);
-            dodajElementy();
-            pack();
-        }
-        private void wczytaj_config(){
-            string_accept=config.SettingFrame_string_accept;
-            string_ip=config.SettingFrame_string_ip;
-        }
-
-       private void dodajElementy(){
-           this.setLayout(new GridLayout(4,4));
-           acceptButton = new JButton(string_accept);
-           acceptButton.setSize(new Dimension(getWidth(),getHeight()));
-           textField = new JTextField(string_ip);
-           textField.setBackground(Color.white);
-           textField.setCaretColor(Color.red);
-           add(textField);
-           add(acceptButton);
-           acceptButton.addActionListener(this);
-       }
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          //  if(e.equals(acceptButton)){
-                //try {
-                    //(Inet4Address) Inet4Address.getByName(textField.getText());
-                    hostname = textField.getText();
-                odbierzConfig();
-                odbierzMapy();
-            odbierzHighscore();
-          //  odbierzHighscore();
-                   // JOptionPane.showMessageDialog(getParent(), hostname);
-                //}catch (UnknownHostException ex){
-                 //   JOptionPane.showMessageDialog(getParent(), ex.getMessage());
-           //     }
-            }
-       // }
-    }
     public class BestScoreFrame extends JFrame{
 
         Frame parentFrame_;
@@ -795,3 +740,64 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         }
     }
 }
+
+
+    /*private class SettingsFrame extends JFrame implements ActionListener{
+
+        private String string_accept=config.SettingFrame_string_accept;
+        private String string_ip=config.SettingFrame_string_ip;
+        JButton acceptButton;
+        JTextField textField;
+
+       public SettingsFrame(int width,int heigth,Frame parentFrame){
+
+            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            setPreferredSize(new Dimension(width,heigth));
+            parentFrame.setEnabled(false);
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    parentFrame.setEnabled(true);
+                    super.windowClosing(e);
+                }
+            });
+            setVisible(true);
+            dodajElementy();
+            pack();
+        }
+
+
+        private void wczytaj_config(){
+            string_accept=config.SettingFrame_string_accept;
+            string_ip=config.SettingFrame_string_ip;
+        }
+
+       private void dodajElementy(){
+           this.setLayout(new GridLayout(4,4));
+           acceptButton = new JButton(string_accept);
+           acceptButton.setSize(new Dimension(getWidth(),getHeight()));
+           textField = new JTextField(string_ip);
+           textField.setBackground(Color.white);
+           textField.setCaretColor(Color.red);
+           add(textField);
+           add(acceptButton);
+           acceptButton.addActionListener(this);
+       }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          //  if(e.equals(acceptButton)){
+                //try {
+                    //(Inet4Address) Inet4Address.getByName(textField.getText());
+                    hostname = textField.getText();
+                odbierzConfig();
+                odbierzMapy();
+            odbierzHighscore();
+          //  odbierzHighscore();
+                   // JOptionPane.showMessageDialog(getParent(), hostname);
+                //}catch (UnknownHostException ex){
+                 //   JOptionPane.showMessageDialog(getParent(), ex.getMessage());
+           //     }
+            }
+       // }
+    }
+   */
