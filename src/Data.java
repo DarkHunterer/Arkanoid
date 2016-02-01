@@ -10,6 +10,7 @@ import org.json.simple.JSONValue;
 
 /**
  * Klasa odpowiadajaca za konfiguracje
+ * Wczytuje wszystkie dane z plików konfiguracyjnych i udostępnia je dla pozostałych klas programu
  */
 
 public class Data {
