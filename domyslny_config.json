@@ -81,5 +81,11 @@
   "SettingFrame":{
     "string_accept": "Akceptuj",
     "string_ip": "Wprowadź tu swoje IP"
+  },
+  "PanelGry":{
+    "init": false,
+    "pauza": false,
+    "pozostale_klocki": true,
+    "string_tlo": "grafika/tlo.jpg"
   }
 }
