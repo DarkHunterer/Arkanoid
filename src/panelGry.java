@@ -509,7 +509,7 @@ private String string_tlo;
             if (pasekwyniku_.zwrocZycie() == 0) {
 
                     System.out.println("koniec gry zycie");
-                    nastepnaMapa();
+                    koniecGry();
                 }
 
         } else if (pilka_.getY_pos() <= 0) {
