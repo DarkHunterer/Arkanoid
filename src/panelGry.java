@@ -23,6 +23,11 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
      *Dwuwymiarowa tablica przechowująca pozycje klocków
      */
     private int[][] bricksPos;
+
+    /**
+     * Zmienna odpowiadajaca ilosci map ktore mamy do zagrania
+     */
+    private int ilosc_map;
     /**
      * Pole przehcowujące obiekt paletki
      */
@@ -94,6 +99,7 @@ private String string_tlo;
         this.setOpaque(true);
         this.setBackground(config.OknoGlowne_kolor_panelGry);
         oknoGlowneUchwyt = OknoGlowneUchwyt_;
+        ilosc_map = config.ilosc_map;
         pasekwyniku_ = oknoGlowneUchwyt.getPasekWyniku_();
         bricksPos = config.bricksPos;
         string_tlo=config.panel_gry_string_imgPanel;
