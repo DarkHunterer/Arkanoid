@@ -48,16 +48,36 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      */
     private String string_command_authors;
     /**
-     *
+     *Zmienna odpowiadająca za włączenie okna pomocy
      */
     private String string_command_help;
+    /**
+     * Zmienna odpowiadająća za start gry
+     */
     private String string_command_start;
+    /**
+     * Zmienna odpowiadająca za włączenie ustawień
+     */
     private String string_command_settings;
+    /**
+     * Zmienna odpowiadająca za włączenie highscore
+     */
     private String string_command_bestScore;
-
+    /**
+     * Zmienna odpowiadająca za tytuł menu pomocy
+     */
     private String string_menuPomoc_title;
+    /**
+     * Zmienna odpowiadająca za napis Start
+     */
     private String string_start;
+    /**
+     * Zmienna odpowiadająca za napis Koniec
+     */
     private String string_end;
+    /**
+     *
+     */
     private String string_bestScore;
     private String string_config;
     private String string_rules;
@@ -255,7 +275,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         MenuItem mStart = new MenuItem(string_start);
         MenuItem mKoniec = new MenuItem(string_end);
         MenuItem mbestScore = new MenuItem(string_bestScore);
-        MenuItem mUstawienia = new MenuItem(string_config);
+      //  MenuItem mUstawienia = new MenuItem(string_config);
         MenuItem mPomoc = new MenuItem(string_rules);
         MenuItem mAutorzy = new MenuItem(string_authors);
 
@@ -268,7 +288,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         mbar.add(menuPomoc);
         menu.add(mStart);
         menu.add(mbestScore);
-        menu.add(mUstawienia);
+       // menu.add(mUstawienia);
         menu.add(mKoniec);
         menuPomoc.add(mPomoc);
         menuPomoc.add(mAutorzy);
@@ -276,7 +296,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
         mKoniec.setActionCommand(string_command_exit);
         mAutorzy.setActionCommand(string_command_authors);
-        mUstawienia.setActionCommand(string_command_settings);
+       // mUstawienia.setActionCommand(string_command_settings);
         mPomoc.setActionCommand(string_command_help);
         mStart.setActionCommand(string_command_start);
         mbestScore.setActionCommand(string_command_bestScore);
@@ -285,7 +305,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         mAutorzy.addActionListener(this);
         mPomoc.addActionListener(this);
         mStart.addActionListener(this);
-        mUstawienia.addActionListener(this);
+      //  mUstawienia.addActionListener(this);
         mbestScore.addActionListener(this);
     }
 
