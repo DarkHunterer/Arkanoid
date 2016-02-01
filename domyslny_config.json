@@ -86,7 +86,6 @@
     "init": false,
     "pauza": false,
     "pozostale_klocki": true,
-    "string_tlo": "grafika/tlo.jpg",
-    "test": "test"
+    "string_tlo": "grafika/tlo.jpg"
   }
 }

@@ -113,7 +113,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             System.out.println("Najlepsze wyniki: "+ highScore);
         }
         catch (Exception ex){
-            System.out.println("Zlapano wyjatek: "+ ex.toString());
+            System.out.println("Zlapano wyjatek highscore: "+ ex.toString());
         }
         ///
     }
@@ -460,6 +460,16 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             System.err.println("Cannot establish connection. Server may not be up. "+ex.toString());
         }
     }
+    public void odbierzHighscore(){
+        try {
+            send_command("Gimme highscore nigga!");
+            readFileResponse();
+        }catch (UnknownHostException ex) {
+            System.err.println("Host unknown. Cannot establish connection");
+        } catch (IOException ex) {
+            System.err.println("Cannot establish connection. Server may not be up. "+ex.toString());
+        }
+    }
     public void readFileResponse() throws IOException{
         String filename;
        // int number_of_files;
@@ -563,6 +573,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
                     hostname = textField.getText();
                 odbierzConfig();
                 odbierzMapy();
+          //  odbierzHighscore();
                    // JOptionPane.showMessageDialog(getParent(), hostname);
                 //}catch (UnknownHostException ex){
                  //   JOptionPane.showMessageDialog(getParent(), ex.getMessage());
@@ -636,7 +647,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             System.out.println("Najlepsze wyniki: "+ highScore);
         }
         catch (Exception ex){
-            System.out.println("Zlapano wyjatek: "+ ex.toString());
+            System.out.println("Zlapano wyjatek highscore : "+ ex.toString());
         }
         }
     }
