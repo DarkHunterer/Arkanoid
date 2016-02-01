@@ -455,8 +455,9 @@ public class Data {
     }
 
     /**
-     * Metoda odpowiadająca za wczytanie mapy pozycji klocków i ich zdrowia
-     *
+     * Metoda odpowiadająca za wczytanie mapy
+     *Wczytuje klocki i ich żywotność
+     *Wczytuje czas przeznaczony na daną mapę
      * @param jsonObjMapa Obiekt typu JSONObject
      */
     private void wczytaj_Mape(JSONObject jsonObjMapa) {
@@ -519,7 +520,8 @@ public class Data {
         }
     }
     /**
-     * metoda czytaj perk
+     * Metoda wczytująca konfigurację bonusów
+     * @param jsonObjPerk Obiekt typu JSONObject
      */
     private void wczytaj_Perki(JSONObject jsonObjPerk) {
         Perk_string_bonus_0 = (String) jsonObjPerk.get("string_bonus_0");
@@ -538,7 +540,8 @@ public class Data {
     }
 
     /**
-     * metoda cyztaj klocek
+     * Metoda wczytująca konfigurację klocków
+     * @param jsonObjectKlocek Obiekt typu JSONObject
      */
     private void wczytaj_Klocki(JSONObject jsonObjectKlocek) {
         Klocek_zycie_1 = (String) jsonObjectKlocek.get("string_zycie_1");
@@ -551,6 +554,7 @@ public class Data {
 
     /**
      * Metoda do wczytania Settinf Frame
+     * @param jsonObjSettingFrame Obiekt typu JSONObject
      */
     private void wczytaj_Setting_Frame(JSONObject jsonObjSettingFrame) {
         SettingFrame_string_ip = (String) jsonObjSettingFrame.get("string_ip");
@@ -558,7 +562,8 @@ public class Data {
     }
 
     /**
-     *
+     * Metoda do wczytania konfiguracji piłki
+     * @param jsonObjPilka Obiekt typu JSONObject
      */
     private void wczytaj_Pilka(JSONObject jsonObjPilka) {
         System.out.println("hello wejscie");
@@ -567,19 +572,24 @@ public class Data {
         temp = (long) jsonObjPilka.get("dy");
         Pilka_dy = (int) temp;
         temp = (long) jsonObjPilka.get("start");
-        ;
         pilka_start = (int) temp;
         pilka_string_imgBall = (String) jsonObjPilka.get("string_imgBall");
-        //   System.out.println("hello1 ");
-        //  System.out.println(pilka_string_imgBall +"hello");
+
     }
 
+    /**
+     * Metoda do wczytania konfiguracji paletki
+     * @param jsonObjPaletka Obiekt typu JSONObject
+     */
     private void wczytaj_Paletka(JSONObject jsonObjPaletka) {
         long temp = (long) jsonObjPaletka.get("predkosc");
         paletka_predkosc = (int) temp;
         paletka_string_imgPale = (String) jsonObjPaletka.get("string_imgPale");
     }
-
+    /**
+     * Metoda do wczytania konfiguracji panelu gry
+     * @param jsonObjPanelGry Obiekt typu JSONObject
+     */
     private void wczytaj_PanelGry(JSONObject jsonObjPanelGry) {
         panel_gry_init = (boolean) jsonObjPanelGry.get("init");
         panel_gry_pauza = (boolean) jsonObjPanelGry.get("pauza");
