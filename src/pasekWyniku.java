@@ -1,159 +1,258 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
- * Klasa paska wyniku
+ * Klasa paska wyniku. Zajmuje się odmierzaniem pozostałęgo czasu.
+ * Przechowuje wynik i pozostałe życia.
+ * Dodaje/odejmuje punkty.
+ * Dodaje/odejmuje życia.
  */
-public class pasekWyniku extends JPanel implements ActionListener{
-
+public class pasekWyniku extends JPanel implements ActionListener {
+    /**
+     * zmienna przechowująca pozostałe życia
+     */
     private int zycie;
+    /**
+     * Zmienna przechowująca wynik gracza
+     */
     private int wynik;
-    private int czas ;
+    /**
+     * Zmienna przechowująca pzostały czas
+     */
+    private int czas;
+    /**
+     * Zmienna wykorzystywana do obliczenia czasu
+     */
     private int licznik;
-    private Boolean init=false;
-    private Boolean init2=false;
+    /**
+     * Zmienna do inicjalizacji pauzy
+     */
+    private Boolean init;
+    /**
+     * Zmienna do inicjalizacji ukrytej pauzy, wykorzystywanej do startowania piłki przez uzytkownika
+     */
+    private Boolean init2;
+    /**
+     * Zmienna przechowująca kolor paska wyniku
+     */
     private Color kolor_;
-
+    /**
+     * Obiekt JLabel do wyświetlania pozostałych żyć
+     */
     private JLabel labelZycie;
+    /**
+     * Obiekt JLabel do wyświetlania wyniku
+     */
     private JLabel labelWynik;
+    /**
+     * Obiekt JLabel do wyświetlenia pozostałego czasu
+     */
     private JLabel labelCzas;
+    /**
+     * Obiekt JLabel do wyświetlenia stanu pauzy
+     */
     private JLabel labelPauza;
+    /**
+     * String przechowujący napis do wyświetlenia czasu
+     */
+    private String string_czas;
+    /**
+     * String przechowujący napis do wyświetlenia wyniku
+     */
+    private String string_wynik;
+    /**
+     * String przechowujący napis do wyświetlenia życia
+     */
+    private String string_zycie;
+    /**
+     * String przechowujący napis do wyświetlenia stanu pauzy
+     */
+    private String string_pauza;
 
     /**
+     * Konstruktor paska wyniku
+     * Wczytuje dane z konfiguracji
      *
      * @param config Obiekt odpowiadajacy za konfiguracje
      */
-    public pasekWyniku(Data config){
-        licznik=0;
-        wynik=0;
+    public pasekWyniku(Data config) {
+        string_czas = config.PasekWyniku_string_czas;
+        string_wynik = config.PasekWyniku_string_wynik;
+        string_zycie = config.PasekWyniku_string_zycie;
+        string_pauza = config.PasekWyniku_string_pauza;
+        licznik = config.PasekWyniku_licznik;
+        wynik = config.PasekWyniku_wynik;
+        init = config.PasekWyniku_init;
+        init2 = config.PasekWyniku_init2;
         zycie = config.PasekWyniku_const_zycie;
         czas = config.PasekWyniku_const_czas;
         kolor_ = config.OknoGlowne_kolor_pasekWyniku;
         this.setBackground(kolor_);
         setLayout(new FlowLayout());
-
         zycie = config.PasekWyniku_const_zycie;
         czas = config.PasekWyniku_const_czas;
-
-        labelZycie= new JLabel("Zycie: "+ zycie);
-        labelWynik= new JLabel("Wynik: "+ wynik);
-        labelCzas= new JLabel("Czas: "+ czas);
-        labelZycie= new JLabel();
-        labelWynik= new JLabel();
-        labelCzas= new JLabel();
-        labelPauza = new JLabel("PAUZA");
+        labelZycie = new JLabel(string_zycie + zycie);
+        labelWynik = new JLabel(string_wynik + wynik);
+        labelCzas = new JLabel(string_czas + czas);
+        labelZycie = new JLabel();
+        labelWynik = new JLabel();
+        labelCzas = new JLabel();
+        labelPauza = new JLabel(string_pauza);
         labelPauza.setVisible(false);
-
         this.setOpaque(true);
-    }
-    public void dodajPunkty(){
-        wynik+=10;
-    }
-    public void dodajPunkty(int pkt){
-        wynik+=pkt;
-    }
-    public void zmniejszZycie(){
-        zycie--;
-    }
-    public void dodajZycie(){
-        zycie++;
-    }
-    public int zwrocZycie(){
-        return zycie;
-    }
-    public void dodajCzas(){
-        czas=czas+5;
     }
 
     /**
-     * Metoda odpowiadajaca za inicjacje paska
+     * Metoda dodająca punkty przy uderzeniu w klocek
      */
-    public void start(Data config){
+    public void dodajPunkty() {
+        wynik += 10;
+    }
+
+    /**
+     * Metoda dodająca ilość punktów z parametru.
+     * Wykorzystywana przy bonusach, przeliczeniu czasu i zyc na punkty
+     *
+     * @param pkt Ilość punktów
+     */
+    public void dodajPunkty(int pkt) {
+        wynik += pkt;
+    }
+
+    /**
+     * Metoda zmniejszająca ilość pozostałych żyć o 1
+     */
+    public void zmniejszZycie() {
+        zycie--;
+    }
+
+    /**
+     * Metoda dodająca 1 życie
+     */
+    public void dodajZycie() {
+        zycie++;
+    }
+
+    /**
+     * Metoda zwracająca ilośc pozostałych żyć
+     *
+     * @return Ilośc pozostałych żyć
+     */
+    public int zwrocZycie() {
+        return zycie;
+    }
+
+    /**
+     * Metoda dodająca dodatkowy czas 5 sekund
+     * Wykorzystywana w bonusach
+     */
+    public void dodajCzas() {
+        czas = czas + 5;
+    }
+
+    /**
+     * Metoda odpowiadajaca za inicjacje paska wyniku
+     *
+     * @param config Plik konfiguracyjny
+     */
+    public void start(Data config) {
         ustawGUI();
         zerujWartosci(config);
-
     }
 
+    /**
+     * Metoda zwracająca pozostały czas
+     *
+     * @return Pozostały czas
+     */
     public int getCzas() {
-            return czas;
+        return czas;
     }
 
+    /**
+     * Metoda zwracająca wynik
+     *
+     * @return Wynik gracza
+     */
     public int getWynik() {
         return wynik;
     }
 
     /**
-     * Metoda odpowiadajaca za dodanie labeli wyniku, �ycia i czasu do panelu paska wyniku
+     * Metoda odpowiadajaca za dodanie labeli wyniku, życia i czasu do panelu paska wyniku
      */
-    private void ustawGUI(){
+    private void ustawGUI() {
         add(labelWynik);
         add(labelZycie);
         add(labelCzas);
         add(labelPauza);
-
-               ////
-            ////
-           ////
-        ////
-        /*
-        do zrobienia
-           ImageIcon pauzaIcon = new ImageIcon("pauza.png");
-        Image img = pauzaIcon.getImage();
-        img = img.getScaledInstance(getWidth(),getHeight(), Image.SCALE_SMOOTH);
-        pauzaIcon = new ImageIcon(img);
-        labelPauza.setIcon(pauzaIcon);
-         */
-        init=true;
+        init = true;
     }
-    private void zerujWartosci(Data config){
-        licznik=0;
-        wynik=0;
+
+    /**
+     * Metoda przywracająca początkowy stan paska wyniku
+     *
+     * @param config Plik konfiguracyjny
+     */
+    private void zerujWartosci(Data config) {
+        licznik = config.PasekWyniku_licznik;
+        wynik = config.PasekWyniku_wynik;
         zycie = config.PasekWyniku_const_zycie;
         czas = config.PasekWyniku_const_czas;
     }
-    private void zaktualizujWynik(int wynik_){
-        wynik = wynik_;
-    }
-    private void zaktualizujZycie(int zycie_){
-        zycie = zycie_;
-    }
-    public void zaktualizujWartosci(int wynik_, int zycie_){
-        zaktualizujWynik(wynik_);
-        zaktualizujZycie(zycie_);
-    }
+
     /**
-     * Metoda obs�uguj�ca zdarzenia. Zmniejsza czas pozosta�y do ko�ca
-     * @param e
+     * Metoda obsługująca zdarzenia.
+     * Zmniejsza czas pozostały do końca gry
+     *
+     * @param e Objekt ActionEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (init) {
             licznik += 10;
-            labelCzas.setText("Czas: " + czas);
-            labelWynik.setText("Wynik: "+wynik);
-            labelZycie.setText("Zycie: "+ zycie);
-            if(init2){
-            if ((licznik % 1000) == 0 && czas > 0) {
-                czas--;
+            labelCzas.setText(string_czas + czas);
+            labelWynik.setText(string_wynik + wynik);
+            labelZycie.setText(string_zycie + zycie);
+            if (init2) {
+                if ((licznik % 1000) == 0 && czas > 0) {
+                    czas--;
+                }
             }
-        }}
+        }
     }
-    public void wlacz_pauze(){
+
+    /**
+     * Metoda włączająca pauzę na żądanie gracza
+     */
+    public void wlacz_pauze() {
         init = false;
         labelPauza.setVisible(true);
     }
-    public void wylacz_pauze(){
+
+    /**
+     * Metoda wyłączająca pauzę na żądanie gracza
+     */
+    public void wylacz_pauze() {
         labelPauza.setVisible(false);
-        init=true;
+        init = true;
     }
+
+    /**
+     * Metoda włączania ukrytej pauzy
+     * Wykorzystywana do zatrzymania piłki po ustawieniu jej na pozycji startowej
+     */
     public void ukryta_pauza_wlacz() {
-        init2=false;
+        init2 = false;
     }
-    public void ukryta_pauza_wylacz(){
-        init2=true;
+
+    /**
+     * Metoda wyłączająca ukryta pauzę
+     * Wykorzystywana do wystartowania piłki z pozycji startowej
+     */
+    public void ukryta_pauza_wylacz() {
+        init2 = true;
     }
 }

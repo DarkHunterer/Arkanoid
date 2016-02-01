@@ -123,6 +123,17 @@ public class Data {
     public int PasekWyniku_const_czas;
     ///
     /**
+     *
+     */
+    public int PasekWyniku_wynik;
+    public int PasekWyniku_licznik;
+    public boolean PasekWyniku_init;
+    public boolean PasekWyniku_init2;
+    public String PasekWyniku_string_zycie;
+    public String PasekWyniku_string_wynik;
+    public String PasekWyniku_string_czas;
+    public String PasekWyniku_string_pauza;
+    /**
      * Dwuwymiarowa tablica pozycji klocków. 0 - brak klocka 1-6 zdrowie klocka
      */
     int bricksPos[][];
@@ -198,6 +209,7 @@ public class Data {
 
     int paletka_predkosc;
     String paletka_string_imgPale;
+
     /**
      * Konstruktor klasy, wczytuje domyslna konfiguracje z pliku.
      */
@@ -306,6 +318,16 @@ public class Data {
         PasekWyniku_const_zycie = (int) temp;
         temp = (long) (jsonObjPasekWyniku.get("czas"));
         PasekWyniku_const_czas = (int) temp;
+        temp = (long) (jsonObjPasekWyniku.get("wynik"));
+        PasekWyniku_wynik = (int) temp;
+        temp = (long) (jsonObjPasekWyniku.get("licznik"));
+        PasekWyniku_licznik = (int) temp;
+        PasekWyniku_init = (boolean) jsonObjPasekWyniku.get("init");
+        PasekWyniku_init2 = (boolean) jsonObjPasekWyniku.get("init2");
+        PasekWyniku_string_zycie = (String) jsonObjPasekWyniku.get("string_zycie");
+        PasekWyniku_string_wynik = (String) jsonObjPasekWyniku.get("string_wynik");
+        PasekWyniku_string_czas = (String) jsonObjPasekWyniku.get("string_czas");
+        PasekWyniku_string_pauza = (String) jsonObjPasekWyniku.get("string_pauza");
     }
 
     /**
@@ -379,16 +401,18 @@ public class Data {
         Pilka_dx = (int) temp;
         temp = (long) jsonObjPilka.get("dy");
         Pilka_dy = (int) temp;
-        temp = (long) jsonObjPilka.get("start");;
+        temp = (long) jsonObjPilka.get("start");
+        ;
         pilka_start = (int) temp;
         pilka_string_imgBall = (String) jsonObjPilka.get("string_imgBall");
-     //   System.out.println("hello1 ");
-      //  System.out.println(pilka_string_imgBall +"hello");
+        //   System.out.println("hello1 ");
+        //  System.out.println(pilka_string_imgBall +"hello");
     }
-    private void wczytaj_Paletka(JSONObject jsonObjPaletka){
+
+    private void wczytaj_Paletka(JSONObject jsonObjPaletka) {
         long temp = (long) jsonObjPaletka.get("predkosc");
-        paletka_predkosc=(int) temp;
-        paletka_string_imgPale= (String) jsonObjPaletka.get("string_imgPale");
+        paletka_predkosc = (int) temp;
+        paletka_string_imgPale = (String) jsonObjPaletka.get("string_imgPale");
     }
 
 }

@@ -5,13 +5,21 @@
     "start": 0,
     "string_imgBall": "grafika/ball.png"
   },
-  "Paletka"{
+  "Paletka":{
   "predkosc": 200,
   "string_imgPale": "grafika/paddle.png"
 },
   "PasekWyniku": {
     "czas": 100,
-    "zycie": 5
+    "zycie": 5,
+    "wynik": 0,
+    "licznik": 0,
+    "init": false,
+    "init2": false,
+    "string_zycie": "Zycie: ",
+    "string_wynik": "Wynik: ",
+    "string_czas": "Czas: ",
+    "string_pauza": "PAUZA"
   },
   "OknoGlowne": {
     "command_exit": "EXIT",
