@@ -496,7 +496,10 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
         }
     }
 
-
+    /**
+     * metoda do pobrania Frame z Najlepszymi wynikami
+     * @return Frame z wynikami
+     */
     public BestScoreFrame getScoreFrame() {
         return scoreFrame;
     }
@@ -523,6 +526,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
     }
 
     /**
+     * Metoda uaktywniająca się w momencie pokazania okna
      * @param e Obiekt typu ComponentEvent
      */
     @Override
@@ -531,6 +535,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
     }
 
     /**
+     * Metoda uaktywniająca się w momencie schowania okna
      * @param e Obiekt typu ComponentEvent
      */
     @Override
@@ -538,6 +543,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
 
     }
 
+    /**
+     * Metoda do pobierania map z serwera
+     */
     public void odbierzMapy() {
         try {
             send_command("Gimme maps nigga!");
@@ -561,6 +569,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
         }
     }
 
+    /**
+     * Metoda pobierająca konfigurację z serwera
+     */
     public void odbierzConfig() {
         try {
             send_command("Gimme config nigga!");
@@ -572,6 +583,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
         }
     }
 
+    /**
+     * Metoda pobierająca listę najlepszych wyników z serwera
+     */
     public void odbierzHighscore() {
         try {
             send_command("Gimme highscore nigga!");
