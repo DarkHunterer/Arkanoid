@@ -381,6 +381,14 @@ public class Data {
     }
 
     /**
+     * Metoda mająca na celu zmianę rozgrywanej mapy na następną
+     *
+     * @param numer Numer mapy do rozegrania
+     */
+    public void aktualizuj_mape(int numer){
+
+    }
+    /**
      * metoda czytaj perk
      */
     private void wczytaj_Perki(JSONObject jsonObjPerk) {
