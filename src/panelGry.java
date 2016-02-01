@@ -29,6 +29,10 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
      */
     private int ilosc_map;
     /**
+     * Zmienna przechowujaca numer aktualnie rozgrywanej mapy
+     */
+    private int aktualna_mapa;
+    /**
      * Pole przehcowujące obiekt paletki
      */
     private paletka paletka_;
@@ -100,6 +104,7 @@ private String string_tlo;
         this.setBackground(config.OknoGlowne_kolor_panelGry);
         oknoGlowneUchwyt = OknoGlowneUchwyt_;
         ilosc_map = config.ilosc_map;
+        aktualna_mapa=1;
         pasekwyniku_ = oknoGlowneUchwyt.getPasekWyniku_();
         bricksPos = config.bricksPos;
         string_tlo=config.panel_gry_string_imgPanel;
@@ -515,7 +520,13 @@ private String string_tlo;
         }
     }
 
+    /**
+     * Metoda zmieniajaca plansze
+     * W przypadku ukonczenia mapy, należy przejść do nastepnej nie konczac gry
+     */
+    private void nastepnaMapa(){
 
+    }
     /**
      * Metoda końca gry
      * Dodaje bonusowe punkty za czas i zycie do ostatecznego wyniku
