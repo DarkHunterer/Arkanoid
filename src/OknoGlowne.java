@@ -20,16 +20,36 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private Color kolor_pasekWyniku;
     private Color kolor_panelGry;
     private Color kolor_background;
+    /**
+     * Zmienna odpowiadająca za szerokośc ekranu
+     */
     private int width;
+    /**
+     * Zmienna odpowiadająca za wysokość ekranu
+     */
     private int heigth;
 
-    private Image dbImage;
-    private Graphics dbGfx;
-
+ //   private Image dbImage;
+  // private Graphics dbGfx;
+    /**
+     * Zmienna odpowiadająca za komendę wyłączenia zegara
+     */
     private String string_command_timer_off;
+    /**
+     * Zmienna odpowiadająca za komendę włączeniaa zegara
+     */
     private String string_command_timer_on;
+    /**
+     * Zmienna odpowiadająca za komendę wyłączenia gry
+     */
     private String string_command_exit;
+    /**
+     * Zmienna odpowiadająca za włączenie okna o autorach
+     */
     private String string_command_authors;
+    /**
+     *
+     */
     private String string_command_help;
     private String string_command_start;
     private String string_command_settings;
@@ -54,6 +74,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     private BestScoreFrame scoreFrame;
     private pasekWyniku pasekWyniku_;
     private panelGry panelgry_;
+    /**
+     * Zmienna odpowiadająća za opóźnienie zegara
+     */
     private int DELAY;
     private Timer timerGlowny;
     private Boolean pauza = false;

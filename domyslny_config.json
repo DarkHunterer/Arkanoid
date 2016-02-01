@@ -41,7 +41,7 @@
     "width": 500,
     "string_menuPomoc_title": "Pomoc",
     "string_rules": "Zasady gry",
-    "string_help_message": "Zasady gry:\nNależy zbić klocki piłką. Inne zasady dojdą w przyszłości.\n",
+    "string_help_message": "Zasady gry:\nNalezy zbic klocki piłką. Inne zasady dojdą w przyszłości.\n",
     "string_menu": "Menu",
     "color_pasekwyniku": -292561,
     "command_bestscore": "BESTSCORE",
@@ -86,6 +86,7 @@
     "init": false,
     "pauza": false,
     "pozostale_klocki": true,
-    "string_tlo": "grafika/tlo.jpg"
+    "string_tlo": "grafika/tlo.jpg",
+    "test": "test"
   }
 }

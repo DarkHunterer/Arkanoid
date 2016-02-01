@@ -243,7 +243,7 @@ public class Data {
             JSONObject jsonObjKlocek = (JSONObject) jsonObjMain.get("Klocek");
             JSONObject jsonObjPilka = (JSONObject) jsonObjMain.get("Pilka");
             JSONObject jsonObjPaletka = (JSONObject) jsonObjMain.get("Paletka");
-            JSONObject jsonObjPanelGry = (JSONObject) jsonObjMain.get("PanelGry") ;
+            JSONObject jsonObjPanelGry = (JSONObject) jsonObjMain.get("PanelGry");
 
             wczytaj_OknoGlowne(jsonObjOknoGlowne);
             wczytaj_PasekWyniku(jsonObjPasekWyniku);
@@ -422,12 +422,11 @@ public class Data {
         paletka_string_imgPale = (String) jsonObjPaletka.get("string_imgPale");
     }
 
-    private void wczytaj_PanelGry(JSONObject jsonObjPanelGry)
-    {
-        panel_gry_init=(boolean) jsonObjPanelGry.get("init");
-        panel_gry_pauza=(boolean) jsonObjPanelGry.get("pauza");
-        panel_gry_pozostale_klocki=(boolean) jsonObjPanelGry.get("pozostale_klocki");
-        panel_gry_string_imgPanel=(String) jsonObjPanelGry.get("string_tlo");
+    private void wczytaj_PanelGry(JSONObject jsonObjPanelGry) {
+        panel_gry_init = (boolean) jsonObjPanelGry.get("init");
+        panel_gry_pauza = (boolean) jsonObjPanelGry.get("pauza");
+        panel_gry_pozostale_klocki = (boolean) jsonObjPanelGry.get("pozostale_klocki");
+        panel_gry_string_imgPanel = (String) jsonObjPanelGry.get("string_tlo");
 
     }
 }
