@@ -74,6 +74,8 @@ public class paletka implements KeyListener {
 
     /**
      * Metoda ustawiająca paletkę na wybranej pozycji
+     * @param height wysokosc okna gry
+     * @param width szerokosc okna gry
      */
     public void paletka_pozycja_start(int width, int height) {
 

@@ -1,7 +1,5 @@
 import org.json.simple.JSONObject;
-
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -14,12 +12,12 @@ import java.util.Map;
  * Główna klasa, w której umieszczane komponenty panelGry i pasekWyniku
  */
 
-public class OknoGlowne extends JFrame implements ActionListener, KeyListener,ComponentListener{
+public class OknoGlowne extends JFrame implements ActionListener, KeyListener, ComponentListener {
     //Wszystko to idzie do konfigu
     /**
      * Zmienna przechowująca obiekt Data z konfiguracją
      */
-    private  Data config;
+    private Data config;
     /**
      * Zmienna odpowiadająca za kolor paska wyniku
      */
@@ -41,8 +39,8 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      */
     private int heigth;
 
- //   private Image dbImage;
-  // private Graphics dbGfx;
+    //   private Image dbImage;
+    // private Graphics dbGfx;
     /**
      * Zmienna odpowiadająca za komendę wyłączenia zegara
      */
@@ -60,7 +58,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      */
     private String string_command_authors;
     /**
-     *Zmienna odpowiadająca za włączenie okna pomocy
+     * Zmienna odpowiadająca za włączenie okna pomocy
      */
     private String string_command_help;
     /**
@@ -88,7 +86,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      */
     private String string_end;
     /**
-     *Zmienna odpowiadająca za napis Najlepsze Wyniki
+     * Zmienna odpowiadająca za napis Najlepsze Wyniki
      */
     private String string_bestScore;
     /**
@@ -124,15 +122,15 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     /**
      * Numer portu wykorzystywanego do komunikacji
      */
-    private int port=4455;
+    private int port = 4455;
     /**
      * Gniazdo klienta
      */
     Socket socketClient;
-   // /**
-   //  * Pole przehcowujące Frame ustawień
-   //  */
-   // private SettingsFrame settFrame;
+    // /**
+    //  * Pole przehcowujące Frame ustawień
+    //  */
+    // private SettingsFrame settFrame;
 
     /**
      * Pole przechowujące Frame Najlepszych wyników
@@ -165,7 +163,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     ///**
     // *
     // */
-   // private Boolean init = false;
+    // private Boolean init = false;
     /**
      * Zmienna wykorzystywana do umiejscowienia paska wyniku
      */
@@ -201,16 +199,15 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     /**
      * HashMap wykorzystywana do przehcowywania Najlepszych wyników
      */
-    Map<String,Long> highScore = new HashMap<String,Long>();
-/**
- *
- */
-   // private boolean graTrwa;
+    Map<String, Long> highScore = new HashMap<String, Long>();
+
     /**
      * Konstruktor okna głównego
+     * pobiera i wczytuje konfiguracfje
+     * tworzy interfejs graficzny
      */
-    public OknoGlowne(){
-      //  super();
+    public OknoGlowne() {
+        //  super();
         sciagnij_config();
         wczytaj_config();
         dodajElementy();
@@ -223,35 +220,34 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             Object obj = parser.parse(new FileReader("HighScore.txt"));
 
             JSONObject jsonObjMain = (JSONObject) obj;
-            highScore.putAll((Map)jsonObjMain.get("HighScore"));
-            System.out.println("Najlepsze wyniki: "+ highScore);
-        }
-        catch (Exception ex){
-            System.out.println("Zlapano wyjatek highscore: "+ ex.toString());
+            highScore.putAll((Map) jsonObjMain.get("HighScore"));
+            System.out.println("Najlepsze wyniki: " + highScore);
+        } catch (Exception ex) {
+            System.out.println("Zlapano wyjatek highscore: " + ex.toString());
         }
         ///
     }
 
     /**
-     * Main okna głównego. Tworzy obiekt okna i pojawia go na ekranie
-     *
+     * Main okna głównego.
+     * Tworzy obiekt okna i pojawia go na ekranie
      */
-    public static void main(String [] args){
+    public static void main(String[] args) {
         OknoGlowne okno = new OknoGlowne();
         okno.setVisible(true);
-      //  System.out.println(Color.darkGray.getRGB()+" "+Color.PINK.getRGB()+" "+Color.BLUE.getRGB());
+        //  System.out.println(Color.darkGray.getRGB()+" "+Color.PINK.getRGB()+" "+Color.BLUE.getRGB());
         //okno.panelgry_ = null;
-      //  Frame f = new Frame();
-      //  f.setPreferredSize(new Dimension(500,500));
-      //  f.pack();
-      //  f.setVisible(true);
-       // okno.panelgry_.setVisible(false);
+        //  Frame f = new Frame();
+        //  f.setPreferredSize(new Dimension(500,500));
+        //  f.pack();
+        //  f.setVisible(true);
+        // okno.panelgry_.setVisible(false);
     }
 
     /**
-     * Metoda wczytująca konfiguracje
+     * Metoda wczytująca konfigurację okna głównego
      */
-    private void wczytaj_config(){
+    private void wczytaj_config() {
         config = new Data();
         kolor_background = config.OknoGlowne_kolor_background;
         kolor_pasekWyniku = config.OknoGlowne_kolor_pasekWyniku;
@@ -262,36 +258,39 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         string_command_timer_off = config.OknoGlowne_command_timer_off;
         string_command_timer_on = config.OknoGlowne_command_timer_on;
         string_command_authors = config.OknoGlowne_command_authors;
-        string_command_exit =config.OknoGlowne_command_exit;
-        string_command_help =config.OknoGlowne_command_help;
-        string_command_start =config.OknoGlowne_command_start;
+        string_command_exit = config.OknoGlowne_command_exit;
+        string_command_help = config.OknoGlowne_command_help;
+        string_command_start = config.OknoGlowne_command_start;
         string_command_settings = config.OknoGlowne_command_settings;
         string_command_bestScore = config.OknoGlowne_command_bestScore;
-        string_menuPomoc_title=config.OknoGlowne_string_menuPomoc_title;
-        string_start=config.OknoGlowne_string_start;
-        string_end=config.OknoGlowne_string_end;
-        string_bestScore=config.OknoGlowne_string_bestScore;
-        string_config=config.OknoGlowne_string_config;
-        string_rules=config.OknoGlowne_string_rules;
-        string_authors=config.OknoGlowne_string_authors;
-        string_menu=config.OknoGlowne_string_menu;
-        string_menu_title=config.OknoGlowne_string_menu_title;
+        string_menuPomoc_title = config.OknoGlowne_string_menuPomoc_title;
+        string_start = config.OknoGlowne_string_start;
+        string_end = config.OknoGlowne_string_end;
+        string_bestScore = config.OknoGlowne_string_bestScore;
+        string_config = config.OknoGlowne_string_config;
+        string_rules = config.OknoGlowne_string_rules;
+        string_authors = config.OknoGlowne_string_authors;
+        string_menu = config.OknoGlowne_string_menu;
+        string_menu_title = config.OknoGlowne_string_menu_title;
         string_help_message = config.OknoGlowne_string_help_message;
-        weightx_pasek_wyniku=config.OknoGlowne_weightx_pasek_wyniku;
-        weighty_pasek_wyniku=config.OknoGlowne_weighty_pasek_wyniku;
-        gridx_pasek_wyniku=config.OknoGlowne_gridx_pasek_wyniku;
-        gridy_pasek_wyniku=config.OknoGlowne_gridy_pasek_wyniku;
-        gridx_panel_gry=config.OknoGlowne_gridx_panel_gry;
-        gridy_panel_gry=config.OknoGlowne_gridy_panel_gry;
-        weighty_panel_gry=config.OknoGlowne_weighty_panel_gry;
-        string_authors_data=config.OknoGlowne_string_authors_data;
-        pauza=config.OknoGlowne_pauza;
-        graTrwa=config.OknoGlowne_graTrwa;
-        port=config.OknoGlowne_port;
+        weightx_pasek_wyniku = config.OknoGlowne_weightx_pasek_wyniku;
+        weighty_pasek_wyniku = config.OknoGlowne_weighty_pasek_wyniku;
+        gridx_pasek_wyniku = config.OknoGlowne_gridx_pasek_wyniku;
+        gridy_pasek_wyniku = config.OknoGlowne_gridy_pasek_wyniku;
+        gridx_panel_gry = config.OknoGlowne_gridx_panel_gry;
+        gridy_panel_gry = config.OknoGlowne_gridy_panel_gry;
+        weighty_panel_gry = config.OknoGlowne_weighty_panel_gry;
+        string_authors_data = config.OknoGlowne_string_authors_data;
+        pauza = config.OknoGlowne_pauza;
+        graTrwa = config.OknoGlowne_graTrwa;
+        port = config.OknoGlowne_port;
 
     }
 
-
+    /**
+     * Metoda pobierajaca pasek wyniku
+     * @return pasek wyniku
+     */
     public pasekWyniku getPasekWyniku_() {
         return pasekWyniku_;
     }
@@ -299,16 +298,16 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     /**
      * Metoda tworząca obiekty panelu gry i pasku wyniku oraz dodająca je do głównego okna na GridBackLayout'cie
      */
-    private  void dodajElementy(){
+    private void dodajElementy() {
         pasekWyniku_ = new pasekWyniku(config);
-        panelgry_ = new panelGry(config,this);
+        panelgry_ = new panelGry(config, this);
 
-        Dimension rozmiar_okna = new Dimension(width,heigth);
+        Dimension rozmiar_okna = new Dimension(width, heigth);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setPreferredSize(rozmiar_okna);
         this.getContentPane().setBackground(kolor_background);
 
-        timerGlowny = new Timer(DELAY,this);
+        timerGlowny = new Timer(DELAY, this);
         addKeyListener(this);
         timerGlowny.setActionCommand(string_command_timer_off);
         this.addComponentListener(this);
@@ -316,45 +315,45 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-       // c.weightx=1;
-        c.weightx=weightx_pasek_wyniku;
+        // c.weightx=1;
+        c.weightx = weightx_pasek_wyniku;
         //c.weighty=0.01;
-        c.weighty=weighty_pasek_wyniku;
-       // c.gridx=0;
-        c.gridx=(int) gridx_pasek_wyniku;
-       // c.gridy=0;
-        c.gridy=(int) gridy_pasek_wyniku;
+        c.weighty = weighty_pasek_wyniku;
+        // c.gridx=0;
+        c.gridx = (int) gridx_pasek_wyniku;
+        // c.gridy=0;
+        c.gridy = (int) gridy_pasek_wyniku;
 
-        this.add(pasekWyniku_,c);
-      //  c.gridx=0;
-        c.gridx=gridx_panel_gry;
-       // c.gridy=1;
-        c.gridy=gridy_panel_gry;
-       // c.weighty=0.95;
-        c.weighty=weighty_panel_gry;
+        this.add(pasekWyniku_, c);
+        //  c.gridx=0;
+        c.gridx = gridx_panel_gry;
+        // c.gridy=1;
+        c.gridy = gridy_panel_gry;
+        // c.weighty=0.95;
+        c.weighty = weighty_panel_gry;
         add(panelgry_, c);
     }
 
     /**
      * Metoda uruchamiająca logikę gry
      */
-    private void zacznijGre(){
+    private void zacznijGre() {
         //if(init) {
-            pasekWyniku_.start(config);
-            //panelgry_.setVisible(true);
-            graTrwa = true;
-            panelgry_.start();
-            timerGlowny.start();
-            timerGlowny.setActionCommand(string_command_timer_on);
-      // }
-       // else
-       //     JOptionPane.showMessageDialog(getParent(),"Nie wczytano ustawien");
+        pasekWyniku_.start(config);
+        //panelgry_.setVisible(true);
+        graTrwa = true;
+        panelgry_.start();
+        timerGlowny.start();
+        timerGlowny.setActionCommand(string_command_timer_on);
+        // }
+        // else
+        //     JOptionPane.showMessageDialog(getParent(),"Nie wczytano ustawien");
     }
 
     /**
      * Metoda rysujaca okno na ekranie
      */
-    private void dodajGUI(){
+    private void dodajGUI() {
         this.pack();
     }
 
@@ -362,7 +361,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
      * Metoda dodajaca pasek menu do głównego okna
      */
 
-    private void dodajMenu(){
+    private void dodajMenu() {
 
         MenuBar mbar;
         Menu menu;
@@ -371,7 +370,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         MenuItem mStart = new MenuItem(string_start);
         MenuItem mKoniec = new MenuItem(string_end);
         MenuItem mbestScore = new MenuItem(string_bestScore);
-      //  MenuItem mUstawienia = new MenuItem(string_config);
+        //  MenuItem mUstawienia = new MenuItem(string_config);
         MenuItem mPomoc = new MenuItem(string_rules);
         MenuItem mAutorzy = new MenuItem(string_authors);
 
@@ -384,7 +383,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         mbar.add(menuPomoc);
         menu.add(mStart);
         menu.add(mbestScore);
-       // menu.add(mUstawienia);
+        // menu.add(mUstawienia);
         menu.add(mKoniec);
         menuPomoc.add(mPomoc);
         menuPomoc.add(mAutorzy);
@@ -392,7 +391,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
         mKoniec.setActionCommand(string_command_exit);
         mAutorzy.setActionCommand(string_command_authors);
-       // mUstawienia.setActionCommand(string_command_settings);
+        // mUstawienia.setActionCommand(string_command_settings);
         mPomoc.setActionCommand(string_command_help);
         mStart.setActionCommand(string_command_start);
         mbestScore.setActionCommand(string_command_bestScore);
@@ -401,21 +400,23 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         mAutorzy.addActionListener(this);
         mPomoc.addActionListener(this);
         mStart.addActionListener(this);
-      //  mUstawienia.addActionListener(this);
+        //  mUstawienia.addActionListener(this);
         mbestScore.addActionListener(this);
     }
 
     /**
-     *  Metoda odpowiadajaca za przechwycenie puszczenia klawisza
+     * Metoda odpowiadajaca za przechwycenie puszczenia klawisza
+     *
      * @param e Obiekt typu KeyEvent
      */
     @Override
     public void keyReleased(KeyEvent e) {
-            panelgry_.keyReleased(e);
-        }
+        panelgry_.keyReleased(e);
+    }
 
     /**
-     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     *
      * @param e Obiekt typu KeyEvent
      */
     @Override
@@ -424,68 +425,60 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     }
 
     /**
-     *  Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     * Metoda odpowiadajaca za przechwycenie wcisniecia klawisza
+     *
      * @param e Obiekt typu KeyEvent
      */
     @Override
-        public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) {
         panelgry_.keyPressed(e);
-        if (e.getKeyCode()==KeyEvent.VK_P) {
-            if(!pauza) {
+        if (e.getKeyCode() == KeyEvent.VK_P) {
+            if (!pauza) {
                 pauza = true;
-            //    getMenuBar().getMenu(0).setEnabled(pauza);
+                //    getMenuBar().getMenu(0).setEnabled(pauza);
                 panelgry_.wlaczPauze();
                 System.out.println("Pauza wlaczona");
-            }
-            else {
+            } else {
                 pauza = false;
-             //   getMenuBar().getMenu(0).setEnabled(pauza);
+                //   getMenuBar().getMenu(0).setEnabled(pauza);
                 panelgry_.wylaczPauze();
                 System.out.println("Pauza wylaczona");
             }
         }
-        if (e.getKeyCode()==KeyEvent.VK_SPACE) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             panelgry_.ukryta_pauza_wylacz();
         }
     }
 
     /**
+     * Metoda odpowiadajaca za obsluge zdarzen w obiekcie
      *
-     *  Metoda odpowiadajaca za obsluge zdarzen w obiekcie
      * @param e Obiekt typu KeyEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(graTrwa) {
-          // panelgry_.actionPerformed(e);
-           pasekWyniku_.actionPerformed(e);
+        if (graTrwa) {
+            // panelgry_.actionPerformed(e);
+            pasekWyniku_.actionPerformed(e);
             repaint();
 
         }
-        if (e.getActionCommand().equals(string_command_exit)){
+        if (e.getActionCommand().equals(string_command_exit)) {
             //this.dispose(); to dziala ciekawie
             System.exit(1);
-        }
-        else if(e.getActionCommand().equals(string_command_help))
-        {
-            JOptionPane.showMessageDialog(getParent(),string_help_message);
-        }
-        else if(e.getActionCommand().equals(string_command_authors))
-        {
-      //      JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel Rękawek\n-Konrad Jędrzejczak");
+        } else if (e.getActionCommand().equals(string_command_help)) {
+            JOptionPane.showMessageDialog(getParent(), string_help_message);
+        } else if (e.getActionCommand().equals(string_command_authors)) {
+            //      JOptionPane.showMessageDialog(getParent(), "Autorzy gry:\n-Daniel Rękawek\n-Konrad Jędrzejczak");
             JOptionPane.showMessageDialog(getParent(), string_authors_data);
-        }
-        else if(e.getActionCommand().equals(string_command_start))
-        {
+        } else if (e.getActionCommand().equals(string_command_start)) {
             zacznijGre();
-        }
-        else if(e.getActionCommand().equals(string_command_bestScore)){
-             scoreFrame = new BestScoreFrame(getWidth()/2,getHeight()/2,this);
+        } else if (e.getActionCommand().equals(string_command_bestScore)) {
+            scoreFrame = new BestScoreFrame(getWidth() / 2, getHeight() / 2, this);
             scoreFrame.rysuj();
             scoreFrame.wczytajZPliku();
             scoreFrame.dodajElementy();
-        }
-        else if (e.getActionCommand().equals(string_command_settings)){
+        } else if (e.getActionCommand().equals(string_command_settings)) {
          /*   JFileChooser chooser = new JFileChooser();
             int returnVal = chooser.showOpenDialog(getParent());
             if(returnVal == JFileChooser.APPROVE_OPTION) {
@@ -499,9 +492,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
             else {
                 JOptionPane.showMessageDialog(getParent(),"Blad otwarcia pliku");
             }*/
-          //settFrame = new SettingsFrame(getWidth()/2,getHeight()/2,this);
+            //settFrame = new SettingsFrame(getWidth()/2,getHeight()/2,this);
         }
-     }
+    }
 
 
     public BestScoreFrame getScoreFrame() {
@@ -510,6 +503,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
     /**
      * Metoda odpowiadajaca za obsluge zdarzenia skalowania okna
+     *
      * @param e Obiekt typu ComponentEvent
      */
     @Override
@@ -520,6 +514,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
 
     /**
      * Metoda odpowiadajaca za obsluge zdarzenia przesuniecia okna
+     *
      * @param e Obiekt typu ComponentEvent
      */
     @Override
@@ -528,7 +523,6 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     }
 
     /**
-     *
      * @param e Obiekt typu ComponentEvent
      */
     @Override
@@ -537,85 +531,89 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
     }
 
     /**
-     *
      * @param e Obiekt typu ComponentEvent
      */
     @Override
     public void componentHidden(ComponentEvent e) {
 
     }
-    public void odbierzMapy(){
+
+    public void odbierzMapy() {
         try {
             send_command("Gimme maps nigga!");
             int number_of_files;
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
-            number_of_files=Integer.parseInt(stdIn.readLine());
+            number_of_files = Integer.parseInt(stdIn.readLine());
             String filename[] = new String[number_of_files];
 
-            for(int i=0; i<number_of_files;i++)
+            for (int i = 0; i < number_of_files; i++)
                 filename[i] = stdIn.readLine();
-            System.out.println("Mapy: " +filename.toString());
-            for (int i=0;i<number_of_files;i++){
-                send_command("Daj "+filename[i]);
+            System.out.println("Mapy: " + filename.toString());
+            for (int i = 0; i < number_of_files; i++) {
+                send_command("Daj " + filename[i]);
                 readFileResponse();
             }
 
-        }catch (UnknownHostException ex) {
-        System.err.println("Host unknown. Cannot establish connection");
-    } catch (IOException ex) {
-        System.err.println("Cannot establish connection. Server may not be up. "+ex.toString());
-    }
-    }
-    public void odbierzConfig(){
-        try {
-          send_command("Gimme config nigga!");
-            readFileResponse();
-        }catch (UnknownHostException ex) {
+        } catch (UnknownHostException ex) {
             System.err.println("Host unknown. Cannot establish connection");
         } catch (IOException ex) {
-            System.err.println("Cannot establish connection. Server may not be up. "+ex.toString());
+            System.err.println("Cannot establish connection. Server may not be up. " + ex.toString());
         }
     }
-    public void odbierzHighscore(){
+
+    public void odbierzConfig() {
+        try {
+            send_command("Gimme config nigga!");
+            readFileResponse();
+        } catch (UnknownHostException ex) {
+            System.err.println("Host unknown. Cannot establish connection");
+        } catch (IOException ex) {
+            System.err.println("Cannot establish connection. Server may not be up. " + ex.toString());
+        }
+    }
+
+    public void odbierzHighscore() {
         try {
             send_command("Gimme highscore nigga!");
             readFileResponse();
-        }catch (UnknownHostException ex) {
+        } catch (UnknownHostException ex) {
             System.err.println("Host unknown. Cannot establish connection");
         } catch (IOException ex) {
-            System.err.println("Cannot establish connection. Server may not be up. "+ex.toString());
+            System.err.println("Cannot establish connection. Server may not be up. " + ex.toString());
         }
     }
-    public void readFileResponse() throws IOException{
+
+    public void readFileResponse() throws IOException {
         String filename;
-       // int number_of_files;
+        // int number_of_files;
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
-       // number_of_files=Integer.parseInt(stdIn.readLine());
+        // number_of_files=Integer.parseInt(stdIn.readLine());
         //filename = new String[number_of_files];
-       // for (int i=0;i<number_of_files;i++) {
-           // filename[i] = stdIn.readLine();
+        // for (int i=0;i<number_of_files;i++) {
+        // filename[i] = stdIn.readLine();
         filename = stdIn.readLine();
-            byte[] contents = new byte[10000];
-            //Initialize the FileOutputStream to the output file's full path.
-           // FileOutputStream fos = new FileOutputStream(filename[i]);
-            FileOutputStream fos = new FileOutputStream(filename);
-            BufferedOutputStream bos = new BufferedOutputStream(fos);
-            InputStream is = socketClient.getInputStream();
-            //No of bytes read in one read() call
-            int bytesRead = 0;
-            while ((bytesRead = is.read(contents)) != -1) {
-                bos.write(contents, 0, bytesRead);
-                if(contents.equals('}'))
-                    break;
-            }
-            bos.flush();
-            bos.close();
-            System.out.println("Odebralem plik " + filename);
+        byte[] contents = new byte[10000];
+        //Initialize the FileOutputStream to the output file's full path.
+        // FileOutputStream fos = new FileOutputStream(filename[i]);
+        FileOutputStream fos = new FileOutputStream(filename);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        InputStream is = socketClient.getInputStream();
+        //No of bytes read in one read() call
+        int bytesRead = 0;
+        while ((bytesRead = is.read(contents)) != -1) {
+            bos.write(contents, 0, bytesRead);
+            if (contents.equals('}'))
+                break;
+        }
+        bos.flush();
+        bos.close();
+        System.out.println("Odebralem plik " + filename);
         //}
         socketClient.close();
         System.out.println("File saved successfully!");
     }
-    public void readStringResponse() throws IOException{
+
+    public void readStringResponse() throws IOException {
         String userInput;
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
 
@@ -627,26 +625,28 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         stdIn.close();
         socketClient.close();
     }
-    public void send_command(String command){
-    try {
-        System.out.println("Attempting to connect to "+hostname+":"+port);
-        socketClient = new Socket(hostname,port);
-        System.out.println("Connection Established");
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socketClient.getOutputStream()));
-        writer.write(command);
-        writer.flush();
-        socketClient.shutdownOutput();
 
-    }catch (Exception ex){
-        System.out.println(ex.toString());
+    public void send_command(String command) {
+        try {
+            System.out.println("Attempting to connect to " + hostname + ":" + port);
+            socketClient = new Socket(hostname, port);
+            System.out.println("Connection Established");
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socketClient.getOutputStream()));
+            writer.write(command);
+            writer.flush();
+            socketClient.shutdownOutput();
+
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
     }
-    }
+
     /*
      * Metoda mająca na celu sciągnięcie konfiguracji gry.
      * W tym celu łączymy się z serwerem, jeżeli połączenie nie powiedzie się, gra się wyłącza.
      */
-    public void sciagnij_config(){
-        hostname = (String)JOptionPane.showInputDialog(
+    public void sciagnij_config() {
+        hostname = (String) JOptionPane.showInputDialog(
                 this,
                 "Aby uruchomić grę, należy nawiązać połączeznie z serwerem\n" +
                         "W przeciwnym wypadku gra nie uruchomi się",
@@ -656,13 +656,13 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
                 null,
                 null
         );
-        System.out.println("IP TO: "+hostname);
+        System.out.println("IP TO: " + hostname);
         try {
             socketClient = new Socket(hostname, port);
-            if(socketClient.isConnected()) {
+            if (socketClient.isConnected()) {
                 System.out.println("Udalo sie nawiazac polaczenie z serwerem");
             }
-            }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.toString());
             System.out.println("Nie udalo sie nawiazac polaczenie z serwerem");
             JOptionPane.showMessageDialog(null, "Nie udalo sie nawiazac polaczenia", "Serwer error: " + "Polaczenie z serwerem", JOptionPane.INFORMATION_MESSAGE);
@@ -671,14 +671,15 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
         odbierzConfig();
         odbierzMapy();
         odbierzHighscore();
-        }
+    }
 
-    public class BestScoreFrame extends JFrame{
+    public class BestScoreFrame extends JFrame {
 
         Frame parentFrame_;
-        public BestScoreFrame(int width,int heigth,Frame parentFrame){
+
+        public BestScoreFrame(int width, int heigth, Frame parentFrame) {
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            setPreferredSize(new Dimension(width,heigth));
+            setPreferredSize(new Dimension(width, heigth));
             parentFrame_ = parentFrame;
             addWindowListener(new WindowAdapter() {
                 @Override
@@ -688,55 +689,59 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener,Co
                 }
             });
         }
-        public void rysuj(){
+
+        public void rysuj() {
             parentFrame_.setEnabled(false);
             setVisible(true);
             pack();
         }
-        private void dodajElementy(){
-          //  this.setLayout(new BorderLayout());
-            String[] columnNames = {"Nick","Wynik"};
+
+        private void dodajElementy() {
+            //  this.setLayout(new BorderLayout());
+            String[] columnNames = {"Nick", "Wynik"};
             Object[][] data = new Object[highScore.size()][2];
-            int i=0;
-            for(Map.Entry<String,Long> entr : highScore.entrySet()){
+            int i = 0;
+            for (Map.Entry<String, Long> entr : highScore.entrySet()) {
                 data[i][0] = entr.getKey();
                 data[i][1] = entr.getValue();
                 i++;
             }
-            JTable table = new JTable(data,columnNames);
+            JTable table = new JTable(data, columnNames);
             table.setAutoCreateRowSorter(true);
             JScrollPane scrollPane = new JScrollPane(table);
             table.setFillsViewportHeight(true);
 
             add(scrollPane);
         }
-        public void zapiszDoPliku(){
+
+        public void zapiszDoPliku() {
             try {
                 FileWriter writer = new FileWriter("HighScore.txt");
                 StringWriter out = new StringWriter();
-                Map highScore2 = new HashMap<String,Long>();
+                Map highScore2 = new HashMap<String, Long>();
 
                 JSONObject objMain = new JSONObject();
-                objMain.put("HighScore",highScore2);
+                objMain.put("HighScore", highScore2);
 
                 objMain.writeJSONString(out);
                 writer.write(out.toString());
                 writer.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.toString());
             }
         }
-        private void wczytajZPliku(){try {
-            org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
-            Object obj = parser.parse(new FileReader("HighScore.txt"));
 
-            JSONObject jsonObjMain = (JSONObject) obj;
-            highScore.putAll((Map<String,Long>)jsonObjMain.get("HighScore"));
-            System.out.println("Najlepsze wyniki: "+ highScore);
-        }
-        catch (Exception ex){
-            System.out.println("Zlapano wyjatek highscore : "+ ex.toString());
-        }
+        private void wczytajZPliku() {
+            try {
+                org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
+                Object obj = parser.parse(new FileReader("HighScore.txt"));
+
+                JSONObject jsonObjMain = (JSONObject) obj;
+                highScore.putAll((Map<String, Long>) jsonObjMain.get("HighScore"));
+                System.out.println("Najlepsze wyniki: " + highScore);
+            } catch (Exception ex) {
+                System.out.println("Zlapano wyjatek highscore : " + ex.toString());
+            }
         }
     }
 }
