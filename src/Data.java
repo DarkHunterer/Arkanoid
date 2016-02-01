@@ -237,7 +237,7 @@ public class Data {
         try {
             org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
             Object obj = parser.parse(new FileReader(sciezka));
-            Object objMapa = parser.parse(new FileReader("mapa.json"));
+            Object objMapa = parser.parse(new FileReader("mapy/mapa1.json"));
 
             JSONObject jsonObjMain = (JSONObject) obj;
             JSONObject jsonObjMapa = (JSONObject) objMapa;
