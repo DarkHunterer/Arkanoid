@@ -724,21 +724,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
                 i++;
             }
             JTable table = new JTable(data, columnNames);
-            /*table.setModel(new DefaultTableModel(new Object[0][], new String[] {
-                    "SELECT", "WHERE"}) {
-                Class[] types = {String.class,Integer.class};
-                boolean[] canEdit = { false, false };
-
-                @Override
-                public Class getColumnClass(int columnIndex) {
-                    return this.types[columnIndex];
-                }
-
-                public boolean isCellEditable(int columnIndex) {
-                    return this.canEdit[columnIndex];
-                }
-            });*/
-            table.setAutoCreateRowSorter(false);
+            table.setAutoCreateRowSorter(true);
             JScrollPane scrollPane = new JScrollPane(table);
             table.setFillsViewportHeight(true);
             add(scrollPane);
