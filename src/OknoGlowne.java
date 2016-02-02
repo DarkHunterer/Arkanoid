@@ -10,6 +10,7 @@ import java.net.UnknownHostException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Główna klasa, w której umieszczane komponenty panelGry i pasekWyniku
@@ -717,10 +718,12 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
             //  this.setLayout(new BorderLayout());
             String[] columnNames = {"Nick", "Wynik"};
             Object[][] data = new Object[highScore.size()][2];
+
             int i = 0;
             for (Map.Entry<String, Long> entr : highScore.entrySet()) {
                 data[i][0] = entr.getKey();
-                data[i][1] = entr.getValue();
+                int temp = entr.getValue().intValue();
+                data[i][1] = temp;
                 i++;
             }
             JTable table = new JTable(data, columnNames);
