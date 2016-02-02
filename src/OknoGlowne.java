@@ -600,6 +600,10 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
         }
     }
 
+    /**
+     * metoda zapisująca odebrany strumien danych plików
+     * @throws IOException
+     */
     public void readFileResponse() throws IOException {
         String filename;
         // int number_of_files;
@@ -630,6 +634,10 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
         System.out.println("File saved successfully!");
     }
 
+    /**
+     * Metoda odczytująca odpowiedz serwera
+     * @throws IOException
+     */
     public void readStringResponse() throws IOException {
         String userInput;
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
@@ -643,6 +651,10 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
         socketClient.close();
     }
 
+    /**
+     * Metoda wysylajaca komendę do serwera
+     * @param command komenda
+     */
     public void send_command(String command) {
         try {
             System.out.println("Attempting to connect to " + hostname + ":" + port);
@@ -658,7 +670,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
         }
     }
 
-    /*
+    /**
      * Metoda mająca na celu sciągnięcie konfiguracji gry.
      * W tym celu łączymy się z serwerem, jeżeli połączenie nie powiedzie się, gra się wyłącza.
      */
@@ -690,6 +702,9 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
         odbierzHighscore();
     }
 
+    /**
+     * metoda odpowiedzialna za okno Najlepszych wyników
+     */
     public class BestScoreFrame extends JFrame {
 
         Frame parentFrame_;
@@ -707,12 +722,18 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
             });
         }
 
+        /**
+         * Metoda odpowiedzialna za rysowanie ramki wyników
+         */
         public void rysuj() {
             parentFrame_.setEnabled(false);
             setVisible(true);
             pack();
         }
 
+        /**
+         * metoda dodajaca elementy do listy najlepszych wynikow
+         */
         private void dodajElementy() {
             //  this.setLayout(new BorderLayout());
             String[] columnNames = {"Nick", "Wynik"};
@@ -743,6 +764,10 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
             table.setFillsViewportHeight(true);
             add(scrollPane);
         }
+
+        /**
+         * metoda wcztujaca najlepsdze wyniki z pliku
+         */
         private void wczytajZPliku() {
             try {
                 org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
