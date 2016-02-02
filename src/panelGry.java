@@ -3,7 +3,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
 import java.util.*;
 
 /**
@@ -65,6 +68,19 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
      */
 
     private int wys_stara;
+    /**
+     * Przechowuje IP serwera
+     */
+    private String hostname;
+    /**
+     * Numer portu wykorzystywanego do komunikacji
+     */
+    private int port = 4455;
+    /**
+     * Gniazdo klienta
+     */
+    Socket socketClient;
+
     /**
      *Obiekt Image przechowujący obrazek tła gry
      */
@@ -356,7 +372,6 @@ private String string_tlo;
      * Pilnuje końća gry po zbiciu wsyzstkich klocków.
      */
     public void sprawdzKolizje() {
-      //  System.out.println("Sprawdz kolizje");
         Rectangle rpaletka = paletka_.getBounds();
         Rectangle rpilka = pilka_.getBounds();
         Point pPG, pPD, pLD, pLG;
@@ -385,7 +400,7 @@ private String string_tlo;
         }
         //zderzenie z 1 klockiem
         if (ilosc_kolizji == 1) {
-           System.out.println("Zderzenie z 1 klockiem");
+            System.out.println("Zderzenie z 1 klockiem");
             int zderzenia_rogi = 0;
             Rectangle rklocek = klockiTab[0].getBounds();
             for (Point p : pointTab) {
@@ -529,9 +544,8 @@ private String string_tlo;
      * W przypadku ukonczenia mapy, należy przejść do nastepnej nie konczac gry
      */
     private void nastepnaMapa() {
-        System.out.println("nastepna mapa test");
-        aktualna_mapa++;
         if (aktualna_mapa < ilosc_map) {
+            aktualna_mapa++;
             ukryta_pauza_wlacz();
             System.out.println("AKTUALNA MAPA: " + aktualna_mapa);
             config_.aktualizuj_mape(aktualna_mapa);
@@ -550,6 +564,23 @@ private String string_tlo;
         }
         else
             koniecGry();
+    }
+
+    /**
+     *
+     */
+    public void send_command(String command) {
+        try {
+            System.out.println("Attempting to connect to " + hostname + ":" + port);
+            socketClient = new Socket(hostname, port);
+            System.out.println("Connection Established");
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socketClient.getOutputStream()));
+            writer.write(command);
+            writer.flush();
+            socketClient.shutdownOutput();
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
     }
     /**
      * Metoda końca gry
