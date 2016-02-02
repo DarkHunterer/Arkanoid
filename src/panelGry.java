@@ -3,7 +3,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
 import java.util.*;
 
 /**
@@ -65,6 +68,19 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
      */
 
     private int wys_stara;
+    /**
+     * Przechowuje IP serwera
+     */
+    private String hostname;
+    /**
+     * Numer portu wykorzystywanego do komunikacji
+     */
+    private int port = 4455;
+    /**
+     * Gniazdo klienta
+     */
+    Socket socketClient;
+
     /**
      *Obiekt Image przechowujący obrazek tła gry
      */
@@ -528,8 +544,8 @@ private String string_tlo;
      * W przypadku ukonczenia mapy, należy przejść do nastepnej nie konczac gry
      */
     private void nastepnaMapa() {
-        aktualna_mapa++;
         if (aktualna_mapa < ilosc_map) {
+            aktualna_mapa++;
             ukryta_pauza_wlacz();
             System.out.println("AKTUALNA MAPA: " + aktualna_mapa);
             config_.aktualizuj_mape(aktualna_mapa);
@@ -548,6 +564,23 @@ private String string_tlo;
         }
         else
             koniecGry();
+    }
+
+    /**
+     *
+     */
+    public void send_command(String command) {
+        try {
+            System.out.println("Attempting to connect to " + hostname + ":" + port);
+            socketClient = new Socket(hostname, port);
+            System.out.println("Connection Established");
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socketClient.getOutputStream()));
+            writer.write(command);
+            writer.flush();
+            socketClient.shutdownOutput();
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
     }
     /**
      * Metoda końca gry
@@ -568,15 +601,7 @@ private String string_tlo;
 
         }
             int wynik = pasekwyniku_.getWynik();
-            Map.Entry<String, Long> tempEntry = new AbstractMap.SimpleEntry<String, Long>("Nick", 0l);
-            for (Map.Entry<String, Long> tempMap : oknoGlowneUchwyt.highScore.entrySet()) {
-                if ((long) wynik > tempMap.getValue()) {
-                    czyRekord = true;
-                    tempEntry = tempMap;
-                    System.out.println("Dziala");
-                    break;
-                }
-            }
+           //czyRekord = wyslij komende czy rekord;
             if (czyRekord) {
                 if (bonus_points=false)
                 {
@@ -586,11 +611,7 @@ private String string_tlo;
                 {
                     nick = JOptionPane.showInputDialog(null,"Bonus za pozostale zycia " + pasekwyniku_.zwrocZycie()*100 + "/nBonus za pozostały czas "+pasekwyniku_.getCzas()*20 +"/nTwoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
                 }
-                oknoGlowneUchwyt.highScore.remove(tempEntry.getKey());
-                oknoGlowneUchwyt.highScore.put(nick, (long) wynik);
-                OknoGlowne.BestScoreFrame bestscore;
-                bestscore = oknoGlowneUchwyt.getScoreFrame();
-                bestscore.zapiszDoPliku();
+
             } else {
                 JOptionPane.showMessageDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
             }
