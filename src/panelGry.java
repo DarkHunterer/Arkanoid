@@ -569,7 +569,8 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
     }
 
     /**
-     *
+     * Metoda wysyłająca komendę
+     * @param command komenda
      */
     public void send_command(String command) {
         try {
@@ -691,6 +692,8 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
     /**
      * Metoda decydująca czy pojawi się bonus
      * Jeśli tak, odpowiada za jego stworzenie
+     * @param kl obiekl Klocek klocek
+     * @param config  obiekt Data konfiguracja
      */
     private void add_perk(Klocek kl, Data config) {
         int j = generator.nextInt(9);

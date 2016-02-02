@@ -115,6 +115,7 @@ public class perk {
      * @param kl    klocek z któego wypada bonus
      * @param pale  paletka z którą bonus ma się zderzyć aby się wykonać
      * @param pasek pasek wyniku do któego zapisywane są wyniki działania bonusu
+     * @param config Data konfiguracja
      */
     public perk(Klocek kl, paletka pale, pasekWyniku pasek, Data config) {
         pos_x = kl.getPos_X();

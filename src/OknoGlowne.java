@@ -235,6 +235,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
     /**
      * Main okna głównego.
      * Tworzy obiekt okna i pojawia go na ekranie
+     * @param args dane uruchomieniowe
      */
     public static void main(String[] args) {
         OknoGlowne okno = new OknoGlowne();
@@ -603,7 +604,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
 
     /**
      * metoda zapisująca odebrany strumien danych plików
-     * @throws IOException
+     * @throws IOException rzuca IOException
      */
     public void readFileResponse() throws IOException {
         String filename;
@@ -637,7 +638,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
 
     /**
      * Metoda odczytująca odpowiedz serwera
-     * @throws IOException
+     * @throws IOException rzuca IOException
      */
     public void readStringResponse() throws IOException {
         String userInput;
