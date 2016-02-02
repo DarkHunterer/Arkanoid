@@ -356,6 +356,7 @@ private String string_tlo;
      * Pilnuje końća gry po zbiciu wsyzstkich klocków.
      */
     public void sprawdzKolizje() {
+      //  System.out.println("Sprawdz kolizje");
         Rectangle rpaletka = paletka_.getBounds();
         Rectangle rpilka = pilka_.getBounds();
         Point pPG, pPD, pLD, pLG;
@@ -384,7 +385,7 @@ private String string_tlo;
         }
         //zderzenie z 1 klockiem
         if (ilosc_kolizji == 1) {
-            System.out.println("Zderzenie z 1 klockiem");
+           System.out.println("Zderzenie z 1 klockiem");
             int zderzenia_rogi = 0;
             Rectangle rklocek = klockiTab[0].getBounds();
             for (Point p : pointTab) {
@@ -528,6 +529,7 @@ private String string_tlo;
      * W przypadku ukonczenia mapy, należy przejść do nastepnej nie konczac gry
      */
     private void nastepnaMapa() {
+        System.out.println("nastepna mapa test");
         aktualna_mapa++;
         if (aktualna_mapa < ilosc_map) {
             ukryta_pauza_wlacz();
@@ -584,7 +586,7 @@ private String string_tlo;
                 }
                 if (bonus_points=true)
                 {
-                    nick = JOptionPane.showInputDialog(null,"Bonus za pozostale zycia " + pasekwyniku_.zwrocZycie()*100 + "/nBonus za pozostały czas "+pasekwyniku_.getCzas()*20 +"/nTwoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                    nick = JOptionPane.showInputDialog(null,"Bonus za pozostale zycia " + pasekwyniku_.zwrocZycie()*100 + "\nBonus za pozostały czas "+pasekwyniku_.getCzas()*20 +"\nTwoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
                 }
                 oknoGlowneUchwyt.highScore.remove(tempEntry.getKey());
                 oknoGlowneUchwyt.highScore.put(nick, (long) wynik);
