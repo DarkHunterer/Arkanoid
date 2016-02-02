@@ -714,6 +714,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             setPreferredSize(new Dimension(width, heigth));
             parentFrame_ = parentFrame;
+            odbierzHighscore();
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
