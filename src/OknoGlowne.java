@@ -552,7 +552,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
      */
     public void odbierzMapy() {
         try {
-            send_command("Gimme maps nigga!");
+            send_command("Gimme maps");
             int number_of_files;
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
             number_of_files = Integer.parseInt(stdIn.readLine());
@@ -578,7 +578,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
      */
     public void odbierzConfig() {
         try {
-            send_command("Gimme config nigga!");
+            send_command("Gimme config");
             readFileResponse();
         } catch (UnknownHostException ex) {
             System.err.println("Host unknown. Cannot establish connection");
@@ -592,7 +592,7 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
      */
     public void odbierzHighscore() {
         try {
-            send_command("Gimme highscore nigga!");
+            send_command("Gimme highscore");
             readFileResponse();
         } catch (UnknownHostException ex) {
             System.err.println("Host unknown. Cannot establish connection");

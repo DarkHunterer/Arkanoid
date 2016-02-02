@@ -1,1 +1,1 @@
-{"HighScore":{"Screen":920,"NoName":550,"Gracz1":30,"James Hetfield":200,"Lars Ulrich":300,"Daniel":1000,"Linda":1100,"Darth Vader":2000,"TestPrzedOddaniem":800,"Kirk Hamet":800}}
+{"HighScore":{"Screen":5920,"NoName":9550,"Gracz1":3330,"James Hetfield":4200,"Lars Ulrich":5300,"Daniel":6000,"Linda":2100,"Darth Vader":8000,"TestPrzedOddaniem":1200,"Kirk Hamet":7800}}
