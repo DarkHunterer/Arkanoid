@@ -611,11 +611,11 @@ private String string_tlo;
                 }
             }
             if (czyRekord) {
-                if (bonus_points=false)
+                if (bonus_points==false)
                 {
                 nick = JOptionPane.showInputDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
                 }
-                if (bonus_points=true)
+                if (bonus_points==true)
                 {
                     nick = JOptionPane.showInputDialog(null,"Bonus za pozostale zycia " + pasekwyniku_.zwrocZycie()*100 + "\nBonus za pozostały czas "+pasekwyniku_.getCzas()*20 +"\nTwoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
                 }
