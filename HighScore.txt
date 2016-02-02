@@ -5,7 +5,7 @@
     "Cliff Burton": 100,
     "Kirk Hamet": 800,
     "Daniel": 1000,
-    "Konrad": 0,
+    "Konrad": 20,
     "Bogus³aw": 670,
     "Linda": 1100,
     "Darth Vader": 2000,

@@ -3,9 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.*;
 
@@ -589,44 +587,34 @@ private String string_tlo;
      * Obsługuje sprawdzanie i zapisywanie rekordowych wyników
      */
     private void koniecGry() {
-            Boolean czyRekord = false;
-            wlaczPauze();
-        boolean bonus_points=false;
-        String nick="";
-        if(pasekwyniku_.getCzas()!=0 && pasekwyniku_.zwrocZycie()!=0)
-        {
+        Boolean czyRekord = false;
+        wlaczPauze();
+        boolean bonus_points = false;
+        String nick = "";
+        if (pasekwyniku_.getCzas() != 0 && pasekwyniku_.zwrocZycie() != 0) {
             pasekwyniku_.dodajPunkty(pasekwyniku_.getCzas() * 20);
             pasekwyniku_.dodajPunkty(pasekwyniku_.zwrocZycie() * 100);
-            bonus_points=true;
-
+            bonus_points = true;
         }
+        try {
             int wynik = pasekwyniku_.getWynik();
-            Map.Entry<String, Long> tempEntry = new AbstractMap.SimpleEntry<String, Long>("Nick", 0l);
-            for (Map.Entry<String, Long> tempMap : oknoGlowneUchwyt.highScore.entrySet()) {
-                if ((long) wynik > tempMap.getValue()) {
-                    czyRekord = true;
-                    tempEntry = tempMap;
-                    System.out.println("Dziala");
-                    break;
-                }
-            }
+            nick = JOptionPane.showInputDialog(null, "Bonus za pozostale zycia " + pasekwyniku_.zwrocZycie() * 100 + "\nBonus za pozostały czas " + pasekwyniku_.getCzas() * 20 + "\nTwoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+
+            send_command("Nick: "+nick);
+            send_command("Wynik: "+Integer.toString(wynik));
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+            czyRekord = Boolean.valueOf(stdIn.readLine());
+           // socketClient.shutdownInput();
+
+            System.out.println("Odpowiedz serwera to: "+czyRekord);
             if (czyRekord) {
-                if (bonus_points==false)
-                {
-                nick = JOptionPane.showInputDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
-                }
-                if (bonus_points==true)
-                {
-                    nick = JOptionPane.showInputDialog(null,"Bonus za pozostale zycia " + pasekwyniku_.zwrocZycie()*100 + "\nBonus za pozostały czas "+pasekwyniku_.getCzas()*20 +"\nTwoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
-                }
-                oknoGlowneUchwyt.highScore.remove(tempEntry.getKey());
-                oknoGlowneUchwyt.highScore.put(nick, (long) wynik);
-                OknoGlowne.BestScoreFrame bestscore;
-                bestscore = oknoGlowneUchwyt.getScoreFrame();
-                bestscore.zapiszDoPliku();
+                JOptionPane.showMessageDialog(null, nick+"Brawo! Twoj wynik to " + pasekwyniku_.getWynik()+".\nJest rekord!\nUda Ci się go poprawić?", "Koniec gry", JOptionPane.PLAIN_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, nick+", Twoj wynik to " + pasekwyniku_.getWynik()+".\nNiestety bez rekordu.\nSpróbuj ponownie!", "Koniec gry", JOptionPane.PLAIN_MESSAGE);
             }
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
     }
     /**
      * Metoda obliczajaca kat odbicia pilki od paletki
