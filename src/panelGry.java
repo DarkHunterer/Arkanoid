@@ -605,12 +605,13 @@ private String string_tlo;
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
             czyRekord = Boolean.valueOf(stdIn.readLine());
            // socketClient.shutdownInput();
-
-            System.out.println("Odpowiedz serwera to: "+czyRekord);
-            if (czyRekord) {
-                JOptionPane.showMessageDialog(null, nick+"Brawo! Twoj wynik to " + pasekwyniku_.getWynik()+".\nJest rekord!\nUda Ci się go poprawić?", "Koniec gry", JOptionPane.PLAIN_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, nick+", Twoj wynik to " + pasekwyniku_.getWynik()+".\nNiestety bez rekordu.\nSpróbuj ponownie!", "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+            if(nick!=null) {
+                System.out.println("Odpowiedz serwera to: " + czyRekord);
+                if (czyRekord) {
+                    JOptionPane.showMessageDialog(null, nick + "Brawo! Twoj wynik to " + pasekwyniku_.getWynik() + ".\nJest rekord!\nUda Ci się go poprawić?", "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, nick + ", Twoj wynik to " + pasekwyniku_.getWynik() + ".\nNiestety bez rekordu.\nSpróbuj ponownie!", "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                }
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
