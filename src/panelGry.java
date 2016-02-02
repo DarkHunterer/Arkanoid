@@ -152,7 +152,12 @@ private String string_tlo;
         if (thread == null) {
             thread = new Thread(this, "Watek panelu gry");
         }
+        if(!thread.isAlive())
         thread.start();
+        if(aktualna_mapa!=1) {
+            aktualna_mapa = 0;
+            nastepnaMapa();
+        }
     }
 
     /**
