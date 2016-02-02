@@ -1,1 +1,14 @@
-{"HighScore":{"Zdzisiek":200,"Hubert":300,"Wiesiek":100}}
+{
+  "HighScore": {
+    "James Hetfield": 200,
+    "Lars Ulrich": 300,
+    "Cliff Burton": 100,
+    "Kirk Hamet": 800,
+    "Daniel": 1000,
+    "Konrad": 0,
+    "Bogus³aw": 670,
+    "Linda": 1100,
+    "Darth Vader": 2000,
+    "NoName": 550
+  }
+}
