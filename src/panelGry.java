@@ -626,7 +626,7 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
         if (bonus_points == false)
 
             //int wynik = pasekwyniku_.getWynik();
-            JOptionPane.showMessageDialog(null, "Twoj wynik to " + pasekwyniku_.getWynik());
+            JOptionPane.showMessageDialog(null, "Przegrana! Twoj wynik to " + pasekwyniku_.getWynik());
 
     }
         /**
