@@ -17,11 +17,11 @@ import java.util.*;
 public class panelGry extends JPanel implements KeyListener, Runnable {
 
     /**
-     *Pole przechowujące obiekt Data z konfiguracją gry
+     * Pole przechowujące obiekt Data z konfiguracją gry
      */
     private Data config_;
     /**
-     *Dwuwymiarowa tablica przechowująca pozycje klocków
+     * Dwuwymiarowa tablica przechowująca pozycje klocków
      */
     private int[][] bricksPos;
 
@@ -42,27 +42,27 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
      */
     private Pilka pilka_;
     /**
-     *Zmienna wykorzystywana do uruchomienia w odpowiednim momencie metod run, paint i skaluj
+     * Zmienna wykorzystywana do uruchomienia w odpowiednim momencie metod run, paint i skaluj
      */
     private Boolean init;
     /**
-     *Zmienna wykorzystywana do włączenia i wyłączenia pauzy
+     * Zmienna wykorzystywana do włączenia i wyłączenia pauzy
      */
     private Boolean pauza;
     /**
-     *Lista przechowująca wszystkie klocki
+     * Lista przechowująca wszystkie klocki
      */
     private ArrayList<Klocek> klocki;
     /**
-     *Lista przechowujca wszystkie perki
+     * Lista przechowujca wszystkie perki
      */
     private ArrayList<perk> perks;
     /**
-     *Zmienna przehcowująca starą szerokośc okna przed skalowaniem
+     * Zmienna przehcowująca starą szerokośc okna przed skalowaniem
      */
     private int szer_stara;
     /**
-     *Zmienna przechowująca starą wysokośc okna, przed skalowaniem
+     * Zmienna przechowująca starą wysokośc okna, przed skalowaniem
      */
 
     private int wys_stara;
@@ -80,37 +80,38 @@ public class panelGry extends JPanel implements KeyListener, Runnable {
     Socket socketClient;
 
     /**
-     *Obiekt Image przechowujący obrazek tła gry
+     * Obiekt Image przechowujący obrazek tła gry
      */
     private Image imgTlo;
     /**
-     *Uchwyt na obiekt, który przechowuje dane na temat przebiegu rozgrywki i metody zapewniające dostęp do nich.
+     * Uchwyt na obiekt, który przechowuje dane na temat przebiegu rozgrywki i metody zapewniające dostęp do nich.
      */
     private OknoGlowne oknoGlowneUchwyt;
     /**
-     *Zmienna wykorzystywana do wykrycia końca gry przez zbicie wszystkich klocków
+     * Zmienna wykorzystywana do wykrycia końca gry przez zbicie wszystkich klocków
      */
     private boolean pozostale_klocki;
     /**
-     *Główny wątek gry
+     * Główny wątek gry
      */
     Thread thread;
     /**
-     *Generator liczb pseudolosowych, wykorzystywany do pojawiania bonusów po zbiciu klocka
+     * Generator liczb pseudolosowych, wykorzystywany do pojawiania bonusów po zbiciu klocka
      */
     Random generator = new Random();
     /**
-     *Pole przechowujące obiekt paska wyniku.
+     * Pole przechowujące obiekt paska wyniku.
      */
     private pasekWyniku pasekwyniku_;
     /**
      * Pole przechowujące adres do obrazka tła
      */
-private String string_tlo;
+    private String string_tlo;
+
     /**
      * Konstruktor klasy panelGry
      *
-     * @param config Obiekt z konfiguracją gry
+     * @param config            Obiekt z konfiguracją gry
      * @param OknoGlowneUchwyt_ Obiekt Okna Głownego w którym znajduje sie Panel Gry
      */
     public panelGry(Data config, OknoGlowne OknoGlowneUchwyt_) {
@@ -118,14 +119,14 @@ private String string_tlo;
         this.setBackground(config.OknoGlowne_kolor_panelGry);
         oknoGlowneUchwyt = OknoGlowneUchwyt_;
         ilosc_map = config.ilosc_map;
-        System.out.println("Ilosc map to: "+ilosc_map);
-        aktualna_mapa=1;
+        System.out.println("Ilosc map to: " + ilosc_map);
+        aktualna_mapa = 1;
         pasekwyniku_ = oknoGlowneUchwyt.getPasekWyniku_();
         bricksPos = config.bricksPos;
-        string_tlo=config.panel_gry_string_imgPanel;
-        init=config.panel_gry_init;
-        pauza=config.panel_gry_pauza;
-        pozostale_klocki=config.panel_gry_pozostale_klocki;
+        string_tlo = config.panel_gry_string_imgPanel;
+        init = config.panel_gry_init;
+        pauza = config.panel_gry_pauza;
+        pozostale_klocki = config.panel_gry_pozostale_klocki;
         try {
             imgTlo = ImageIO.read(new File(string_tlo));
         } catch (Exception e) {
@@ -152,9 +153,9 @@ private String string_tlo;
         if (thread == null) {
             thread = new Thread(this, "Watek panelu gry");
         }
-        if(!thread.isAlive())
-        thread.start();
-        if(aktualna_mapa!=1) {
+        if (!thread.isAlive())
+            thread.start();
+        if (aktualna_mapa != 1) {
             aktualna_mapa = 0;
             nastepnaMapa();
         }
@@ -171,7 +172,7 @@ private String string_tlo;
         int maxRow = bricksPos.length;
         int maxCol = bricksPos[0].length;
         int brickWidth = width / maxCol;
-       int brickHeigth = (int) (heigth / maxRow / (2.5));
+        int brickHeigth = (int) (heigth / maxRow / (2.5));
         System.out.println("Tablica klockow. LENGTH: " + bricksPos.length);
         klocki = new ArrayList<>();
         for (int[] row : bricksPos) {
@@ -327,7 +328,6 @@ private String string_tlo;
      * Poruszanie perków
      * Sprawdzanie kolizji
      * Sprawdzanie warunku końca gry po czasie
-     *
      */
 
     @Override
@@ -349,8 +349,8 @@ private String string_tlo;
                     sprawdzKolizje();
                     if (pasekwyniku_.getCzas() <= 0) {
                         System.out.println("koniec gry czas");
-                            koniecGry();
-                        }
+                        koniecGry();
+                    }
                     pozostale_klocki = false;
                     long update = System.nanoTime() - now;
                     double milis = (double) update / 1000000.0;
@@ -527,16 +527,16 @@ private String string_tlo;
             ukryta_pauza_wlacz();
             if (pasekwyniku_.zwrocZycie() == 0) {
 
-                    System.out.println("koniec gry zycie");
-                    koniecGry();
-                }
+                System.out.println("koniec gry zycie");
+                koniecGry();
+            }
 
         } else if (pilka_.getY_pos() <= 0) {
             pilka_.setY_pos(1);
             pilka_.odwroc_Y();
         }
         if (pozostale_klocki == false) {
-                System.out.println("koniec gry klocki");
+            System.out.println("koniec gry klocki");
             nastepnaMapa();
 
         }
@@ -564,8 +564,7 @@ private String string_tlo;
             dodajKlocki(width, heigth);
             perks = new ArrayList<>();
             init = true;
-        }
-        else
+        } else
             koniecGry();
     }
 
@@ -585,6 +584,7 @@ private String string_tlo;
             System.out.println(ex.toString());
         }
     }
+
     /**
      * Metoda końca gry
      * Dodaje bonusowe punkty za czas i zycie do ostatecznego wyniku
@@ -601,37 +601,45 @@ private String string_tlo;
             pasekwyniku_.dodajPunkty(pasekwyniku_.zwrocZycie() * 100);
             bonus_points = true;
         }
-        try {
-            int wynik = pasekwyniku_.getWynik();
-            nick = JOptionPane.showInputDialog(null, "Bonus za pozostale zycia " + pasekwyniku_.zwrocZycie() * 100 + "\nBonus za pozostały czas " + pasekwyniku_.getCzas() * 20 + "\nTwoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+        if (bonus_points == true) {
+            try {
+                int wynik = pasekwyniku_.getWynik();
+                nick = JOptionPane.showInputDialog(null, "Bonus za pozostale zycia " + pasekwyniku_.zwrocZycie() * 100 + "\nBonus za pozostały czas " + pasekwyniku_.getCzas() * 20 + "\nTwoj wynik to " + pasekwyniku_.getWynik(), "Koniec gry", JOptionPane.PLAIN_MESSAGE);
 
-            send_command("Nick: "+nick);
-            send_command("Wynik: "+Integer.toString(wynik));
-            BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
-            czyRekord = Boolean.valueOf(stdIn.readLine());
-           // socketClient.shutdownInput();
-            if(nick!=null) {
-                System.out.println("Odpowiedz serwera to: " + czyRekord);
-                if (czyRekord) {
-                    JOptionPane.showMessageDialog(null, nick + "Brawo! Twoj wynik to " + pasekwyniku_.getWynik() + ".\nJest rekord!\nUda Ci się go poprawić?", "Koniec gry", JOptionPane.PLAIN_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, nick + ", Twoj wynik to " + pasekwyniku_.getWynik() + ".\nNiestety bez rekordu.\nSpróbuj ponownie!", "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                send_command("Nick: " + nick);
+                send_command("Wynik: " + Integer.toString(wynik));
+                BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+                czyRekord = Boolean.valueOf(stdIn.readLine());
+                // socketClient.shutdownInput();
+                if (nick != null) {
+                    System.out.println("Odpowiedz serwera to: " + czyRekord);
+                    if (czyRekord) {
+                        JOptionPane.showMessageDialog(null, nick + "Brawo! Twoj wynik to " + pasekwyniku_.getWynik() + ".\nJest rekord!\nUda Ci się go poprawić?", "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, nick + ", Twoj wynik to " + pasekwyniku_.getWynik() + ".\nNiestety bez rekordu.\nSpróbuj ponownie!", "Koniec gry", JOptionPane.PLAIN_MESSAGE);
+                    }
                 }
+            } catch (Exception ex) {
+                System.out.println(ex.toString());
             }
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
         }
+        if (bonus_points == false)
+
+            //int wynik = pasekwyniku_.getWynik();
+            JOptionPane.showMessageDialog(null, "Przegrana! Twoj wynik to " + pasekwyniku_.getWynik());
+
     }
-    /**
-     * Metoda obliczajaca kat odbicia pilki od paletki
-     * @param X_ball pozycja x-owa piłki
-     */
+        /**
+         * Metoda obliczajaca kat odbicia pilki od paletki
+         * @param X_ball pozycja x-owa piłki
+         */
+
     private void obliczKat(int X_ball) {
         int middlePaddle = (paletka_.getX() + paletka_.getSzer_() / 2);
         int beginPaddle = paletka_.getX();
         int X_collision = X_ball + pilka_.getSrednica() / 2 - beginPaddle;
-       // System.out.println("Srodek paletki to " + middlePaddle + " X_collision to " + X_collision);
-       // System.out.print("Szerokosc paletki to " + paletka_.getSzer_() + "\n");
+        // System.out.println("Srodek paletki to " + middlePaddle + " X_collision to " + X_collision);
+        // System.out.print("Szerokosc paletki to " + paletka_.getSzer_() + "\n");
 
         int kat = 80 * (X_collision - paletka_.getSzer_() / 2) / (paletka_.getSzer_() / 2);
         if (kat <= -80)
