@@ -1,14 +1,1 @@
-{
-  "HighScore": {
-    "James Hetfield": 200,
-    "Lars Ulrich": 300,
-    "Cliff Burton": 100,
-    "Kirk Hamet": 800,
-    "Daniel": 1000,
-    "Konrad": 20,
-    "Bogus³aw": 670,
-    "Linda": 1100,
-    "Darth Vader": 2000,
-    "NoName": 550
-  }
-}
+{"HighScore":{"Bogusï¿½aw":670,"Cliff Burton":100,"NoName":550,"Gracz1":30,"James Hetfield":200,"Lars Ulrich":300,"Daniel":1000,"Linda":1100,"Darth Vader":2000,"Kirk Hamet":800}}

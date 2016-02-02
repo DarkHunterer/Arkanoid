@@ -1,10 +1,13 @@
 import org.json.simple.JSONObject;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -721,35 +724,29 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
                 i++;
             }
             JTable table = new JTable(data, columnNames);
-            table.setAutoCreateRowSorter(true);
+            /*table.setModel(new DefaultTableModel(new Object[0][], new String[] {
+                    "SELECT", "WHERE"}) {
+                Class[] types = {String.class,Integer.class};
+                boolean[] canEdit = { false, false };
+
+                @Override
+                public Class getColumnClass(int columnIndex) {
+                    return this.types[columnIndex];
+                }
+
+                public boolean isCellEditable(int columnIndex) {
+                    return this.canEdit[columnIndex];
+                }
+            });*/
+            table.setAutoCreateRowSorter(false);
             JScrollPane scrollPane = new JScrollPane(table);
             table.setFillsViewportHeight(true);
-
             add(scrollPane);
         }
-
-        public void zapiszDoPliku() {
-            try {
-                FileWriter writer = new FileWriter("HighScore.txt");
-                StringWriter out = new StringWriter();
-                Map highScore2 = new HashMap<String, Long>();
-
-                JSONObject objMain = new JSONObject();
-                objMain.put("HighScore", highScore2);
-
-                objMain.writeJSONString(out);
-                writer.write(out.toString());
-                writer.close();
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
-        }
-
         private void wczytajZPliku() {
             try {
                 org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
                 Object obj = parser.parse(new FileReader("HighScore.txt"));
-
                 JSONObject jsonObjMain = (JSONObject) obj;
                 highScore.putAll((Map<String, Long>) jsonObjMain.get("HighScore"));
                 System.out.println("Najlepsze wyniki: " + highScore);
@@ -759,64 +756,3 @@ public class OknoGlowne extends JFrame implements ActionListener, KeyListener, C
         }
     }
 }
-
-
-    /*private class SettingsFrame extends JFrame implements ActionListener{
-
-        private String string_accept=config.SettingFrame_string_accept;
-        private String string_ip=config.SettingFrame_string_ip;
-        JButton acceptButton;
-        JTextField textField;
-
-       public SettingsFrame(int width,int heigth,Frame parentFrame){
-
-            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            setPreferredSize(new Dimension(width,heigth));
-            parentFrame.setEnabled(false);
-            addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    parentFrame.setEnabled(true);
-                    super.windowClosing(e);
-                }
-            });
-            setVisible(true);
-            dodajElementy();
-            pack();
-        }
-
-
-        private void wczytaj_config(){
-            string_accept=config.SettingFrame_string_accept;
-            string_ip=config.SettingFrame_string_ip;
-        }
-
-       private void dodajElementy(){
-           this.setLayout(new GridLayout(4,4));
-           acceptButton = new JButton(string_accept);
-           acceptButton.setSize(new Dimension(getWidth(),getHeight()));
-           textField = new JTextField(string_ip);
-           textField.setBackground(Color.white);
-           textField.setCaretColor(Color.red);
-           add(textField);
-           add(acceptButton);
-           acceptButton.addActionListener(this);
-       }
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          //  if(e.equals(acceptButton)){
-                //try {
-                    //(Inet4Address) Inet4Address.getByName(textField.getText());
-                    hostname = textField.getText();
-                odbierzConfig();
-                odbierzMapy();
-            odbierzHighscore();
-          //  odbierzHighscore();
-                   // JOptionPane.showMessageDialog(getParent(), hostname);
-                //}catch (UnknownHostException ex){
-                 //   JOptionPane.showMessageDialog(getParent(), ex.getMessage());
-           //     }
-            }
-       // }
-    }
-   */
